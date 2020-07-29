@@ -26,10 +26,6 @@ export default function ApplicationViews() {
                     <Register />
                 </Route>
 
-                <Route path="/dashboard">
-                    <Dashboard />
-                </Route>
-
                 <Route path="/tasks">
                     <TaskList />
                 </Route>
