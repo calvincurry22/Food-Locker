@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./Task.css";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ task }) => {
+export default ({ task, updateTask, deleteTask }) => {
     const date = new Date(task.expirationDate).toLocaleDateString()
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
@@ -30,6 +30,7 @@ export default ({ task }) => {
                     Expiration Date: {date}
                 </Typography>
                 <Button variant="contained">Completed</Button>
+                <Button>Delete</Button>
             </Paper>
         </Grid>
     )

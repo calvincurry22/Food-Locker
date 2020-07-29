@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ toggleTaskModal, taskModal, currentUser }) => {
+export default ({ toggleTaskModal, taskModal, currentUser, saveTask }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
@@ -38,7 +38,11 @@ export default ({ toggleTaskModal, taskModal, currentUser }) => {
                         <CloseOutlinedIcon />
                     </IconButton>
                     <h2 id="transition-modal-title">New Task</h2>
-                    <TaskCreateForm toggleTaskModal={toggleTaskModal} currentUser={currentUser} />
+                    <TaskCreateForm
+                        toggleTaskModal={toggleTaskModal}
+                        currentUser={currentUser}
+                        saveTask={saveTask}
+                    />
                 </div>
             </Modal>
         </div>

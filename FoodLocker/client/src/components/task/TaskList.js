@@ -125,7 +125,7 @@ export default () => {
     const [open, setOpen] = React.useState(true)
     const { logout } = useContext(UserContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks } = useContext(TaskContext)
+    const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks, deleteTask, updateTask, saveTask } = useContext(TaskContext)
     const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const [taskModal, setTaskModal] = useState(false)
@@ -155,7 +155,7 @@ export default () => {
                         <Grid container spacing={4}>
                             {tasks &&
                                 tasks.map(t => {
-                                    return <Task key={t.id} task={t} />
+                                    return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} />
                                 })
                             }
                         </Grid>
@@ -164,6 +164,7 @@ export default () => {
                         currentUser={currentUser}
                         toggleTaskModal={toggleTaskModal}
                         taskModal={taskModal}
+                        saveTask={saveTask}
                     />
                 </main>
             </div>

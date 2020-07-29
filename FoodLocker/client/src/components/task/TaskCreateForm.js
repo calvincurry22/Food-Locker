@@ -39,8 +39,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ toggleTaskModal, currentUser }) => {
-    const { saveTask } = useContext(TaskContext);
+export default ({ toggleTaskModal, currentUser, saveTask }) => {
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext);
     const [taskText, setTaskText] = useState();
     const [expirationDate, setExpirationDate] = useState();
@@ -57,6 +56,7 @@ export default ({ toggleTaskModal, currentUser }) => {
     }
 
     const createNewTask = () => {
+        console.log(selectedDate)
         saveTask({
             text: taskText,
             userId: currentUser.id,
@@ -95,7 +95,7 @@ export default ({ toggleTaskModal, currentUser }) => {
                             <Grid container justify="space-around">
                                 <KeyboardDatePicker
                                     disableToolbar
-
+                                    variant="inline"
                                     format="MM/dd/yyyy"
                                     margin="normal"
                                     id="expirationDate"
@@ -110,7 +110,7 @@ export default ({ toggleTaskModal, currentUser }) => {
                         </MuiPickersUtilsProvider>
                         <Grid item xs={12} sm={12}>
                             <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="employee">Employee</InputLabel>
+                                <InputLabel htmlFor="employee">Assign To</InputLabel>
                                 <Select
                                     native="true"
                                     variant="outlined"
