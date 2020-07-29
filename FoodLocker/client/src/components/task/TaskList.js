@@ -31,6 +31,8 @@ import { EmployeeContext } from '../../providers/EmployeeProvider';
 import "./Task.css";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import TaskCreateModal from './TaskCreateModal';
+import Task from './Task';
 
 const drawerWidth = 270;
 //test comment
@@ -126,11 +128,13 @@ export default () => {
     const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks } = useContext(TaskContext)
     const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
+    const [taskModal, setTaskModal] = useState(false)
+    const toggleTaskModal = () => setTaskModal(!taskModal)
 
     const handleDrawerClose = () => {
         setOpen(!open);
     }
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+
 
     useEffect(() => {
         getIncompleteTasksByUserId(currentUser.id)
@@ -143,7 +147,7 @@ export default () => {
                 <SideNav />
                 <main className={classes.content}>
                     <Button variant="contained" href="/completedTasks">View Completed Tasks</Button>
-                    <Fab aria-label="add" size="medium">
+                    <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
                         <AddIcon />
                     </Fab>
                     {/* <div className={classes.appBarSpacer} /> */}
@@ -151,23 +155,16 @@ export default () => {
                         <Grid container spacing={4}>
                             {tasks &&
                                 tasks.map(t => {
-                                    const date = new Date(t.expirationDate).toLocaleDateString()
-                                    return (
-                                        <Grid item xs={12} md={4} lg={3}>
-                                            <Paper className={fixedHeightPaper}>
-                                                <Typography className="taskListTyopgraphy">
-                                                    Task: {t.text} <br />
-                                                    Assigned To: {t.employee.firstName + " " + t.employee.lastName} <br />
-                                                    Expiration Date: {date}
-                                                </Typography>
-                                                <Button variant="contained">Completed</Button>
-                                            </Paper>
-                                        </Grid>
-                                    )
+                                    return <Task key={t.id} task={t} />
                                 })
                             }
                         </Grid>
                     </Container>
+                    <TaskCreateModal
+                        currentUser={currentUser}
+                        toggleTaskModal={toggleTaskModal}
+                        taskModal={taskModal}
+                    />
                 </main>
             </div>
         </>

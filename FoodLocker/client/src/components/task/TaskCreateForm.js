@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Container } from '@material-ui/core';
+import { Container, makeStyles, Grid, TextField, Button } from '@material-ui/core';
 import { TaskContext } from '../../providers/TaskProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -7,6 +7,7 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import clsx from 'clsx';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
@@ -40,14 +41,16 @@ export default ({ toggleTaskModal, currentUser }) => {
     const [taskText, setTaskText] = useState();
     const [expirationDate, setExpirationDate] = useState();
     const [employeeId, setEmployeeId] = useState();
+    const classes = useStyles()
 
     const createNewTask = () => {
-        save({
+        saveTask({
             text: taskText,
             userId: currentUser.id,
             expirationDate: expirationDate,
             employeeId: employeeId
         })
+            .then(() => toggleTaskModal())
     }
 
 
@@ -68,21 +71,13 @@ export default ({ toggleTaskModal, currentUser }) => {
                             required
                             fullWidth
                             id="taskText"
-                            label="text"
+                            multiline
+                            rows={5}
+                            label="Type Task Here"
                             autoFocus
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <TextField
-                            onChange={e => setExpirationDate(e.target.value)}
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="taskExpirationDate"
-                            label="Expiration Date"
-                            name="expirationDate"
-                            autoComplete="lname"
-                        />
                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <Grid container justify="space-around">
                                 <KeyboardDatePicker
@@ -98,30 +93,32 @@ export default ({ toggleTaskModal, currentUser }) => {
                                     }}
                                 />
                             </Grid>
-                            <Grid item xs={12}>
-                                <FormControl>
-                                    <InputLabel htmlFor="employee">Select Employee</InputLabel>
-                                    <NativeSelect
-                                        native
-                                        value={0}
-                                        onChange={e => setEmployeeId(e.target.value)}
-                                        inputProps={{
-                                            name: 'employee',
-                                            id: 'employee',
-                                        }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        {
-                                            employees.map(e => {
-                                                return <option value={e.id}>{e.firstName} {e.lastName}</option>
-                                            })
-                                        }
-                                    </NativeSelect>
-                                </FormControl>
-                            </Grid>
-                            <Button type="submit" variant="contained">Save</Button>
+                        </MuiPickersUtilsProvider>
+                        <Grid item xs={12}>
+                            <FormControl>
+                                <InputLabel htmlFor="employee">Select Employee</InputLabel>
+                                <NativeSelect
+                                    native
+                                    value={0}
+                                    onChange={e => setEmployeeId(e.target.value)}
+                                    inputProps={{
+                                        name: 'employee',
+                                        id: 'employee',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    {
+                                        employees.map(e => {
+                                            return <option key={e.id} value={e.id}>{e.firstName} {e.lastName}</option>
+                                        })
+                                    }
+                                </NativeSelect>
+                            </FormControl>
+                        </Grid>
+                        <Button type="submit" variant="contained">Save</Button>
+                    </Grid>
                 </Grid>
             </form>
-        </Container >
+        </Container>
     )
 }
