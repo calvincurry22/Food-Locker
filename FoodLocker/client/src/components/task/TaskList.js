@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header';
-import "./Dashboard.css";
 import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
@@ -29,7 +28,6 @@ import SideNav from '../SideNav';
 import { TaskContext } from '../../providers/TaskProvider';
 import { CredentialContext } from '../../providers/CredentialProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
-
 const drawerWidth = 270;
 //test comment
 
@@ -116,7 +114,6 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 export default () => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
@@ -130,11 +127,6 @@ export default () => {
         setOpen(!open);
     }
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-
-    useEffect(() => {
-        getIncompleteTasksByUserId(currentUser.id)
-        getEmployeesByUserId(currentUser.id)
-    }, [])
 
     return (
         <>

@@ -22,9 +22,9 @@ import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedI
 import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { UserContext } from '../providers/UserProvider';
-
+import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
 
 const drawerWidth = 270;
 //test comment
@@ -119,6 +119,7 @@ export default () => {
     const [open, setOpen] = React.useState(true)
     const { logout } = useContext(UserContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
+    const history = useHistory()
 
     const handleDrawerClose = () => {
         setOpen(!open);
@@ -164,7 +165,10 @@ export default () => {
                         </ListItemIcon>
                         <ListItemText primary="Manage Credentials" />
                     </ListItem>
-                    <ListItem className="menuItems" button>
+                    <ListItem
+                        className="menuItems"
+                        button
+                        onClick={() => history.push("/tasks")}>
                         <ListItemIcon>
                             <AssignmentTurnedInOutlinedIcon />
                         </ListItemIcon>
@@ -175,6 +179,15 @@ export default () => {
                             <LibraryBooksOutlinedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Food Safety Resources" />
+                    </ListItem>
+                    <ListItem
+                        className="menuItems"
+                        button
+                        onClick={() => history.push("/dashboard")}>
+                        <ListItemIcon>
+                            <DashboardOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Dashboard" />
                     </ListItem>
                     <ListItem className="menuItems" button>
                         <ListItemIcon>

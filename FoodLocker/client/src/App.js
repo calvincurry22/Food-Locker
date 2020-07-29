@@ -3,7 +3,7 @@ import ApplicationViews from "./components/ApplicationViews";
 import { BrowserRouter as Router } from "react-router-dom";
 import './App.css';
 import { UserProvider } from './providers/UserProvider';
-import Header from './components/dashboard/Header';
+import Header from './components/Header';
 import TaskProvider from './providers/TaskProvider';
 import EmployeeProvider from './providers/EmployeeProvider';
 import CredentialProvider from './providers/CredentialProvider';

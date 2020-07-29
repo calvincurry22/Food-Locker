@@ -40,7 +40,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Badge, Tooltip } from '@material-ui/core';
-import { UserContext } from '../../providers/UserProvider';
+import { UserContext } from '../providers/UserProvider';
 
 const useStyles = makeStyles((theme) => ({
     root: {
