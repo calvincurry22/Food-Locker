@@ -23,7 +23,7 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("getByEmployee/{id}")]
-        public IActionResult GetAllAuditsByUserId(int id)
+        public IActionResult GetAllCredentialsByEmployeeId(int id)
         {
             List<Credential> credentialList = _credentialRepository.GetByEmployeeId(id);
             if (credentialList == null)

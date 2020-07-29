@@ -1,0 +1,70 @@
+
+
+
+.appBar {
+    background-color: #32CD32 !important;
+    
+}
+
+.toolBar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.headerIconGrid {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+/* .height {
+    height: 660px;
+    width: 15%;
+}
+
+.test {
+    display: flex;
+} */
+
+.a {
+    height: 200px;
+    margin-bottom: -20px;
+    margin-left: 30%;
+    padding-bottom: 20px;
+    width: 200px;
+}
+
+.b {
+    height: 200px;
+    margin-bottom: -20px;
+    margin-left: 30%;
+    padding-bottom: 20px;
+    width: 200px;
+}
+
+.c {
+    height: 200px;
+    margin-bottom: -20px;
+    margin-left: 30%;
+    padding-bottom: 20px;
+    width: 200px;
+}
+
+.d {
+    height: 200px;
+    margin-bottom: -20px;
+    margin-left: 30%;
+    padding-bottom: 20px;
+    width: 200px;
+}
+
+.menuItems {
+    /* margin-top: 20px !important; */
+}
+
+.avatar {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
