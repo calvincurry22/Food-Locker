@@ -22,7 +22,7 @@ namespace FoodLocker.Controllers
             _vcRepository = new ViolationCategoryRepository(context);
         }
 
-        [HttpGet("getByUser/{id}")]
+        [HttpGet]
         public IActionResult GetAll()
         {
             List<ViolationCategory> list = _vcRepository.GetAll();
