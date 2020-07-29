@@ -32,21 +32,14 @@ export default ({ toggleTaskModal, taskModal, currentUser }) => {
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
                 open={taskModal}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 500,
-                }}
             >
-                <Fade in={taskModal}>
-                    <div className={classes.paper}>
-                        <IconButton onClick={toggleTaskModal}>
-                            <CloseOutlinedIcon />
-                        </IconButton>
-                        <h2 id="transition-modal-title">New Task</h2>
-                        <TaskCreateForm toggleTaskModal={toggleTaskModal} currentUser={currentUser} />
-                    </div>
-                </Fade>
+                <div className={classes.paper}>
+                    <IconButton onClick={toggleTaskModal}>
+                        <CloseOutlinedIcon />
+                    </IconButton>
+                    <h2 id="transition-modal-title">New Task</h2>
+                    <TaskCreateForm toggleTaskModal={toggleTaskModal} currentUser={currentUser} />
+                </div>
             </Modal>
         </div>
     );

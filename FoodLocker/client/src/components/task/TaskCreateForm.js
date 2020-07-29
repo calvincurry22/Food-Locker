@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
     avatar: {
         margin: theme.spacing(1),
         // backgroundColor: theme.palette.secondary.main,
@@ -40,14 +44,23 @@ export default ({ toggleTaskModal, currentUser }) => {
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext);
     const [taskText, setTaskText] = useState();
     const [expirationDate, setExpirationDate] = useState();
-    const [employeeId, setEmployeeId] = useState();
     const classes = useStyles()
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2020-07-29T21:11:54'));
+    const [employeeId, setEmployeeId] = useState(0)
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date)
+    }
+
+    const handleNameChange = (event) => {
+        setEmployeeId(event.target.value)
+    }
 
     const createNewTask = () => {
         saveTask({
             text: taskText,
             userId: currentUser.id,
-            expirationDate: expirationDate,
+            expirationDate: selectedDate,
             employeeId: employeeId
         })
             .then(() => toggleTaskModal())
@@ -82,25 +95,27 @@ export default ({ toggleTaskModal, currentUser }) => {
                             <Grid container justify="space-around">
                                 <KeyboardDatePicker
                                     disableToolbar
-                                    variant="inline"
+
                                     format="MM/dd/yyyy"
                                     margin="normal"
                                     id="expirationDate"
                                     label="Set Expiration Date"
-                                    onChange={e => setExpirationDate(e.target.value)}
+                                    value={selectedDate}
+                                    onChange={handleDateChange}
                                     KeyboardButtonProps={{
                                         'aria-label': 'change date',
                                     }}
                                 />
                             </Grid>
                         </MuiPickersUtilsProvider>
-                        <Grid item xs={12}>
-                            <FormControl>
-                                <InputLabel htmlFor="employee">Select Employee</InputLabel>
-                                <NativeSelect
-                                    native
-                                    value={0}
-                                    onChange={e => setEmployeeId(e.target.value)}
+                        <Grid item xs={12} sm={12}>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel htmlFor="employee">Employee</InputLabel>
+                                <Select
+                                    native="true"
+                                    variant="outlined"
+                                    value={employeeId}
+                                    onChange={handleNameChange}
                                     inputProps={{
                                         name: 'employee',
                                         id: 'employee',
@@ -112,7 +127,7 @@ export default ({ toggleTaskModal, currentUser }) => {
                                             return <option key={e.id} value={e.id}>{e.firstName} {e.lastName}</option>
                                         })
                                     }
-                                </NativeSelect>
+                                </Select>
                             </FormControl>
                         </Grid>
                         <Button type="submit" variant="contained">Save</Button>
