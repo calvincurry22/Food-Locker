@@ -22,5 +22,11 @@ namespace FoodLocker.Repositories
             return _context.ViolationCategory
                             .ToList();
         }
+
+        public ViolationCategory GetById(int id)
+        {
+            return _context.ViolationCategory
+                    .FirstOrDefault(vc => vc.Id == id);
+        }
     }
 }
