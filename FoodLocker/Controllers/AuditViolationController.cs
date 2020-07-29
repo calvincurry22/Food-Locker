@@ -22,7 +22,7 @@ namespace FoodLocker.Controllers
             _auditViolationRepository = new AuditViolationRepository(context);
         }
 
-        [HttpGet("getByAuditId/{id}")]
+        [HttpGet("getByAudit/{id}")]
         public IActionResult GetAllByAuditId(int id)
         {
             List<AuditViolation> avList = _auditViolationRepository.GetByAuditId(id);

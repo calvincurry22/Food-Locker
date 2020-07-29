@@ -14,59 +14,59 @@ namespace FoodLocker.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class AuditController : ControllerBase
+    public class CredentialController : ControllerBase
     {
-        private readonly AuditRepository _auditRepository;
-        public AuditController(ApplicationDbContext context)
+        private readonly CredentialRepository _credentialRepository;
+        public CredentialController(ApplicationDbContext context)
         {
-            _auditRepository = new AuditRepository(context);
+            _credentialRepository = new CredentialRepository(context);
         }
 
-        [HttpGet("getByUser/{id}")]
+        [HttpGet("getByEmployee/{id}")]
         public IActionResult GetAllAuditsByUserId(int id)
         {
-            List<Audit> auditList = _auditRepository.GetAllAuditsByUserId(id);
-            if (auditList == null)
+            List<Credential> credentialList = _credentialRepository.GetByEmployeeId(id);
+            if (credentialList == null)
             {
                 return NotFound();
             }
-            return Ok(auditList);
+            return Ok(credentialList);
         }
 
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            Audit audit = _auditRepository.GetAuditById(id);
-            if (audit == null)
+            var credential = _credentialRepository.GetById(id);
+            if (credential == null)
             {
                 return NotFound();
             }
-            return Ok(audit);
+            return Ok(credential);
         }
 
         [HttpPost]
-        public IActionResult Add(Audit a)
+        public IActionResult Add(Credential c)
         {
-            _auditRepository.Add(a);
-            return CreatedAtAction("Get", new { id = a.Id }, a);
+            _credentialRepository.Add(c);
+            return CreatedAtAction("Get", new { id = c.Id }, c);
         }
 
         [HttpDelete("{Id}")]
         public IActionResult Delete(int id)
         {
-            _auditRepository.Delete(id);
+            _credentialRepository.Delete(id);
             return NoContent();
         }
 
         [HttpPut("{Id}")]
-        public IActionResult Put(int id, Audit a)
+        public IActionResult Put(int id, Credential c)
         {
-            if (id != a.Id)
+            if (id != c.Id)
             {
                 return BadRequest();
             }
-            _auditRepository.Update(a);
+            _credentialRepository.Update(c);
             return NoContent();
 
         }
