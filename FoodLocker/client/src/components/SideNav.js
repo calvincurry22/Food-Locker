@@ -159,7 +159,11 @@ export default () => {
                         </ListItemIcon>
                         <ListItemText primary="Audit Records" />
                     </ListItem>
-                    <ListItem className="menuItems" button>
+                    <ListItem
+                        className="menuItems"
+                        button
+                        onClick={() => history.push("/credentials")}
+                    >
                         <ListItemIcon>
                             <CardMembershipIcon />
                         </ListItemIcon>

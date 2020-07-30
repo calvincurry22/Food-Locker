@@ -23,18 +23,13 @@ import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../providers/UserProvider';
 import SideNav from '../SideNav';
-import { TaskContext } from '../../providers/TaskProvider';
 import { CredentialContext } from '../../providers/CredentialProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
-import "./Task.css";
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
-import TaskCreateModal from './TaskCreateModal';
-import Task from './Task';
-import CompletedTask from './CompletedTask';
-import TaskEditModal from './TaskEditModal';
+
+import Employee from './Employee';
 
 const drawerWidth = 270;
 //test comment
@@ -125,7 +120,8 @@ const useStyles = makeStyles((theme) => ({
 export default () => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks, deleteTask, updateTask, saveTask, deleteCompletedTask, completedTasks } = useContext(TaskContext)
+    const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
+    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
     const [taskModal, setTaskModal] = useState(false)
     const toggleTaskModal = () => setTaskModal(!taskModal)
     const [viewingNewTasks, setViewingNewTasks] = useState(true)
@@ -135,17 +131,11 @@ export default () => {
     const [editTaskModal, setEditTaskModal] = useState(false)
     const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
     const [taskObj, setTaskObj] = useState({})
+    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+
     useEffect(() => {
-        if (viewingNewTasks) {
-            getIncompleteTasksByUserId(currentUser.id)
-            setViewButton("View Completed Tasks");
-            setPageTitle("Current Tasks")
-        } else {
-            getCompletedTasksByUserId(currentUser.id)
-            setViewButton("View Current Tasks");
-            setPageTitle("Completed Tasks")
-        }
-    }, [viewingNewTasks])
+        getEmployeesByUserId(currentUser.id)
+    }, [])
 
     return (
         <>
@@ -153,39 +143,17 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <Button variant="contained" onClick={toggleView}>{viewButton}</Button>
-                    <h2>{pageTitle}</h2>
-                    <Tooltip title="Add Task">
-                        <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
-                            <AddIcon />
-                        </Fab>
-                    </Tooltip>
+                    <h2>Manage Credentials</h2>
+                    <Button variant="contained" onClick={toggleView}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {
-                                (viewingNewTasks)
-                                    ? (tasks.map(t => {
-                                        return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} toggleEditTaskModal={toggleEditTaskModal} setTaskObj={setTaskObj} />
-                                    }))
-                                    : completedTasks.map(t => {
-                                        return <CompletedTask key={t.id} task={t} currentUser={currentUser} deleteCompletedTask={deleteCompletedTask} />
-                                    })
+                                employees.map(e => {
+                                    return <Employee employee={e} />
+                                })
                             }
                         </Grid>
                     </Container>
-                    <TaskCreateModal
-                        currentUser={currentUser}
-                        toggleTaskModal={toggleTaskModal}
-                        taskModal={taskModal}
-                        saveTask={saveTask}
-                    />
-                    <TaskEditModal
-                        toggleEditTaskModal={toggleEditTaskModal}
-                        currentUser={currentUser}
-                        editTaskModal={editTaskModal}
-                        updateTask={updateTask}
-                        taskObj={taskObj}
-                    />
                 </main>
             </div>
         </>
