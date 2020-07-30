@@ -19,25 +19,29 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ task, deleteTask, currentUser }) => {
+export default ({ task, deleteCompletedTask, currentUser }) => {
     const date = new Date(task.expirationDate).toLocaleDateString()
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
     const removeTask = (id) => {
-        deleteTask(id, currentUser.id)
+        deleteCompletedTask(id)
     }
 
     return (
-        <Grid item xs={12} md={4} lg={3}>
-            <Paper className={fixedHeightPaper}>
-                <Typography className="taskListTyopgraphy">
-                    Task: {task.text} <br />
+        <>
+            {task &&
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <Typography className="taskListTyopgraphy">
+                            Task: {task.text} <br />
                     Assigned To: {task.employee.firstName + " " + task.employee.lastName} <br />
                     Expiration Date: {date}
-                </Typography>
-                <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
-            </Paper>
-        </Grid>
+                        </Typography>
+                        <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
+                    </Paper>
+                </Grid>
+            }
+        </>
     )
 }

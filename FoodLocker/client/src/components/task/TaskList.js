@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header';
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button } from '@material-ui/core';
+import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -123,27 +123,25 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles()
-    const [open, setOpen] = React.useState(true)
-    const { logout } = useContext(UserContext)
+
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks, deleteTask, updateTask, saveTask } = useContext(TaskContext)
-    const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
-    const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
+    const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks, deleteTask, updateTask, saveTask, deleteCompletedTask, completedTasks } = useContext(TaskContext)
     const [taskModal, setTaskModal] = useState(false)
     const toggleTaskModal = () => setTaskModal(!taskModal)
     const [viewingNewTasks, setViewingNewTasks] = useState(true)
+    const [viewButton, setViewButton] = useState("View Completed Tasks")
+    const [pageTitle, setPageTitle] = useState("Current Tasks")
     const toggleView = () => setViewingNewTasks(!viewingNewTasks)
-
-    const handleDrawerClose = () => {
-        setOpen(!open);
-    }
-
 
     useEffect(() => {
         if (viewingNewTasks) {
             getIncompleteTasksByUserId(currentUser.id)
+            setViewButton("View Completed Tasks");
+            setPageTitle("Current Tasks")
         } else {
             getCompletedTasksByUserId(currentUser.id)
+            setViewButton("View Current Tasks");
+            setPageTitle("Completed Tasks")
         }
     }, [viewingNewTasks])
 
@@ -153,20 +151,20 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <Button variant="contained" onClick={toggleView}>View Completed Tasks</Button>
+                    <Button variant="contained" onClick={toggleView}>{viewButton}</Button>
+                    <h2>{pageTitle}</h2>
                     <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
                         <AddIcon />
                     </Fab>
-                    {/* <div className={classes.appBarSpacer} /> */}
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {
                                 (viewingNewTasks)
-                                    ? tasks.map(t => {
+                                    ? (tasks.map(t => {
                                         return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} />
-                                    })
-                                    : tasks.map(t => {
-                                        return <CompletedTask key={t.id} task={t} deleteTask={deleteTask} currentUser={currentUser} />
+                                    }))
+                                    : completedTasks.map(t => {
+                                        return <CompletedTask key={t.id} task={t} currentUser={currentUser} deleteCompletedTask={deleteCompletedTask} />
                                     })
                             }
                         </Grid>

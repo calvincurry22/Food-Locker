@@ -13,7 +13,6 @@ export function UserProvider(props) {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((u) => {
-            setIsLoggedIn(!!u);
             setIsFirebaseReady(true);
         });
     }, []);
@@ -22,12 +21,14 @@ export function UserProvider(props) {
 
         return firebase.auth().signInWithEmailAndPassword(email, pw)
             .then((signInResponse) => getUserProfile(signInResponse.user.uid))
-            .then((user) => sessionStorage.setItem("user", JSON.stringify(user)));
+            .then((user) => sessionStorage.setItem("user", JSON.stringify(user)))
+            .then(() => setIsLoggedIn(true))
     };
 
     const logout = () => {
         return firebase.auth().signOut()
-            .then(() => sessionStorage.clear());
+            .then(() => sessionStorage.clear())
+            .then(() => setIsLoggedIn(false))
     };
 
     const register = (user, password) => {

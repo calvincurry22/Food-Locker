@@ -27,7 +27,7 @@ export default ({ task, updateTask, deleteTask, currentUser }) => {
     const [isChecked, setIsChecked] = useState(false)
 
     const removeTask = (id) => {
-        deleteTask(id, currentUser.id)
+        deleteTask(id)
     }
 
     const completeTask = (taskObj) => {
@@ -35,20 +35,24 @@ export default ({ task, updateTask, deleteTask, currentUser }) => {
         updateTask(taskObj)
     }
     return (
-        <Grid item xs={12} md={4} lg={3}>
-            <Paper className={fixedHeightPaper}>
-                <Typography className="taskListTyopgraphy">
-                    Task: {task.text} <br />
+        <>
+            {task &&
+                <Grid item xs={12} md={4} lg={3}>
+                    <Paper className={fixedHeightPaper}>
+                        <Typography className="taskListTyopgraphy">
+                            Task: {task.text} <br />
                     Assigned To: {task.employee.firstName + " " + task.employee.lastName} <br />
                     Expiration Date: {date}
-                </Typography>
-                <FormControlLabel
-                    control={<Checkbox name="checkedA" color="primary" onChange={() => completeTask(task)} />}
-                    label="Mark as completed"
-                />
-                <Button variant="contained">Edit</Button>
-                <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
-            </Paper>
-        </Grid>
+                        </Typography>
+                        <FormControlLabel
+                            control={<Checkbox name="checkedA" color="primary" onChange={() => completeTask(task)} />}
+                            label="Mark as completed"
+                        />
+                        <Button variant="contained">Edit</Button>
+                        <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
+                    </Paper>
+                </Grid>
+            }
+        </>
     )
 }

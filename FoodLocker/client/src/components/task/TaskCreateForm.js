@@ -44,11 +44,16 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
     const [taskText, setTaskText] = useState();
     const [expirationDate, setExpirationDate] = useState();
     const classes = useStyles()
-    const [selectedDate, setSelectedDate] = React.useState(new Date('2020-07-29T21:11:54'));
+    const [selectedDate, setSelectedDate] = React.useState(new Date('2020-07-15T21:11:54'));
     const [employeeId, setEmployeeId] = useState(0)
 
     const handleDateChange = (date) => {
-        setSelectedDate(date)
+        const dateMod = new Date(date)
+        const milliseconds = dateMod.getTime()
+        const timeOffset = dateMod.getTimezoneOffset() * 60000
+        const dateMinusOffset = (milliseconds - timeOffset)
+        const formattedDate = new Date(dateMinusOffset).toJSON()
+        setSelectedDate(formattedDate)
     }
 
     const handleNameChange = (event) => {
@@ -61,8 +66,8 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
             userId: currentUser.id,
             expirationDate: selectedDate,
             employeeId: employeeId
-        })
-            .then(() => toggleTaskModal())
+        });
+        toggleTaskModal()
     }
 
 
@@ -72,7 +77,10 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <form className={classes.form} onSubmit={createNewTask}>
+            <form className={classes.form} onSubmit={e => {
+                e.preventDefault()
+                createNewTask()
+            }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField

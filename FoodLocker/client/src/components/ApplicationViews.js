@@ -9,7 +9,6 @@ import TaskList from "./task/TaskList";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserContext);
-
     return (
         <main>
 
