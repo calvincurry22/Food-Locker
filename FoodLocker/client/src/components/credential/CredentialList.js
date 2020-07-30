@@ -29,7 +29,7 @@ import { EmployeeContext } from '../../providers/EmployeeProvider';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
-import Employee from '../Employee';
+import Employee from './Employee';
 
 const drawerWidth = 270;
 //test comment
@@ -143,9 +143,8 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <Button variant="contained" onClick={toggleView}>New Employee</Button>
                     <h2>Manage Credentials</h2>
-                    <Button variant="contained" onClick={toggleView}>New Credential</Button>
+                    <Button variant="contained" onClick={toggleView}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {

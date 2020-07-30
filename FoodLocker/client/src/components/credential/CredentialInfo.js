@@ -12,7 +12,7 @@ export default ({ credential }) => {
         <div>
             <p>{credential.name}</p>
             <p>Expires:{date}</p>
-            <p>Renewal Fee: {credential.renewalFee}</p>
+            <p>Renewal Fee: ${credential.renewalFee}</p>
             <IconButton>
                 <EditOutlinedIcon />
                 <DeleteForeverOutlinedIcon />

@@ -1,11 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox, Tooltip } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-import { EmployeeContext } from '../providers/EmployeeProvider';
-import { CredentialContext } from '../providers/CredentialProvider';
-import CredentialInfo from './credential/CredentialInfo';
+import CredentialInfo from './CredentialInfo';
+import { CredentialContext } from '../../providers/CredentialProvider';
+import { EmployeeContext } from '../../providers/EmployeeProvider';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -48,6 +50,11 @@ export default ({ employee }) => {
             {employee &&
                 <Grid item xs={12} md={12} lg={12}>
                     <Paper className={fixedHeightPaper}>
+                        <Tooltip title="Add Credential">
+                            <Fab aria-label="add" size="small">
+                                <AddIcon />
+                            </Fab>
+                        </Tooltip>
                         <Typography className="taskListTyopgraphy">
                             <h2>{employee.firstName} {employee.lastName}</h2>
                             <h3>{employee.title}</h3>
