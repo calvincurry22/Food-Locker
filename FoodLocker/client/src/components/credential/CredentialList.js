@@ -143,13 +143,9 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <Button variant="contained" onClick={toggleView}>{viewButton}</Button>
-                    <h2>{pageTitle}</h2>
-                    <Tooltip title="Add Task">
-                        <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
-                            <AddIcon />
-                        </Fab>
-                    </Tooltip>
+                    <Button variant="contained" onClick={toggleView}>New Employee</Button>
+                    <h2>Manage Credentials</h2>
+                    <Button variant="contained" onClick={toggleView}>New Credential</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {

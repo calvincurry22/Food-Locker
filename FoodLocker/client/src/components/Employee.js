@@ -5,6 +5,8 @@ import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox } from '@ma
 import { green } from '@material-ui/core/colors';
 import { EmployeeContext } from '../providers/EmployeeProvider';
 import { CredentialContext } from '../providers/CredentialProvider';
+import CredentialInfo from './credential/CredentialInfo';
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -44,7 +46,7 @@ export default ({ employee }) => {
     return (
         <>
             {employee &&
-                <Grid item xs={12} md={4} lg={4}>
+                <Grid item xs={12} md={12} lg={12}>
                     <Paper className={fixedHeightPaper}>
                         <Typography className="taskListTyopgraphy">
                             <h2>{employee.firstName} {employee.lastName}</h2>
@@ -56,18 +58,15 @@ export default ({ employee }) => {
                         <Typography>
                             {
                                 credentials.map(c => {
-                                    const date = new Date(c.expirationDate).toLocaleDateString()
-                                    return (
-                                        <>
-                                            <p>Title: {c.name}</p>
-                                            <p>Expires: {date}</p>
-                                        </>
-                                    )
+                                    return <CredentialInfo credential={c} />
                                 })
                             }
                         </Typography>
                         <Button variant="contained">
-                            Details
+                            Edit Employee
+                        </Button>
+                        <Button variant="contained">
+                            Delete Employee
                         </Button>
                     </Paper>
                 </Grid>

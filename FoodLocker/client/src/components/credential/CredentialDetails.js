@@ -36,12 +36,12 @@ export default ({ credential }) => {
     }
     return (
         <>
-            {/* {task &&
+            {task &&
                 <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
                         <Typography className="taskListTyopgraphy">
                             {credential.employee.firstName + " " + credential.employee.lastName} <br />
-                    <br />
+                            <br />
                     Expiration Date: {date}
                         </Typography>
                         <FormControlLabel
@@ -57,11 +57,8 @@ export default ({ credential }) => {
                         <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
                     </Paper>
                 </Grid>
-            } */}
-            <Typography>
-                <div>Title: {credential.name}</div>
-                <div>Expires: {date}</div>
-            </Typography>
+            }
+
         </>
     )
 }
