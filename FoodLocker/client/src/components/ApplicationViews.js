@@ -5,6 +5,7 @@ import Register from "./Register";
 import { UserContext } from "../providers/UserProvider";
 import Dashboard from "./dashboard/Dashboard";
 import TaskList from "./task/TaskList";
+import CredentialList from "./credential/CredentialList";
 
 
 export default function ApplicationViews() {
@@ -27,6 +28,10 @@ export default function ApplicationViews() {
 
                 <Route path="/tasks">
                     {isLoggedIn ? <TaskList /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/credentials">
+                    {isLoggedIn ? <CredentialList /> : <Redirect to="/login" />}
                 </Route>
             </Switch>
         </main>
