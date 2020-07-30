@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header';
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress } from '@material-ui/core';
+import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress, Tooltip } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -153,9 +153,11 @@ export default () => {
                 <main className={classes.content}>
                     <Button variant="contained" onClick={toggleView}>{viewButton}</Button>
                     <h2>{pageTitle}</h2>
-                    <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
-                        <AddIcon />
-                    </Fab>
+                    <Tooltip title="Add Task">
+                        <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
+                            <AddIcon />
+                        </Fab>
+                    </Tooltip>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {
