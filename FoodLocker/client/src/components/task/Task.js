@@ -1,8 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import "./Task.css";
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { Grid, Paper, Typography, Button } from '@material-ui/core';
+import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
@@ -24,11 +24,16 @@ export default ({ task, updateTask, deleteTask, currentUser }) => {
     const date = new Date(task.expirationDate).toLocaleDateString()
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+    const [isChecked, setIsChecked] = useState(false)
 
     const removeTask = (id) => {
         deleteTask(id, currentUser.id)
     }
 
+    const completeTask = (taskObj) => {
+        taskObj.isCompleted = true
+        updateTask(taskObj)
+    }
     return (
         <Grid item xs={12} md={4} lg={3}>
             <Paper className={fixedHeightPaper}>
@@ -37,7 +42,11 @@ export default ({ task, updateTask, deleteTask, currentUser }) => {
                     Assigned To: {task.employee.firstName + " " + task.employee.lastName} <br />
                     Expiration Date: {date}
                 </Typography>
-                <Button variant="contained">Completed</Button>
+                <FormControlLabel
+                    control={<Checkbox name="checkedA" color="primary" onChange={() => completeTask(task)} />}
+                    label="Mark as completed"
+                />
+                <Button variant="contained">Edit</Button>
                 <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
             </Paper>
         </Grid>
