@@ -33,6 +33,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import TaskCreateModal from './TaskCreateModal';
 import Task from './Task';
+import CompletedTask from './CompletedTask';
 
 const drawerWidth = 270;
 //test comment
@@ -130,6 +131,8 @@ export default () => {
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const [taskModal, setTaskModal] = useState(false)
     const toggleTaskModal = () => setTaskModal(!taskModal)
+    const [viewingNewTasks, setViewingNewTasks] = useState(true)
+    const toggleView = () => setViewingNewTasks(!viewingNewTasks)
 
     const handleDrawerClose = () => {
         setOpen(!open);
@@ -137,8 +140,12 @@ export default () => {
 
 
     useEffect(() => {
-        getIncompleteTasksByUserId(currentUser.id)
-    }, [])
+        if (viewingNewTasks) {
+            getIncompleteTasksByUserId(currentUser.id)
+        } else {
+            getCompletedTasksByUserId(currentUser.id)
+        }
+    }, [viewingNewTasks])
 
     return (
         <>
@@ -146,17 +153,21 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <Button variant="contained" href="/completedTasks">View Completed Tasks</Button>
+                    <Button variant="contained" onClick={toggleView}>View Completed Tasks</Button>
                     <Fab aria-label="add" size="medium" onClick={toggleTaskModal}>
                         <AddIcon />
                     </Fab>
                     {/* <div className={classes.appBarSpacer} /> */}
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
-                            {tasks &&
-                                tasks.map(t => {
-                                    return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} />
-                                })
+                            {
+                                (viewingNewTasks)
+                                    ? tasks.map(t => {
+                                        return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} />
+                                    })
+                                    : tasks.map(t => {
+                                        return <CompletedTask key={t.id} task={t} deleteTask={deleteTask} currentUser={currentUser} />
+                                    })
                             }
                         </Grid>
                     </Container>
