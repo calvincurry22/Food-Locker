@@ -69,6 +69,10 @@ namespace FoodLocker.Controllers
         [HttpPost]
         public IActionResult Add(Models.Task t)
         {
+            t.ExpirationDate.AddDays(-1);
+            t.CreationDate = DateTime.Now;
+            t.isCompleted = false;
+
             _taskRepository.Add(t);
             return CreatedAtAction("Get", new { id = t.Id }, t);
         }

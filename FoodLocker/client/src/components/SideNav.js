@@ -183,7 +183,7 @@ export default () => {
                     <ListItem
                         className="menuItems"
                         button
-                        onClick={() => history.push("/dashboard")}>
+                        onClick={() => history.push("/")}>
                         <ListItemIcon>
                             <DashboardOutlinedIcon />
                         </ListItemIcon>

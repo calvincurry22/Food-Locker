@@ -1,0 +1,4 @@
+.taskListTyopgraphy {
+    display: flex;
+    flex-direction: column;
+}

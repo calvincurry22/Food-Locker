@@ -4,12 +4,11 @@ import Login from "./Login";
 import Register from "./Register";
 import { UserContext } from "../providers/UserProvider";
 import Dashboard from "./dashboard/Dashboard";
-import SideNav from "./SideNav";
 import TaskList from "./task/TaskList";
+
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserContext);
-
     return (
         <main>
 
@@ -26,15 +25,9 @@ export default function ApplicationViews() {
                     <Register />
                 </Route>
 
-                <Route path="/dashboard">
-                    <Dashboard />
-                </Route>
-
                 <Route path="/tasks">
                     <TaskList />
                 </Route>
-
-
             </Switch>
         </main>
     );

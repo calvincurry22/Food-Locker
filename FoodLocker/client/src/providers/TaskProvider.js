@@ -8,7 +8,9 @@ export const TaskContext = createContext();
 export default (props) => {
     const apiUrl = "/api/task"
     const [tasks, setTasks] = useState([])
+    const [completedTasks, setCompletedTasks] = useState([])
     const { getToken } = useContext(UserContext)
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
 
     const getTasksByUserId = (id) => {
         getToken().then((token) =>
@@ -22,7 +24,6 @@ export default (props) => {
         )
     };
     const getCompletedTasksByUserId = (id) => {
-        debugger
         getToken().then((token) =>
             fetch(`${apiUrl}/completedTasksByUser/${id}`, {
                 method: "GET",
@@ -30,7 +31,7 @@ export default (props) => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(resp => resp.json())
-                .then(setTasks)
+                .then(setCompletedTasks)
         )
     };
     const getIncompleteTasksByUserId = (id) => {
@@ -65,7 +66,7 @@ export default (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(task)
-            }).then(() => getIncompleteTasksByUserId(task.userId))
+            }).then(() => getIncompleteTasksByUserId(currentUser.id))
         );
     };
 
@@ -78,18 +79,29 @@ export default (props) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(task),
-            }).then(() => getIncompleteTasksByUserId(task.userId))
+            }).then(() => getIncompleteTasksByUserId(currentUser.id))
         )
     }
 
-    const deleteTask = (taskId, userId) => {
+    const deleteTask = (taskId) => {
         getToken().then((token) =>
             fetch(`${apiUrl}/${taskId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then(() => getIncompleteTasksByUserId(userId))
+            }).then(() => getIncompleteTasksByUserId(currentUser.id))
+        )
+    }
+
+    const deleteCompletedTask = (taskId) => {
+        getToken().then((token) =>
+            fetch(`${apiUrl}/${taskId}`, {
+                method: "DELETE",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            }).then(() => getCompletedTasksByUserId(currentUser.id))
         )
     }
 
@@ -97,13 +109,15 @@ export default (props) => {
         <TaskContext.Provider
             value={{
                 tasks,
+                completedTasks,
                 getTasksByUserId,
                 getCompletedTasksByUserId,
                 getIncompleteTasksByUserId,
                 getTaskById,
                 saveTask,
                 updateTask,
-                deleteTask
+                deleteTask,
+                deleteCompletedTask
             }}
         >
             {props.children}
