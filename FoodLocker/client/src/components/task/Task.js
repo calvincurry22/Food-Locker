@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ task, updateTask, deleteTask, currentUser }) => {
+export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal, setTaskObj }) => {
     const date = new Date(task.expirationDate).toLocaleDateString()
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
@@ -48,7 +48,12 @@ export default ({ task, updateTask, deleteTask, currentUser }) => {
                             control={<Checkbox name="checkedA" color="primary" onChange={() => completeTask(task)} />}
                             label="Mark as completed"
                         />
-                        <Button variant="contained">Edit</Button>
+                        <Button variant="contained" onClick={() => {
+                            setTaskObj(task)
+                            toggleEditTaskModal()
+                        }}>
+                            Edit
+                        </Button>
                         <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
                     </Paper>
                 </Grid>

@@ -34,6 +34,7 @@ import AddIcon from '@material-ui/icons/Add';
 import TaskCreateModal from './TaskCreateModal';
 import Task from './Task';
 import CompletedTask from './CompletedTask';
+import TaskEditModal from './TaskEditModal';
 
 const drawerWidth = 270;
 //test comment
@@ -132,7 +133,9 @@ export default () => {
     const [viewButton, setViewButton] = useState("View Completed Tasks")
     const [pageTitle, setPageTitle] = useState("Current Tasks")
     const toggleView = () => setViewingNewTasks(!viewingNewTasks)
-
+    const [editTaskModal, setEditTaskModal] = useState(false)
+    const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
+    const [taskObj, setTaskObj] = useState({})
     useEffect(() => {
         if (viewingNewTasks) {
             getIncompleteTasksByUserId(currentUser.id)
@@ -163,7 +166,7 @@ export default () => {
                             {
                                 (viewingNewTasks)
                                     ? (tasks.map(t => {
-                                        return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} />
+                                        return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} toggleEditTaskModal={toggleEditTaskModal} setTaskObj={setTaskObj} />
                                     }))
                                     : completedTasks.map(t => {
                                         return <CompletedTask key={t.id} task={t} currentUser={currentUser} deleteCompletedTask={deleteCompletedTask} />
@@ -176,6 +179,13 @@ export default () => {
                         toggleTaskModal={toggleTaskModal}
                         taskModal={taskModal}
                         saveTask={saveTask}
+                    />
+                    <TaskEditModal
+                        toggleEditTaskModal={toggleEditTaskModal}
+                        currentUser={currentUser}
+                        editTaskModal={editTaskModal}
+                        updateTask={updateTask}
+                        taskObj={taskObj}
                     />
                 </main>
             </div>
