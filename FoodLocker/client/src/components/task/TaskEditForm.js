@@ -49,15 +49,14 @@ export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
     const [updatedTask, setTask] = useState(taskObj);
 
     const handleDateChange = (date) => {
-        // const dateMod = new Date(date)
-        // const milliseconds = dateMod.getTime()
-        // const timeOffset = dateMod.getTimezoneOffset() * 60000
-        // const dateMinusOffset = (milliseconds - timeOffset)
-        // const formattedDate = new Date(dateMinusOffset).toJSON()
-        // setSelectedDate(formattedDate);
-        setSelectedDate(date)
+        setSelectedDate(date);
+        const dateMod = new Date(date)
+        const milliseconds = dateMod.getTime()
+        const timeOffset = dateMod.getTimezoneOffset() * 60000
+        const dateMinusOffset = (milliseconds - timeOffset)
+        const formattedDate = new Date(dateMinusOffset).toJSON()
         const newTask = Object.assign({}, updatedTask);
-        newTask.expirationDate = selectedDate;
+        newTask.expirationDate = formattedDate;
         setTask(newTask);
     }
 
