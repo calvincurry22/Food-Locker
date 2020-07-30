@@ -22,11 +22,11 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/register">
-                    <Register />
+                    {isLoggedIn ? <Register /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/tasks">
-                    <TaskList />
+                    {isLoggedIn ? <TaskList /> : <Redirect to="/login" />}
                 </Route>
             </Switch>
         </main>
