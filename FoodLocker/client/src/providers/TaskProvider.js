@@ -9,6 +9,7 @@ export default (props) => {
     const apiUrl = "/api/task"
     const [tasks, setTasks] = useState([])
     const { getToken } = useContext(UserContext)
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
 
     const getTasksByUserId = (id) => {
         getToken().then((token) =>
@@ -65,7 +66,7 @@ export default (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(task)
-            }).then(() => getIncompleteTasksByUserId(task.userId))
+            }).then(() => getIncompleteTasksByUserId(currentUser.id))
         );
     };
 
@@ -78,18 +79,18 @@ export default (props) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(task),
-            }).then(() => getIncompleteTasksByUserId(task.userId))
+            }).then(() => getIncompleteTasksByUserId(currentUser.id))
         )
     }
 
-    const deleteTask = (taskId, userId) => {
+    const deleteTask = (taskId) => {
         getToken().then((token) =>
             fetch(`${apiUrl}/${taskId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then(() => getIncompleteTasksByUserId(userId))
+            }).then(() => getIncompleteTasksByUserId(currentUser.id))
         )
     }
 

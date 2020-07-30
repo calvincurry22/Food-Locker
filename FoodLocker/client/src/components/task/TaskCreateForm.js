@@ -56,7 +56,6 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
     }
 
     const createNewTask = () => {
-        console.log(selectedDate)
         saveTask({
             text: taskText,
             userId: currentUser.id,

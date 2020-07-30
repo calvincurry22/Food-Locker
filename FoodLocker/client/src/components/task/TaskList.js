@@ -155,7 +155,7 @@ export default () => {
                         <Grid container spacing={4}>
                             {tasks &&
                                 tasks.map(t => {
-                                    return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} />
+                                    return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} />
                                 })
                             }
                         </Grid>
