@@ -9,6 +9,7 @@ export default (props) => {
     const apiUrl = "/api/employee"
     const [employees, setEmployees] = useState([])
     const { getToken } = useContext(UserContext)
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
 
     const getEmployeesByUserId = (id) => {
         getToken().then((token) =>
@@ -42,7 +43,7 @@ export default (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(employee)
-            }).then(() => getEmployeesByUserId(employee.userId))
+            }).then(() => getEmployeesByUserId(currentUser.id))
         );
     };
 
@@ -55,18 +56,18 @@ export default (props) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(employee),
-            }).then(() => getEmployeesByUserId(employee.userId))
+            }).then(() => getEmployeesByUserId(currentUser.id))
         )
     }
 
-    const deleteEmployee = (employeeId, userId) => {
+    const deleteEmployee = (employeeId) => {
         getToken().then((token) =>
             fetch(`${apiUrl}/${employeeId}`, {
                 method: "DELETE",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then(() => getEmployeesByUserId(userId))
+            }).then(() => getEmployeesByUserId(currentUser.id))
         )
     }
 

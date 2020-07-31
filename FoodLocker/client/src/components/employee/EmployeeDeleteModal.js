@@ -4,9 +4,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
-import { IconButton } from '@material-ui/core';
-import EmployeeCreateForm from '../employee/EmployeeCreateForm';
-import CredentialCreateForm from './CredentialCreateForm';
+import { IconButton, Typography, Button } from '@material-ui/core';
+import EmployeeCreateForm from './EmployeeCreateForm';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ saveCredential, toggleCredentialModal, credentialModal, currentUser, employeeObj }) => {
+export default ({ deleteEmployee, toggleDeleteEmployeeModal, deleteEmployeelModal, employeeToDelete }) => {
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
 
@@ -32,19 +31,28 @@ export default ({ saveCredential, toggleCredentialModal, credentialModal, curren
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={credentialModal}
+                open={deleteEmployeelModal}
             >
                 <div className={classes.paper}>
-                    <IconButton onClick={toggleCredentialModal}>
-                        <CloseOutlinedIcon />
-                    </IconButton>
-                    <h2 id="transition-modal-title">New Credential</h2>
-                    <CredentialCreateForm
-                        toggleCredentialModal={toggleCredentialModal}
-                        currentUser={currentUser}
-                        saveCredential={saveCredential}
-                        employeeObj={employeeObj}
-                    />
+                    <Typography>
+                        Are you sure you want to delete {employeeToDelete.fullName} ?
+                    </Typography>
+                    <Button
+                        variant="outlined"
+                        onClick={toggleDeleteEmployeeModal}
+                    >
+                        Cancel
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={e => {
+                            e.preventDefault()
+                            deleteEmployee(employeeToDelete.id)
+                            toggleDeleteEmployeeModal()
+                        }}
+                    >
+                        Delete
+                    </Button>
                 </div>
             </Modal>
         </div>
