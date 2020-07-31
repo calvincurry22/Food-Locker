@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal }) => {
+export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal, setEmployeeToDelete }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
@@ -43,8 +43,12 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
     // }
 
     useEffect(() => {
-        getCredentialsByEmployeeId(employee.id)
-            .then(setCredentials)
+        if (employee) {
+            getCredentialsByEmployeeId(employee.id)
+                .then(setCredentials)
+        } else {
+            return null
+        }
     })
 
     return (
@@ -89,7 +93,14 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
                         >
                             Edit Employee
                         </Button>
-                        <Button variant="contained">
+                        <Button
+                            variant="contained"
+                            onClick={e => {
+                                e.preventDefault()
+                                setEmployeeToDelete(employee)
+                                toggleDeleteEmployeeModal()
+                            }}
+                        >
                             Delete Employee
                         </Button>
                     </Paper>

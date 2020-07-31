@@ -33,6 +33,7 @@ import Employee from '../employee/Employee';
 import EmployeeCreateModal from '../employee/EmployeeCreateModal';
 import CredentialCreateModal from './CredentialCreateModal';
 import CredentialEditModal from './CredentialEditModal';
+import EmployeeDeleteModal from '../employee/EmployeeDeleteModal';
 
 const drawerWidth = 270;
 //test comment
@@ -140,6 +141,7 @@ export default () => {
     const [employeeEditModal, setEmployeeEditModal] = useState(false)
     const toggleEmployeeEditModal = () => setEmployeeEditModal(!employeeEditModal)
     const [employeeObj, setEmployeeObj] = useState({})
+    const [employeeToDelete, setEmployeeToDelete] = useState({})
 
     useEffect(() => {
         getEmployeesByUserId(currentUser.id)
@@ -160,9 +162,11 @@ export default () => {
                                     return <Employee
                                         key={e.id}
                                         employee={e}
+                                        setEmployeeToDelete={setEmployeeToDelete}
                                         setEmployeeObj={setEmployeeObj}
                                         setCredentialObj={setCredentialObj}
                                         deleteCredential={deleteCredential}
+                                        deleteEmployee={deleteEmployee}
                                         toggleCredentialModal={toggleCredentialModal}
                                         toggleEditCredentialModal={toggleEditCredentialModal}
                                         toggleEmployeeEditModal={toggleEmployeeEditModal}
@@ -197,6 +201,12 @@ export default () => {
                         updateEmployee={updateEmployee}
                         employeeEditModal={employeeEditModal}
                         employeeObj={employeeObj}
+                    />
+                    <EmployeeDeleteModal
+                        deleteEmployeelModal={deleteEmployeelModal}
+                        toggleDeleteEmployeeModal={toggleDeleteEmployeeModal}
+                        deleteEmployee={deleteEmployee}
+                        employeeToDelete={employeeToDelete}
                     />
                 </main>
             </div>
