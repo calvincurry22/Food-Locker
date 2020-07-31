@@ -44,69 +44,69 @@ export default ({ toggleEditCredentialModal, updateCredential, credentialObj }) 
     const [taskText, setTaskText] = useState();
     const [expirationDate, setExpirationDate] = useState();
     const classes = useStyles()
-    // const [selectedDate, setSelectedDate] = React.useState(new Date(taskObj.expirationDate));
+    const [selectedDate, setSelectedDate] = React.useState(new Date(credentialObj.expirationDate));
     const [employeeId, setEmployeeId] = useState(0)
-    // const [updatedTask, setTask] = useState(taskObj);
+    const [updatedCredential, setCredential] = useState(credentialObj);
 
-    // const handleDateChange = (date) => {
-    //     setSelectedDate(date);
-    //     const dateMod = new Date(date)
-    //     const milliseconds = dateMod.getTime()
-    //     const timeOffset = dateMod.getTimezoneOffset() * 60000
-    //     const dateMinusOffset = (milliseconds - timeOffset)
-    //     const formattedDate = new Date(dateMinusOffset).toJSON()
-    //     const newTask = Object.assign({}, updatedTask);
-    //     newTask.expirationDate = formattedDate;
-    //     setTask(newTask);
-    // }
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+        const dateMod = new Date(date)
+        const milliseconds = dateMod.getTime()
+        const timeOffset = dateMod.getTimezoneOffset() * 60000
+        const dateMinusOffset = (milliseconds - timeOffset)
+        const formattedDate = new Date(dateMinusOffset).toJSON()
+        const newCredential = Object.assign({}, updatedCredential);
+        newCredential.expirationDate = formattedDate;
+        setCredential(newCredential);
+    }
 
-    // const handleNameChange = (event) => {
-    //     setEmployeeId(event.target.value)
-    // }
+    const editCredential = () => {
+        updateCredential({
+            id: updatedCredential.id,
+            employeeId: updatedCredential.employeeId,
+            name: updatedCredential.name,
+            expirationDate: updatedCredential.expirationDate,
+            renewalFee: updatedCredential.renewalFee
+        });
+        toggleEditCredentialModal()
+    }
 
-    // const editTask = () => {
-    //     updateTask({
-    //         id: updatedTask.id,
-    //         text: updatedTask.text,
-    //         userId: currentUser.id,
-    //         creationDate: updatedTask.creationDate,
-    //         expirationDate: updatedTask.expirationDate,
-    //         isCompleted: updatedTask.isCompleted,
-    //         employeeId: updatedTask.employeeId
-    //     });
-    //     toggleEditTaskModal()
-    // }
-
-    // const handleControlledInputChange = (event) => {
-    //     const newTask = Object.assign({}, updatedTask);
-    //     newTask[event.target.name] = event.target.value;
-    //     setTask(newTask);
-    // };
-
-    // useEffect(() => {
-    //     getEmployeesByUserId(currentUser.id)
-    // }, [])
+    const handleControlledInputChange = (event) => {
+        const newCredential = Object.assign({}, updatedCredential);
+        newCredential[event.target.name] = event.target.value;
+        setCredential(newCredential);
+    };
 
     return (
         <Container component="main" maxWidth="xs">
-            {/* <form className={classes.form} onSubmit={e => {
+            <form className={classes.form} onSubmit={e => {
                 e.preventDefault()
-                editTask()
+                editCredential()
             }}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             onChange={handleControlledInputChange}
-                            autoComplete="fname"
-                            name="text"
+                            autoComplete="cname"
+                            name="name"
                             variant="outlined"
                             required
-                            defaultValue={taskObj.text}
+                            defaultValue={credentialObj.name}
                             fullWidth
-                            id="taskText"
-                            multiline
-                            rows={5}
-                            defaultValue={taskObj.text}
+                            id="credentialName"
+                            autoFocus
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            onChange={handleControlledInputChange}
+                            autoComplete="fee"
+                            name="renewalFee"
+                            variant="outlined"
+                            required
+                            defaultValue={credentialObj.renewalFee}
+                            fullWidth
+                            id="renewalFee"
                             autoFocus
                         />
                     </Grid>
@@ -128,34 +128,10 @@ export default ({ toggleEditCredentialModal, updateCredential, credentialObj }) 
                                 />
                             </Grid>
                         </MuiPickersUtilsProvider>
-                        <Grid item xs={12} sm={12}>
-                            <FormControl className={classes.formControl}>
-                                
-                                <Select
-                                    native="true"
-                                    variant="outlined"
-                                    defaultValue={taskObj.employeeId}
-                                    onChange={handleControlledInputChange}
-                                    inputProps={{
-                                        name: 'employeeId',
-                                        id: 'employee',
-                                    }}
-                                >
-                                    <option value={taskObj.employeeId}>{taskObj.employee.firstName} {taskObj.employee.lastName}</option>
-                                    {
-                                        employees.map(e => {
-                                            return (e.id === taskObj.employeeId)
-                                                ? null
-                                                : <option key={e.id} value={e.id}>{e.firstName} {e.lastName}</option>
-                                        })
-                                    }
-                                </Select>
-                            </FormControl>
-                        </Grid>
                         <Button type="submit" variant="contained">Save</Button>
                     </Grid>
                 </Grid>
-            </form> */}
+            </form>
         </Container >
     )
 }

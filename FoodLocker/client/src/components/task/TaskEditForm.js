@@ -106,7 +106,6 @@ export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
                             id="taskText"
                             multiline
                             rows={5}
-                            defaultValue={taskObj.text}
                             autoFocus
                         />
                     </Grid>
