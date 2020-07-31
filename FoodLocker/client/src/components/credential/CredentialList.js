@@ -127,10 +127,10 @@ export default () => {
     const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
     const [credentialModal, setCredentialModal] = useState(false)
     const toggleCredentialModal = () => setCredentialModal(!credentialModal)
-    const [viewingNewTasks, setViewingNewTasks] = useState(true)
     const [viewButton, setViewButton] = useState("View Completed Tasks")
     const [credentialObj, setCredentialObj] = useState({})
-    const toggleView = () => setViewingNewTasks(!viewingNewTasks)
+    const [deleteEmployeelModal, setDeleteEmployeeModal] = useState(false)
+    const toggleDeleteEmployeeModal = () => setDeleteEmployeeModal(!deleteEmployeelModal)
     const [editCredentialModal, setEditCredentialModal] = useState(false)
     const toggleEditCredentialModal = () => setEditCredentialModal(!editCredentialModal)
     const [taskObj, setTaskObj] = useState({})
@@ -160,8 +160,10 @@ export default () => {
                                         employee={e}
                                         setEmployeeObj={setEmployeeObj}
                                         setCredentialObj={setCredentialObj}
+                                        deleteCredential={deleteCredential}
                                         toggleCredentialModal={toggleCredentialModal}
                                         toggleEditCredentialModal={toggleEditCredentialModal}
+                                        getCredentialsByEmployeeId={getCredentialsByEmployeeId}
                                     />
                                 })
                             }
