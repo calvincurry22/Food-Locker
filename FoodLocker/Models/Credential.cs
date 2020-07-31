@@ -18,8 +18,6 @@ namespace FoodLocker.Models
         [Required]
         public DateTime ExpirationDate { get; set; }
 
-        public DateTime IssueDate { get; set; }
-
         public decimal RenewalFee { get; set; }
 
         public Employee Employee { get; set; }

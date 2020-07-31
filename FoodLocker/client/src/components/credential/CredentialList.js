@@ -30,6 +30,8 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import Employee from './Employee';
+import EmployeeCreateModal from './EmployeeCreateModal';
+import CredentialCreateModal from './CredentialCreateModal';
 
 const drawerWidth = 270;
 //test comment
@@ -122,8 +124,8 @@ export default () => {
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
     const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
-    const [taskModal, setTaskModal] = useState(false)
-    const toggleTaskModal = () => setTaskModal(!taskModal)
+    const [credentialModal, setCredentialModal] = useState(false)
+    const toggleCredentialModal = () => setCredentialModal(!credentialModal)
     const [viewingNewTasks, setViewingNewTasks] = useState(true)
     const [viewButton, setViewButton] = useState("View Completed Tasks")
     const [pageTitle, setPageTitle] = useState("Current Tasks")
@@ -132,6 +134,9 @@ export default () => {
     const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
     const [taskObj, setTaskObj] = useState({})
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+    const [employeeModal, setEmployeeModal] = useState(false)
+    const toggleEmployeeModal = () => setEmployeeModal(!employeeModal)
+    const [employeeObj, setEmployeeObj] = useState({})
 
     useEffect(() => {
         getEmployeesByUserId(currentUser.id)
@@ -144,16 +149,29 @@ export default () => {
                 <SideNav />
                 <main className={classes.content}>
                     <h2>Manage Credentials</h2>
-                    <Button variant="contained" onClick={toggleView}>New Employee</Button>
+                    <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {
                                 employees.map(e => {
-                                    return <Employee employee={e} />
+                                    return <Employee key={e.id} employee={e} setEmployeeObj={setEmployeeObj} toggleCredentialModal={toggleCredentialModal} />
                                 })
                             }
                         </Grid>
                     </Container>
+                    <EmployeeCreateModal
+                        toggleEmployeeModal={toggleEmployeeModal}
+                        saveEmployee={saveEmployee}
+                        employeeModal={employeeModal}
+                        currentUser={currentUser}
+                    />
+                    <CredentialCreateModal
+                        toggleCredentialModal={toggleCredentialModal}
+                        credentialModal={credentialModal}
+                        saveCredential={saveCredential}
+                        employeeObj={employeeObj}
+                        currentUser={currentUser}
+                    />
                 </main>
             </div>
         </>

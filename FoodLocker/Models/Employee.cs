@@ -17,9 +17,6 @@ namespace FoodLocker.Models
         [Required]
         [MaxLength(20)]
         public string LastName { get; set; }
-
-        [Required]
-        public DateTime HireDate { get; set; }
         
         public int UserId { get; set; }
 
@@ -27,5 +24,12 @@ namespace FoodLocker.Models
         [MaxLength(30)]
         public string Title { get; set; }
 
+        public string FullName {
+            get
+            {
+                return $"{FirstName} {LastName}";
+            }
+        }
+                
     }
 }
