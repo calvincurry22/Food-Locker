@@ -32,6 +32,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Employee from './Employee';
 import EmployeeCreateModal from './EmployeeCreateModal';
 import CredentialCreateModal from './CredentialCreateModal';
+import CredentialEditModal from './CredentialEditModal';
 
 const drawerWidth = 270;
 //test comment
@@ -128,10 +129,10 @@ export default () => {
     const toggleCredentialModal = () => setCredentialModal(!credentialModal)
     const [viewingNewTasks, setViewingNewTasks] = useState(true)
     const [viewButton, setViewButton] = useState("View Completed Tasks")
-    const [pageTitle, setPageTitle] = useState("Current Tasks")
+    const [credentialObj, setCredentialObj] = useState({})
     const toggleView = () => setViewingNewTasks(!viewingNewTasks)
-    const [editTaskModal, setEditTaskModal] = useState(false)
-    const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
+    const [editCredentialModal, setEditCredentialModal] = useState(false)
+    const toggleEditCredentialModal = () => setEditCredentialModal(!editCredentialModal)
     const [taskObj, setTaskObj] = useState({})
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [employeeModal, setEmployeeModal] = useState(false)
@@ -154,7 +155,14 @@ export default () => {
                         <Grid container spacing={4}>
                             {
                                 employees.map(e => {
-                                    return <Employee key={e.id} employee={e} setEmployeeObj={setEmployeeObj} toggleCredentialModal={toggleCredentialModal} />
+                                    return <Employee
+                                        key={e.id}
+                                        employee={e}
+                                        setEmployeeObj={setEmployeeObj}
+                                        setCredentialObj={setCredentialObj}
+                                        toggleCredentialModal={toggleCredentialModal}
+                                        toggleEditCredentialModal={toggleEditCredentialModal}
+                                    />
                                 })
                             }
                         </Grid>
@@ -171,6 +179,12 @@ export default () => {
                         saveCredential={saveCredential}
                         employeeObj={employeeObj}
                         currentUser={currentUser}
+                    />
+                    <CredentialEditModal
+                        toggleEditCredentialModal={toggleEditCredentialModal}
+                        editCredentialModal={editCredentialModal}
+                        updateCredential={updateCredential}
+                        credentialObj={credentialObj}
                     />
                 </main>
             </div>

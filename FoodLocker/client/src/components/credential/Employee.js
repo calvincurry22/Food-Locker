@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee, setEmployeeObj, toggleCredentialModal }) => {
+export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
@@ -69,7 +69,12 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal }) => {
                         <h4>Credentials</h4>
                         {
                             credentials.map(c => {
-                                return <CredentialInfo key={c.id} credential={c} />
+                                return <CredentialInfo
+                                    key={c.id}
+                                    credential={c}
+                                    setCredentialObj={setCredentialObj}
+                                    toggleEditCredentialModal={toggleEditCredentialModal}
+                                />
                             })
                         }
                         <Button variant="contained">

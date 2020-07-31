@@ -4,7 +4,7 @@ import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined'
 import { IconButton } from '@material-ui/core';
 
 
-export default ({ credential }) => {
+export default ({ credential, setCredentialObj, toggleEditCredentialModal }) => {
 
     const date = new Date(credential.expirationDate).toLocaleDateString()
 
@@ -13,8 +13,15 @@ export default ({ credential }) => {
             <p>{credential.name}</p>
             <p>Expires:{date}</p>
             <p>Renewal Fee: ${credential.renewalFee}</p>
-            <IconButton>
+            <IconButton
+                onClick={() => {
+                    setCredentialObj(credential)
+                    toggleEditCredentialModal()
+                }}
+            >
                 <EditOutlinedIcon />
+            </IconButton>
+            <IconButton>
                 <DeleteForeverOutlinedIcon />
             </IconButton>
         </div>
