@@ -30,6 +30,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import Employee from './Employee';
+import EmployeeCreateModal from './EmployeeCreateModal';
 
 const drawerWidth = 270;
 //test comment
@@ -132,6 +133,8 @@ export default () => {
     const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
     const [taskObj, setTaskObj] = useState({})
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
+    const [employeeModal, setEmployeeModal] = useState(false)
+    const toggleEmployeeModal = () => setEmployeeModal(!employeeModal)
 
     useEffect(() => {
         getEmployeesByUserId(currentUser.id)
@@ -144,16 +147,22 @@ export default () => {
                 <SideNav />
                 <main className={classes.content}>
                     <h2>Manage Credentials</h2>
-                    <Button variant="contained" onClick={toggleView}>New Employee</Button>
+                    <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {
                                 employees.map(e => {
-                                    return <Employee employee={e} />
+                                    return <Employee key={e.id} employee={e} />
                                 })
                             }
                         </Grid>
                     </Container>
+                    <EmployeeCreateModal
+                        toggleEmployeeModal={toggleEmployeeModal}
+                        saveEmployee={saveEmployee}
+                        employeeModal={employeeModal}
+                        currentUser={currentUser}
+                    />
                 </main>
             </div>
         </>

@@ -7,7 +7,6 @@ export const CredentialContext = createContext();
 
 export default (props) => {
     const apiUrl = "/api/credential"
-    const [credentials, setCredentials] = useState([])
     const { getToken } = useContext(UserContext)
 
     const getCredentialsByEmployeeId = (id) => {
@@ -18,7 +17,6 @@ export default (props) => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(resp => resp.json())
-                .then(setCredentials)
         )
     };
 
@@ -73,7 +71,6 @@ export default (props) => {
     return (
         <CredentialContext.Provider
             value={{
-                credentials,
                 getCredentialsByEmployeeId,
                 getCredentialById,
                 saveCredential,

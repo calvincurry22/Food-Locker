@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
     },
     fixedHeight: {
-        height: 400,
+        height: 300,
     },
     buttonColor: {
         backgroundColor: '#32CD32'
@@ -29,8 +29,9 @@ export default ({ employee }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
+    const [credentials, setCredentials] = useState([])
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
-    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential, credentials } = useContext(CredentialContext)
+    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
 
     // const removeTask = (id) => {
     //     deleteTask(id)
@@ -43,6 +44,7 @@ export default ({ employee }) => {
 
     useEffect(() => {
         getCredentialsByEmployeeId(employee.id)
+            .then(setCredentials)
     })
 
     return (
@@ -55,20 +57,16 @@ export default ({ employee }) => {
                                 <AddIcon />
                             </Fab>
                         </Tooltip>
-                        <Typography className="taskListTyopgraphy">
-                            <h2>{employee.firstName} {employee.lastName}</h2>
-                            <h3>{employee.title}</h3>
-                        </Typography>
-                        <Typography>
-                            <h4>Credentials</h4>
-                        </Typography>
-                        <Typography>
-                            {
-                                credentials.map(c => {
-                                    return <CredentialInfo credential={c} />
-                                })
-                            }
-                        </Typography>
+                        {/* <Typography className="taskListTyopgraphy"> */}
+                        <h2>{employee.firstName} {employee.lastName}</h2>
+                        <h3>{employee.title}</h3>
+                        {/* </Typography> */}
+                        <h4>Credentials</h4>
+                        {
+                            credentials.map(c => {
+                                return <CredentialInfo key={c.id} credential={c} />
+                            })
+                        }
                         <Button variant="contained">
                             Edit Employee
                         </Button>
