@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee }) => {
+export default ({ employee, setEmployeeObj, toggleCredentialModal }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
@@ -53,7 +53,12 @@ export default ({ employee }) => {
                 <Grid item xs={12} md={12} lg={12}>
                     <Paper className={fixedHeightPaper}>
                         <Tooltip title="Add Credential">
-                            <Fab aria-label="add" size="small">
+                            <Fab
+                                onClick={() => {
+                                    setEmployeeObj(employee)
+                                    toggleCredentialModal()
+                                }}
+                                aria-label="add" size="small">
                                 <AddIcon />
                             </Fab>
                         </Tooltip>
