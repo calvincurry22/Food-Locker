@@ -25,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee, setEmployeeObj, toggleCredentialModal }) => {
+export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
     const [credentials, setCredentials] = useState([])
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
-    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
+    // const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
 
     // const removeTask = (id) => {
     //     deleteTask(id)
@@ -69,7 +69,14 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal }) => {
                         <h4>Credentials</h4>
                         {
                             credentials.map(c => {
-                                return <CredentialInfo key={c.id} credential={c} />
+                                return <CredentialInfo
+                                    key={c.id}
+                                    credential={c}
+                                    employee={employee}
+                                    deleteCredential={deleteCredential}
+                                    setCredentialObj={setCredentialObj}
+                                    toggleEditCredentialModal={toggleEditCredentialModal}
+                                />
                             })
                         }
                         <Button variant="contained">
