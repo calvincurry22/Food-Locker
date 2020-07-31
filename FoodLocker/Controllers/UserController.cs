@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodLocker.Data;
 using FoodLocker.Models;
@@ -39,6 +40,12 @@ namespace FoodLocker.Controllers
             _userRepository.Add(user);
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = user.FirebaseUserId }, user);
+        }
+
+        private User GetCurrentUser()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

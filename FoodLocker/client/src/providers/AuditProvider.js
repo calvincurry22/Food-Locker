@@ -7,6 +7,7 @@ export const AuditContext = createContext();
 
 export default (props) => {
     const apiUrl = "/api/audit"
+    const [audit, setAudit] = useState({})
     const [audits, setAudits] = useState([])
     const { getToken } = useContext(UserContext)
 
@@ -30,6 +31,7 @@ export default (props) => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(resp => resp.json())
+                .then(setAudit)
         )
     };
 
@@ -73,6 +75,7 @@ export default (props) => {
     return (
         <AuditContext.Provider
             value={{
+                audit,
                 audits,
                 getAuditsByUserId,
                 getAuditById,
