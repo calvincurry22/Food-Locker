@@ -153,7 +153,11 @@ export default () => {
                         <ListItemText primary={currentUser.firstName + " " + currentUser.lastName} />
                         <ListItemText primary={currentUser.businessName} />
                     </ListItem>
-                    <ListItem className="menuItems" button>
+                    <ListItem
+                        className="menuItems"
+                        button
+                        onClick={() => history.push("/audits")}
+                    >
                         <ListItemIcon>
                             <TimelineIcon />
                         </ListItemIcon>
