@@ -5,8 +5,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { IconButton } from '@material-ui/core';
-import EmployeeCreateForm from '../employee/EmployeeCreateForm';
-import CredentialCreateForm from './CredentialCreateForm';
+import EmployeeEditForm from './EmployeeEditForm';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -22,9 +21,8 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ saveCredential, toggleCredentialModal, credentialModal, currentUser, employeeObj }) => {
+export default ({ toggleEmployeeEditModal, employeeEditModal, updateEmployee, employeeObj }) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
 
     return (
         <div>
@@ -32,17 +30,16 @@ export default ({ saveCredential, toggleCredentialModal, credentialModal, curren
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 className={classes.modal}
-                open={credentialModal}
+                open={employeeEditModal}
             >
                 <div className={classes.paper}>
-                    <IconButton onClick={toggleCredentialModal}>
+                    <IconButton onClick={toggleEmployeeEditModal}>
                         <CloseOutlinedIcon />
                     </IconButton>
-                    <h2 id="transition-modal-title">New Credential</h2>
-                    <CredentialCreateForm
-                        toggleCredentialModal={toggleCredentialModal}
-                        currentUser={currentUser}
-                        saveCredential={saveCredential}
+                    <h2 id="transition-modal-title">Edit Employee</h2>
+                    <EmployeeEditForm
+                        toggleEmployeeEditModal={toggleEmployeeEditModal}
+                        updateEmployee={updateEmployee}
                         employeeObj={employeeObj}
                     />
                 </div>

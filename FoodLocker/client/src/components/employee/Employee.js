@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox, Tooltip } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
-import CredentialInfo from './CredentialInfo';
+import CredentialInfo from '../credential/CredentialInfo';
 import { CredentialContext } from '../../providers/CredentialProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
 import Fab from '@material-ui/core/Fab';
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId }) => {
+export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
@@ -79,7 +79,14 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
                                 />
                             })
                         }
-                        <Button variant="contained">
+                        <Button
+                            variant="contained"
+                            onClick={e => {
+                                e.preventDefault()
+                                setEmployeeObj(employee)
+                                toggleEmployeeEditModal()
+                            }}
+                        >
                             Edit Employee
                         </Button>
                         <Button variant="contained">
