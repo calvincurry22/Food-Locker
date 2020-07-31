@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { AuditContext } from '../../providers/AuditProvider';
-import { Grid, Paper, Typography, Button, makeStyles } from '@material-ui/core';
+import { Grid, Paper, Typography, Button, makeStyles, IconButton } from '@material-ui/core';
 import clsx from 'clsx';
 import { AuditViolationContext } from '../../providers/AuditViolationProvider';
+import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
+import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -54,6 +56,12 @@ export default () => {
                     <Typography>
                         Auditor Name: {audit.auditorName}
                     </Typography>
+                    <IconButton>
+                        <EditOutlinedIcon />
+                    </IconButton>
+                    <IconButton>
+                        <DeleteForeverOutlinedIcon />
+                    </IconButton>
                     <h2>Violations</h2>
                     {
                         auditViolations.map(a => {
@@ -64,6 +72,12 @@ export default () => {
                                     <Typography>Category: {a.violationCategory.name}</Typography>
                                     <Typography>Issue: {a.description}</Typography>
                                     <Typography>Critical issue ? : {a.isCritical ? "Yes" : "No"}</Typography><br />
+                                    <IconButton>
+                                        <EditOutlinedIcon />
+                                    </IconButton>
+                                    <IconButton>
+                                        <DeleteForeverOutlinedIcon />
+                                    </IconButton>
                                 </div>
                             )
                         })
