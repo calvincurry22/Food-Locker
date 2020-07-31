@@ -11,6 +11,6 @@ namespace FoodLocker.Models
         public int Id { get; set; }
 
         [MaxLength(50)]
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 }

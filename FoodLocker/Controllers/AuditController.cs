@@ -26,15 +26,23 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("getByUser/{id}")]
-        public IActionResult GetAllAuditsByUserId()
+        public IActionResult GetAllAuditsByUserId(int id)
         {
             var user = GetCurrentUser();
-            List<Audit> auditList = _auditRepository.GetAllAuditsByUserId(user.Id);
-            if (auditList == null)
+            if(id == user.Id)
             {
-                return NotFound();
+                List<Audit> auditList = _auditRepository.GetAllAuditsByUserId(user.Id);
+                if (auditList == null)
+                {
+                    return NotFound();
+                }
+                return Ok(auditList);
+            } 
+            else
+            {
+                return Unauthorized();
             }
-            return Ok(auditList);
+            
         }
 
 
