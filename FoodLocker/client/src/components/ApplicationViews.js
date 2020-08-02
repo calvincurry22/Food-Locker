@@ -8,6 +8,7 @@ import TaskList from "./task/TaskList";
 import CredentialList from "./credential/CredentialList";
 import AuditList from "./audit/AuditList";
 import AuditDetails from "./audit/AuditDetails";
+import AuditCreateForm from "./audit/AuditCreateForm";
 
 
 export default function ApplicationViews() {
@@ -42,6 +43,10 @@ export default function ApplicationViews() {
 
                 <Route path="/audit/:id">
                     {isLoggedIn ? <AuditDetails /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/createAudit">
+                    {isLoggedIn ? <AuditCreateForm /> : <Redirect to="/login" />}
                 </Route>
             </Switch>
         </main>

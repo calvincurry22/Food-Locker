@@ -157,7 +157,7 @@ export default () => {
                     <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
-                            {employees &&
+                            {
                                 employees.map(e => {
                                     return <Employee
                                         key={e.id}

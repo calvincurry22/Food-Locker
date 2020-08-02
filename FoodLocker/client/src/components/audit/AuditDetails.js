@@ -56,12 +56,6 @@ export default () => {
                     <Typography>
                         Auditor Name: {audit.auditorName}
                     </Typography>
-                    <IconButton>
-                        <EditOutlinedIcon />
-                    </IconButton>
-                    <IconButton>
-                        <DeleteForeverOutlinedIcon />
-                    </IconButton>
                     <h2>Violations</h2>
                     {
                         auditViolations.map(a => {
@@ -72,12 +66,6 @@ export default () => {
                                     <Typography>Category: {a.violationCategory.name}</Typography>
                                     <Typography>Issue: {a.description}</Typography>
                                     <Typography>Critical issue ? : {a.isCritical ? "Yes" : "No"}</Typography><br />
-                                    <IconButton>
-                                        <EditOutlinedIcon />
-                                    </IconButton>
-                                    <IconButton>
-                                        <DeleteForeverOutlinedIcon />
-                                    </IconButton>
                                 </div>
                             )
                         })
