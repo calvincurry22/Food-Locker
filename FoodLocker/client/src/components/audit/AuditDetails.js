@@ -62,7 +62,7 @@ export default () => {
 
                             return (
                                 <div key={a.id}>
-                                    <Typography>Issue # {i += 1}</Typography>
+                                    <Typography>Violation # {i += 1}</Typography>
                                     <Typography>Category: {a.violationCategory.name}</Typography>
                                     <Typography>Issue: {a.description}</Typography>
                                     <Typography>Critical issue ? : {a.isCritical ? "Yes" : "No"}</Typography><br />

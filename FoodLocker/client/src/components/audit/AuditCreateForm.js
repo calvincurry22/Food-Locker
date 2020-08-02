@@ -17,6 +17,8 @@ import { useHistory } from 'react-router-dom';
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 import SideNav from '../SideNav';
 import { Container } from '@material-ui/core';
+import { AuditContext } from '../../providers/AuditProvider';
+import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 
 function Copyright() {
     return (
@@ -83,13 +85,20 @@ const useStyles = makeStyles((theme) => ({
 export default () => {
     const classes = useStyles();
     const history = useHistory()
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
+    const { saveAudit } = useContext(AuditContext)
+    const { saveViolation } = useContext(AuditViolationContext)
+
+    const blankViolation = { auditId: '', isCritical: '', violationCategoryId: '', description: '' };
+    const [violations, setViolations] = useState([
+        { ...blankViolation }
+    ]);
 
     const steps = ['Audit Info', 'Violations', 'Review Audit Record'];
 
-    const [value, setValue] = useState('');
+    const [value, setValue] = useState('pass');
     const [audit, setAudit] = useState({
         auditorName: '',
         auditDate: '',
@@ -104,11 +113,26 @@ export default () => {
     const getStepContent = (step) => {
         switch (step) {
             case 0:
-                return <AuditForm audit={audit} setAudit={setAudit} value={value} setValue={setValue} />;
+                return <AuditForm
+                    audit={audit}
+                    setAudit={setAudit}
+                    value={value}
+                    setValue={setValue}
+                />;
             case 1:
-                return <AuditViolationsForm audit={audit} violationCategories={violationCategories} />;
+                return <AuditViolationsForm
+                    audit={audit}
+                    violationCategories={violationCategories}
+                    blankViolation={blankViolation}
+                    violations={violations}
+                    setViolations={setViolations} />;
             case 2:
-                return <Review audit={audit} />;
+                return <Review
+                    audit={audit}
+                    violationCategories={violationCategories}
+                    blankViolation={blankViolation}
+                    violations={violations}
+                />;
             default:
                 throw new Error('Unknown step');
         }
@@ -122,6 +146,20 @@ export default () => {
         setActiveStep(activeStep - 1);
     };
 
+    const createNewRecord = (auditObj, violationArray) => {
+        saveAudit(auditObj)
+            .then(r => {
+                violationArray.map(v => {
+                    if (v.isCritical === 'no') {
+                        v.isCritical = false
+                    } else {
+                        v.isCritical = true
+                    }
+                    v.auditId = r.id;
+                    saveViolation(v)
+                })
+            })
+    }
 
     return (
         <>
@@ -150,7 +188,7 @@ export default () => {
                                         <Typography variant="subtitle1">
                                             Return to view new audit record.
                                 </Typography>
-                                        <Button onclick={() => history.push("/audits")}>Return</Button>
+                                        <Button onClick={() => history.push("/audits")}>Return</Button>
                                     </>
                                 ) : (
                                         <>
@@ -166,7 +204,12 @@ export default () => {
                                                     variant="contained"
                                                     color="primary"
                                                     onClick={() => {
-                                                        handleNext()
+                                                        if (activeStep === steps.length - 1) {
+                                                            createNewRecord(audit, violations)
+                                                            handleNext()
+                                                        } else {
+                                                            handleNext()
+                                                        }
                                                     }}
                                                     className={classes.button}
                                                 >

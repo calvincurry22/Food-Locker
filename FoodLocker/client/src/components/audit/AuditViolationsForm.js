@@ -3,15 +3,10 @@ import { Grid, FormControlLabel, FormControl, RadioGroup, Radio, FormLabel, Text
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 
 
-export default ({ audit, violationCategories }) => {
-
+export default ({ audit, violationCategories, blankViolation, violations, setViolations }) => {
 
     const [radioValue, setRadioValue] = useState('')
-    const blankViolation = { auditId: '', isCritical: '', violationCategoryId: '', description: '' };
     const description = useRef()
-    const [violations, setViolations] = useState([
-        { ...blankViolation }
-    ]);
 
     const addViolation = () => {
         setViolations([...violations, { ...blankViolation }]);
@@ -21,7 +16,11 @@ export default ({ audit, violationCategories }) => {
         console.log()
         console.log(e.target.value)
         const updatedViolations = [...violations];
-        updatedViolations[e.target.id][e.target.name] = e.target.value;
+        if (e.target.name === 'violationCategoryId') {
+            updatedViolations[e.target.id][e.target.name] = parseInt(e.target.value);
+        } else {
+            updatedViolations[e.target.id][e.target.name] = e.target.value;
+        }
         setViolations(updatedViolations);
         console.log(violations)
     };

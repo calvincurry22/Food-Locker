@@ -29,7 +29,7 @@ export default ({ value, setValue, audit, setAudit }) => {
         <>
 
             <Typography variant="h6" gutterBottom>
-                General Info
+                Details
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={12}>
@@ -37,7 +37,7 @@ export default ({ value, setValue, audit, setAudit }) => {
                         required
                         id="auditorName"
                         name="auditorName"
-                        label="Auitor name"
+                        label="Auditor name"
                         fullWidth
                         autoComplete="given-name"
                         defaultValue={audit.auditorName}
