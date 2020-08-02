@@ -27,6 +27,7 @@ export default ({ value, setValue, audit, setAudit }) => {
 
     return (
         <>
+
             <Typography variant="h6" gutterBottom>
                 General Info
             </Typography>

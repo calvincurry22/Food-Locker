@@ -15,16 +15,13 @@ import AuditForm from './AuditForm';
 import AuditViolationsForm from './AuditViolationsForm';
 import { useHistory } from 'react-router-dom';
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
+import SideNav from '../SideNav';
+import { Container } from '@material-ui/core';
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
-                Your Website
-      </Link>{' '}
-            {new Date().getFullYear()}
-            {'.'}
+            {'Copyright © '} FoodLocker {new Date().getFullYear()} {'.'}
         </Typography>
     );
 }
@@ -32,6 +29,21 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'relative',
+    },
+    root: {
+        display: 'flex',
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    content: {
+        flexGrow: 1,
+        height: '100vh',
+        overflow: 'auto',
+    },
+    container: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
     },
     layout: {
         width: 'auto',
@@ -113,56 +125,63 @@ export default () => {
 
     return (
         <>
-            <CssBaseline />
-            <main className={classes.layout}>
-                <Paper className={classes.paper}>
-                    <Typography component="h1" variant="h4" align="center">
-                        New Audit Record
+            <div className={classes.root}>
+                <CssBaseline />
+                <SideNav />
+                <main className={classes.layout}>
+                    <Container maxWidth="lg" className={classes.container}>
+                        <Paper className={classes.paper}>
+                            <Typography component="h1" variant="h4" align="center">
+                                New Audit Record
                     </Typography>
-                    <Stepper activeStep={activeStep} className={classes.stepper}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    <>
-                        {activeStep === steps.length ? (
+                            <Stepper activeStep={activeStep} className={classes.stepper}>
+                                {steps.map((label) => (
+                                    <Step key={label}>
+                                        <StepLabel>{label}</StepLabel>
+                                    </Step>
+                                ))}
+                            </Stepper>
                             <>
-                                <Typography variant="h5" gutterBottom>
-                                    Submission Successful.
+                                {activeStep === steps.length ? (
+                                    <>
+                                        <Typography variant="h5" gutterBottom>
+                                            Submission Successful.
                                 </Typography>
-                                <Typography variant="subtitle1">
-                                    Return to view new audit record.
+                                        <Typography variant="subtitle1">
+                                            Return to view new audit record.
                                 </Typography>
-                                <Button onclick={() => history.push("/audits")}>Return</Button>
+                                        <Button onclick={() => history.push("/audits")}>Return</Button>
+                                    </>
+                                ) : (
+                                        <>
+
+                                            {getStepContent(activeStep)}
+                                            <div className={classes.buttons}>
+                                                {activeStep !== 0 && (
+                                                    <Button onClick={handleBack} className={classes.button}>
+                                                        Back
+                                                    </Button>
+                                                )}
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    onClick={() => {
+                                                        handleNext()
+                                                    }}
+                                                    className={classes.button}
+                                                >
+                                                    {activeStep === steps.length - 1 ? 'Submit Record' : 'Next'}
+                                                </Button>
+                                            </div>
+
+                                        </>
+                                    )}
                             </>
-                        ) : (
-                                <>
-                                    {getStepContent(activeStep)}
-                                    <div className={classes.buttons}>
-                                        {activeStep !== 0 && (
-                                            <Button onClick={handleBack} className={classes.button}>
-                                                Back
-                                            </Button>
-                                        )}
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={() => {
-                                                handleNext()
-                                            }}
-                                            className={classes.button}
-                                        >
-                                            {activeStep === steps.length - 1 ? 'Submit Record' : 'Next'}
-                                        </Button>
-                                    </div>
-                                </>
-                            )}
-                    </>
-                </Paper>
-                <Copyright />
-            </main>
+                        </Paper>
+                        <Copyright />
+                    </Container>
+                </main>
+            </div>
         </>
     );
 }

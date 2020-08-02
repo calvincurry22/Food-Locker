@@ -1,12 +1,14 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Grid, FormControlLabel, FormControl, RadioGroup, Radio, FormLabel, TextField, Select } from '@material-ui/core';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { Grid, FormControlLabel, FormControl, RadioGroup, Radio, FormLabel, TextField, Select, Typography, Button } from '@material-ui/core';
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 
 
 export default ({ audit, violationCategories }) => {
 
 
-    const blankViolation = { auditId: audit.id, isCritical: '', violationCategoryId: '', description: '' };
+    const [radioValue, setRadioValue] = useState('')
+    const blankViolation = { auditId: '', isCritical: '', violationCategoryId: '', description: '' };
+    const description = useRef()
     const [violations, setViolations] = useState([
         { ...blankViolation }
     ]);
@@ -15,73 +17,66 @@ export default ({ audit, violationCategories }) => {
         setViolations([...violations, { ...blankViolation }]);
     };
 
+    const handleViolationChange = (e) => {
+        console.log()
+        console.log(e.target.value)
+        const updatedViolations = [...violations];
+        updatedViolations[e.target.id][e.target.name] = e.target.value;
+        setViolations(updatedViolations);
+        console.log(violations)
+    };
 
     return (
         <form>
-            <label htmlFor="owner">Owner</label>
-            <input type="text" name="owner" id="owner" />
-            <label htmlFor="description">Description</label>
-            <input type="text" name="description" id="description" />
-            <input
-                type="button"
-                value="Add New Cat"
-                onClick={addViolation}
-            />
+            <h2>Violations</h2>
+            <Button variant="outlined" onClick={addViolation}>Add new issue</Button>
             {
                 violations.map((val, idx) => {
                     console.log(idx)
-                    console.log(val)
+
                     const isCriticalId = `isCritical-${idx}`;
                     const violationCategoryId = `violationCategoryId-${idx}`;
                     const descriptionId = `descriptionId-${idx}`;
                     return (
-                        // < div key={`cat-${idx}`
-                        // }>
-                        //     <label htmlFor={catId}>{`Cat #${idx + 1}`}</label>
-                        //     <input
-                        //         type="text"
-                        //         name={catId}
-                        //         data-idx={idx}
-                        //         id={catId}
-                        //         className="name"
-                        //     />
-                        //     <label htmlFor={ageId}>Age</label>
-                        //     <input
-                        //         type="text"
-                        //         name={ageId}
-                        //         data-idx={idx}
-                        //         id={ageId}
-                        //         className="age"
-                        //     />
-                        // </div>
+
                         <Grid key={idx} container spacing={3}>
-                            <Grid item xs={12} sm={12}>
-                                <TextField
-                                    required
-                                    id={descriptionId}
-                                    name={descriptionId}
-                                    label="Description"
-                                    data-idx={idx}
-                                    fullWidth
-                                    multiline
-                                    rows={8}
-                                    autoComplete="description"
-                                    defaultValue={val.description}
-                                // onChange={handleControlledInputChange}
-                                />
+                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                                {/* <Typography variant='h6'>Issue #{idx + 1}</Typography> */}
+                                <FormControl fullWidth>
+                                    <TextField
+                                        required
+                                        // id={descriptionId}
+                                        // name={descriptionId}
+                                        label="description"
+                                        fullWidth
+                                        multiline
+                                        ref={description}
+                                        variant="outlined"
+                                        rows={2}
+                                        value={violations[idx].description}
+                                        autoComplete="description"
+                                        // defaultValue={violations[idx].description}
+                                        onChange={handleViolationChange}
+                                        inputProps={{
+                                            name: "description",
+                                            id: idx
+                                        }}
+                                    />
+                                </FormControl>
                             </Grid>
-                            <Grid item xs={12} sm={12}>
+                            <Grid item xs={12} sm={6}>
                                 <FormControl>
                                     <FormLabel component="legend">Select Category</FormLabel>
                                     <Select
                                         native
                                         variant="outlined"
+                                        className="violationCategoryId"
                                         data-idx={idx}
                                         value={val.violationCategoryId}
-                                        // onChange={handleNameChange}
+                                        onChange={handleViolationChange}
                                         inputProps={{
-                                            name: violationCategoryId,
-                                            id: violationCategoryId,
+                                            name: "violationCategoryId",
+                                            id: idx,
                                         }}
                                     >
                                         <option aria-label="None" value="" />
@@ -96,9 +91,9 @@ export default ({ audit, violationCategories }) => {
                             <Grid item xs={6} sm={6}>
                                 <FormControl component="fieldset">
                                     <FormLabel component="legend">Critical Violation?</FormLabel>
-                                    <RadioGroup aria-label="passed" data-idx={idx} name={isCriticalId} value={val.isCritical} /*onChange={handleChange}*/>
-                                        <FormControlLabel value='no' control={<Radio />} label="No" />
-                                        <FormControlLabel value='yes' control={<Radio />} label="Yes" />
+                                    <RadioGroup aria-label="passed" className="isCritical" data-idx={idx} name={isCriticalId} value={val.isCritical} onChange={handleViolationChange}>
+                                        <FormControlLabel value='no' control={<Radio inputProps={{ name: "isCritical", id: idx }} />} label="No" />
+                                        <FormControlLabel value='yes' control={<Radio inputProps={{ name: "isCritical", id: idx }} />} label="Yes" />
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>
@@ -108,55 +103,4 @@ export default ({ audit, violationCategories }) => {
             }
         </form >
     )
-
 }
-// import React from 'react';
-// import Typography from '@material-ui/core/Typography';
-// import Grid from '@material-ui/core/Grid';
-// import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-
-// export default ({ audit }) => {
-//     console.log(audit)
-//     return (
-//         <React.Fragment>
-//             <Typography variant="h6" gutterBottom>
-//                 Payment method
-//       </Typography>
-//             <Grid container spacing={3}>
-//                 <Grid item xs={12} md={6}>
-//                     <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name" />
-//                 </Grid>
-//                 <Grid item xs={12} md={6}>
-//                     <TextField
-//                         required
-//                         id="cardNumber"
-//                         label="Card number"
-//                         fullWidth
-//                         autoComplete="cc-number"
-//                     />
-//                 </Grid>
-//                 <Grid item xs={12} md={6}>
-//                     <TextField required id="expDate" label="Expiry date" fullWidth autoComplete="cc-exp" />
-//                 </Grid>
-//                 <Grid item xs={12} md={6}>
-//                     <TextField
-//                         required
-//                         id="cvv"
-//                         label="CVV"
-//                         helperText="Last three digits on signature strip"
-//                         fullWidth
-//                         autoComplete="cc-csc"
-//                     />
-//                 </Grid>
-//                 <Grid item xs={12}>
-//                     <FormControlLabel
-//                         control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-//                         label="Remember credit card details for next time"
-//                     />
-//                 </Grid>
-//             </Grid>
-//         </React.Fragment>
-//     );
-// }
