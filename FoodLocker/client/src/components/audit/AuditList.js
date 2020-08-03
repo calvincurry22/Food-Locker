@@ -22,7 +22,7 @@ import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedI
 import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import SideNav from '../SideNav';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
@@ -117,6 +117,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles()
+    const history = useHistory()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
 
@@ -133,7 +134,7 @@ export default () => {
                 <SideNav />
                 <main className={classes.content}>
                     <h2>Audit Records</h2>
-                    <Tooltip title="Add Audit">
+                    <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>
                         <Fab aria-label="add" size="medium">
                             <AddIcon />
                         </Fab>

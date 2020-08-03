@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using FoodLocker.Data;
 using FoodLocker.Models;
@@ -18,31 +17,20 @@ namespace FoodLocker.Controllers
     public class AuditController : ControllerBase
     {
         private readonly AuditRepository _auditRepository;
-        private readonly UserRepository _userRepository;
         public AuditController(ApplicationDbContext context)
         {
             _auditRepository = new AuditRepository(context);
-            _userRepository = new UserRepository(context);
         }
 
         [HttpGet("getByUser/{id}")]
         public IActionResult GetAllAuditsByUserId(int id)
         {
-            var user = GetCurrentUser();
-            if(id == user.Id)
+            List<Audit> auditList = _auditRepository.GetAllAuditsByUserId(id);
+            if (auditList == null)
             {
-                List<Audit> auditList = _auditRepository.GetAllAuditsByUserId(user.Id);
-                if (auditList == null)
-                {
-                    return NotFound();
-                }
-                return Ok(auditList);
-            } 
-            else
-            {
-                return Unauthorized();
+                return NotFound();
             }
-            
+            return Ok(auditList);
         }
 
 
@@ -61,7 +49,8 @@ namespace FoodLocker.Controllers
         public IActionResult Add(Audit a)
         {
             _auditRepository.Add(a);
-            return CreatedAtAction("Get", new { id = a.Id }, a);
+            return CreatedAtAction(
+                nameof(GetById), new { id = a.Id }, a);
         }
 
         [HttpDelete("{Id}")]
@@ -81,12 +70,6 @@ namespace FoodLocker.Controllers
             _auditRepository.Update(a);
             return NoContent();
 
-        }
-
-        private User GetCurrentUser()
-        {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }

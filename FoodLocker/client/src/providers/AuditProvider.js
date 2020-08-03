@@ -36,7 +36,7 @@ export default (props) => {
     };
 
     const saveAudit = (audit) => {
-        getToken().then((token) =>
+        return getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -44,8 +44,9 @@ export default (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(audit)
-            }).then(() => getAuditsByUserId(audit.userId))
-        );
+            })/*.then(() => getAuditsByUserId(audit.userId))*/
+
+                .then(r => r.json()))
     };
 
     const updateAudit = (audit) => {
