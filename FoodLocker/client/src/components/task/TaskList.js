@@ -135,7 +135,9 @@ export default () => {
     const [editTaskModal, setEditTaskModal] = useState(false)
     const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
     const [taskObj, setTaskObj] = useState({})
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
     useEffect(() => {
+        getUserProfile(currentUser.firebaseUserId)
         if (viewingNewTasks) {
             getIncompleteTasksByUserId(currentUser.id)
             setViewButton("View Completed Tasks");
@@ -151,7 +153,7 @@ export default () => {
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav />
+                <SideNav user={user} />
                 <main className={classes.content}>
                     <Button variant="contained" onClick={toggleView}>{viewButton}</Button>
                     <h2>{pageTitle}</h2>

@@ -23,6 +23,13 @@ namespace FoodLocker.Controllers
             _userRepository = new UserRepository(context);
         }
 
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            var users = _userRepository.GetAll();
+            return Ok(users);
+        }
+
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
@@ -40,6 +47,18 @@ namespace FoodLocker.Controllers
             _userRepository.Add(user);
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = user.FirebaseUserId }, user);
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, User user)
+        {
+            if (id != user.Id)
+            {
+                return BadRequest();
+            }
+            _userRepository.Update(user);
+            return NoContent();
+
         }
 
         private User GetCurrentUser()

@@ -28,6 +28,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 import { AuditContext } from '../../providers/AuditProvider';
 import Audit from './Audit';
+import { UserContext } from '../../providers/UserProvider';
 
 const drawerWidth = 270;
 //test comment
@@ -120,18 +121,17 @@ export default () => {
     const history = useHistory()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
-
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
     useEffect(() => {
         getAuditsByUserId(currentUser.id);
-
-
+        getUserProfile(currentUser.firebaseUserId)
     })
 
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav />
+                <SideNav user={user} />
                 <main className={classes.content}>
                     <h2>Audit Records</h2>
                     <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>

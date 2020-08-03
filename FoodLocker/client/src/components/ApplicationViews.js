@@ -10,19 +10,32 @@ import AuditList from "./audit/AuditList";
 import AuditDetails from "./audit/AuditDetails";
 import AuditCreateForm from "./audit/AuditCreateForm";
 import ChartTest from "./ChartTest";
+import AccountEditForm from "./account/AccountEditForm";
+import FoodSafetyResources from "./FoodSafetyResources";
 
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserContext);
     const [barChartView, setBarChartView] = useState(true)
     const toggleChartView = () => setBarChartView(!barChartView)
+    const [accountEditModal, setAccountEditModal] = useState(false)
+    const toggleAccountEditModal = () => setAccountEditModal(!accountEditModal)
 
     return (
         <main>
 
             <Switch>
                 <Route path="/" exact>
-                    {isLoggedIn ? <Dashboard barChartView={barChartView} setBarChartView={setBarChartView} toggleChartView={toggleChartView} /> : <Redirect to="/login" />}
+                    {isLoggedIn ?
+                        <Dashboard
+                            barChartView={barChartView}
+                            setBarChartView={setBarChartView}
+                            toggleChartView={toggleChartView}
+                            accountEditModal={accountEditModal}
+                            toggleAccountEditModal={toggleAccountEditModal}
+                        />
+                        : <Redirect to="/login" />
+                    }
                 </Route>
 
                 <Route path="/login">
@@ -53,8 +66,12 @@ export default function ApplicationViews() {
                     {isLoggedIn ? <AuditCreateForm /> : <Redirect to="/login" />}
                 </Route>
 
-                <Route path="/chart">
-                    {isLoggedIn ? <ChartTest /> : <Redirect to="/login" />}
+                <Route path="/accountSettings">
+                    {isLoggedIn ? <AccountEditForm /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/resources">
+                    {isLoggedIn ? <FoodSafetyResources /> : <Redirect to="/login" />}
                 </Route>
             </Switch>
         </main>

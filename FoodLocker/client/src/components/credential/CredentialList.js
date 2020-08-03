@@ -34,6 +34,7 @@ import EmployeeCreateModal from '../employee/EmployeeCreateModal';
 import CredentialCreateModal from './CredentialCreateModal';
 import CredentialEditModal from './CredentialEditModal';
 import EmployeeDeleteModal from '../employee/EmployeeDeleteModal';
+import { UserContext } from '../../providers/UserProvider';
 
 const drawerWidth = 270;
 //test comment
@@ -142,18 +143,20 @@ export default () => {
     const toggleEmployeeEditModal = () => setEmployeeEditModal(!employeeEditModal)
     const [employeeObj, setEmployeeObj] = useState({})
     const [employeeToDelete, setEmployeeToDelete] = useState({})
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
 
     useEffect(() => {
         getEmployeesByUserId(currentUser.id)
+        getUserProfile(currentUser.firebaseUserId)
     }, [])
 
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav />
+                <SideNav user={user} />
                 <main className={classes.content}>
-                    <h2>Manage Credentials</h2>
+                    <h2>Manage Employee Credentials</h2>
                     <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>

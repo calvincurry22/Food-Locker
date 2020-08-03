@@ -32,6 +32,7 @@ import { EmployeeContext } from '../../providers/EmployeeProvider';
 import ChartTest from '../ChartTest';
 import { AuditContext } from '../../providers/AuditProvider';
 import TaskProgress from '../task/TaskProgress';
+import AccountEditModal from '../account/AccountEditModal';
 
 const drawerWidth = 270;
 //test comment
@@ -126,14 +127,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ barChartView, setBarChartView, toggleChartView }) => {
+export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal }) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
-    const { logout } = useContext(UserContext)
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
     const { getIncompleteTasksByUserId, getTasksByUserId, tasks } = useContext(TaskContext)
     const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
+
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
 
     const handleDrawerClose = () => {
@@ -144,17 +146,18 @@ export default ({ barChartView, setBarChartView, toggleChartView }) => {
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
     useEffect(() => {
-        getTasksByUserId(currentUser.id)
-        getEmployeesByUserId(currentUser.id)
-        getAuditsByUserId(currentUser.id)
-
+        getUserProfile(currentUser.firebaseUserId)
+        getTasksByUserId(currentUser.id);
+        getEmployeesByUserId(currentUser.id);
+        getAuditsByUserId(currentUser.id);
+        getAllUserProfiles()
     }, [])
 
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav />
+                <SideNav user={user} toggleAccountEditModal={toggleAccountEditModal} />
                 <main className={classes.content}>
                     {/* <div className={classes.appBarSpacer} /> */}
                     <Container maxWidth="lg" className={classes.container}>
@@ -259,6 +262,12 @@ export default ({ barChartView, setBarChartView, toggleChartView }) => {
                         </Grid>
                     </Container>
                 </main>
+                <AccountEditModal
+                    user={user}
+                    updateUser={updateUser}
+                    accountEditModal={accountEditModal}
+                    toggleAccountEditModal={toggleAccountEditModal}
+                    users={users} />
             </div>
         </>
     )

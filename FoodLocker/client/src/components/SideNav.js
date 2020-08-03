@@ -113,11 +113,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-export default () => {
+export default ({ toggleAccountEditModal, user }) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
-    const { logout } = useContext(UserContext)
+    const { logout, getUserProfile } = useContext(UserContext)
+
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const history = useHistory()
 
@@ -150,8 +150,8 @@ export default () => {
                         <ListItemAvatar>
                             <Avatar className={classes.large} src="https://www.ekahiornish.com/wp-content/uploads/2018/07/default-avatar-profile-icon-vector-18942381.jpg" />
                         </ListItemAvatar>
-                        <ListItemText primary={currentUser.firstName + " " + currentUser.lastName} />
-                        <ListItemText primary={currentUser.businessName} />
+                        <ListItemText primary={user.firstName + " " + user.lastName} />
+                        <ListItemText primary={user.businessName} />
                     </ListItem>
                     <ListItem
                         className="menuItems"
@@ -182,7 +182,7 @@ export default () => {
                         </ListItemIcon>
                         <ListItemText primary="Manage Tasks" />
                     </ListItem >
-                    <ListItem className="menuItems" button>
+                    <ListItem className="menuItems" button onClick={() => history.push("/resources")}>
                         <ListItemIcon>
                             <LibraryBooksOutlinedIcon />
                         </ListItemIcon>
@@ -196,6 +196,12 @@ export default () => {
                             <DashboardOutlinedIcon />
                         </ListItemIcon>
                         <ListItemText primary="Dashboard" />
+                    </ListItem>
+                    <ListItem className="menuItems" button>
+                        <ListItemIcon>
+                            <ExitToAppOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Account Settings" onClick={toggleAccountEditModal} />
                     </ListItem>
                     <ListItem className="menuItems" button>
                         <ListItemIcon>

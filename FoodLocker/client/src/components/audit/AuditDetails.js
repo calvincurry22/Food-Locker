@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
+import AuditDetailsCharts from './AuditDetailsCharts';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -75,6 +76,7 @@ export default () => {
                             )
                         })
                     }
+                    <AuditDetailsCharts violations={auditViolations} />
                 </>
             }
         </Grid>
