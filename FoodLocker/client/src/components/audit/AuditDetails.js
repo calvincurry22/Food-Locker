@@ -37,6 +37,9 @@ export default () => {
             getViolationsByAuditId(parsedId)
         }
     }, [])
+
+    const criticalData = []
+    const nonCriticalData = []
     return (
 
         <Grid item xs={12} md={12} lg={9}>
@@ -59,7 +62,9 @@ export default () => {
                     <h2>Violations</h2>
                     {
                         auditViolations.map(a => {
-
+                            (a.isCritical === true)
+                                ? criticalData.push(a)
+                                : nonCriticalData.push(a)
                             return (
                                 <div key={a.id}>
                                     <Typography>Violation # {i += 1}</Typography>
