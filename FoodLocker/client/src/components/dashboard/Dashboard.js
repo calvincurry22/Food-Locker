@@ -31,6 +31,7 @@ import { CredentialContext } from '../../providers/CredentialProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
 import ChartTest from '../ChartTest';
 import { AuditContext } from '../../providers/AuditProvider';
+import TaskProgress from '../task/TaskProgress';
 
 const drawerWidth = 270;
 //test comment
@@ -117,10 +118,10 @@ const useStyles = makeStyles((theme) => ({
         height: 310,
     },
     chartHeight: {
-        height: 420,
+        height: 430,
     },
     resourcesHeight: {
-        height: 200,
+        height: 190,
     }
 }));
 
@@ -129,7 +130,7 @@ export default ({ barChartView, setBarChartView, toggleChartView }) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
     const { logout } = useContext(UserContext)
-    const { getIncompleteTasksByUserId, tasks } = useContext(TaskContext)
+    const { getIncompleteTasksByUserId, getTasksByUserId, tasks } = useContext(TaskContext)
     const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
@@ -143,9 +144,10 @@ export default ({ barChartView, setBarChartView, toggleChartView }) => {
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
     useEffect(() => {
-        getIncompleteTasksByUserId(currentUser.id)
+        getTasksByUserId(currentUser.id)
         getEmployeesByUserId(currentUser.id)
         getAuditsByUserId(currentUser.id)
+
     }, [])
 
     return (
@@ -181,8 +183,9 @@ export default ({ barChartView, setBarChartView, toggleChartView }) => {
                             <Grid item xs={12} md={4} lg={4}>
                                 <Paper className={fixedHeightPaper}>
                                     <Typography>
-                                        Tasks
+                                        Tasks Completed
                                     </Typography>
+                                    <TaskProgress tasks={tasks} />
                                     {/* <CircularProgress variant="static" value={90} /> */}
                                     {/* <img className="b" src="https://thumbs.dreamstime.com/b/business-to-do-list-flat-icon-modern-style-task-list-business-to-do-list-flat-icon-modern-style-any-purposes-perfect-web-138650221.jpg" /> */}
                                     {/* {tasks &&
