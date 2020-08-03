@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -14,12 +14,15 @@ import ChartTest from "./ChartTest";
 
 export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserContext);
+    const [barChartView, setBarChartView] = useState(true)
+    const toggleChartView = () => setBarChartView(!barChartView)
+
     return (
         <main>
 
             <Switch>
                 <Route path="/" exact>
-                    {isLoggedIn ? <Dashboard /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <Dashboard barChartView={barChartView} setBarChartView={setBarChartView} toggleChartView={toggleChartView} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/login">

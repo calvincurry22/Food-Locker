@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-export default ({ audits }) => {
+export default ({ audits, barChartView }) => {
     // const currentUser = JSON.parse(sessionStorage.getItem("user"))
     // const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
     // const [getViolationsByAuditId, auditViolations] = useContext(AuditViolationContext)
@@ -153,72 +153,47 @@ export default ({ audits }) => {
 
     return (
         <>
-            {/* <div className="App">
-                <Line data={data} options={{
-                    scales: {
-                        yAxes: [{
-                            display: true,
-                            ticks: {
-                                stepSize: 5,
-                                maxTicksLimit: 10,    // minimum will be 0, unless there is a lower value.
-                                // OR //
-                                beginAtZero: true   // minimum value will be 0.
-                            }
-                        }]
-                    }
-                }} />
-            </div> */}
-            <div className={classes.chartJsHeight}>
-                <Bar
+            {!barChartView &&
 
-                    data={data}
-                    options={{
-                        responsive: true,
+                <div className="App">
+                    <Line data={data} options={{
                         scales: {
                             yAxes: [{
                                 display: true,
                                 ticks: {
                                     stepSize: 5,
-                                    maxTicksLimit: 8,    // minimum will be 0, unless there is a lower value.
+                                    maxTicksLimit: 10,    // minimum will be 0, unless there is a lower value.
                                     // OR //
                                     beginAtZero: true   // minimum value will be 0.
                                 }
                             }]
                         }
-                    }}
-                />
-            </div>
-            {/* <div>
-                <Pie
-                    data={pieData}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Average Rainfall per month',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'right'
-                        }
-                    }}
-                />
+                    }} />
+                </div>
+            }
+            {barChartView &&
 
-                <Doughnut
-                    data={pieData}
-                    options={{
-                        title: {
-                            display: true,
-                            text: 'Average Rainfall per month',
-                            fontSize: 20
-                        },
-                        legend: {
-                            display: true,
-                            position: 'right'
-                        }
-                    }}
-                />
-            </div> */}
+                <div className={classes.chartJsHeight}>
+                    <Bar
+
+                        data={data}
+                        options={{
+                            responsive: true,
+                            scales: {
+                                yAxes: [{
+                                    display: true,
+                                    ticks: {
+                                        stepSize: 5,
+                                        maxTicksLimit: 8,    // minimum will be 0, unless there is a lower value.
+                                        // OR //
+                                        beginAtZero: true   // minimum value will be 0.
+                                    }
+                                }]
+                            }
+                        }}
+                    />
+                </div>
+            }
         </>
     );
 }
