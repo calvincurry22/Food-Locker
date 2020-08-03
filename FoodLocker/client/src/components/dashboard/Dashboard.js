@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header';
 import "./Dashboard.css";
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar } from '@material-ui/core';
+import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, CircularProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -178,7 +178,8 @@ export default () => {
                                     <Typography>
                                         Tasks
                                     </Typography>
-                                    <img className="b" src="https://thumbs.dreamstime.com/b/business-to-do-list-flat-icon-modern-style-task-list-business-to-do-list-flat-icon-modern-style-any-purposes-perfect-web-138650221.jpg" />
+                                    {/* <CircularProgress variant="static" value={90} /> */}
+                                    {/* <img className="b" src="https://thumbs.dreamstime.com/b/business-to-do-list-flat-icon-modern-style-task-list-business-to-do-list-flat-icon-modern-style-any-purposes-perfect-web-138650221.jpg" /> */}
                                     {/* {tasks &&
                                         tasks.map(t => {
                                             const date = new Date(t.expirationDate).toLocaleDateString()
