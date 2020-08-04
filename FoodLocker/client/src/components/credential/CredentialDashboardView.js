@@ -10,25 +10,25 @@ export default ({ employees }) => {
     const [s, setS] = useState([])
 
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        employees.map(e => {
-            console.log(e)
-            getCredentialsByEmployeeId(e.id)
-                .then(r => {
-                    if (r.length === 0) {
-                        credentials.push(e)
-                        console.log(credentials)
-                    } else {
-                        return null
-                    }
-                });
-            // .then(() => {
-            //     credentials = credentials.flat()
-            //     setS(employeesWithNoCredentials)
-            // })
-        })
-    }, [])
+    //     employees.map(e => {
+    //         console.log(e)
+    //         getCredentialsByEmployeeId(e.id)
+    //             .then(r => {
+    //                 if (r.length === 0) {
+    //                     credentials.push(e)
+    //                     console.log(credentials)
+    //                 } else {
+    //                     return null
+    //                 }
+    //             });
+    //         .then(() => {
+    //             credentials = credentials.flat()
+    //             setS(employeesWithNoCredentials)
+    //         })
+    //     })
+    // }, [])
 
     // if (credentials) {
     //     return null
@@ -51,12 +51,12 @@ export default ({ employees }) => {
             <Typography>
                 Employees without certifications
             </Typography>
-            {credentials.length ?
+            {/* {credentials.length ?
                 credentials.map(e => {
                     console.log(e)
                     return <Typography>{e.fullName}</Typography>
                 }) : null
-            }
+            } */}
         </div>
     )
 }

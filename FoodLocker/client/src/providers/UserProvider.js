@@ -12,6 +12,7 @@ export function UserProvider(props) {
     const [isLoggedIn, setIsLoggedIn] = useState(currentUser != null);
     const [isFirebaseReady, setIsFirebaseReady] = useState(false);
     const [users, setUsers] = useState([])
+
     useEffect(() => {
         firebase.auth().onAuthStateChanged((u) => {
             setIsFirebaseReady(true);
@@ -19,10 +20,9 @@ export function UserProvider(props) {
     }, []);
 
     const login = (email, pw) => {
-
         return firebase.auth().signInWithEmailAndPassword(email, pw)
             .then((signInResponse) => getUserProfile(signInResponse.user.uid))
-            .then(() => sessionStorage.setItem("user", JSON.stringify(user)))
+            .then((userProfile) => sessionStorage.setItem("user", JSON.stringify(userProfile)))
             .then(() => setIsLoggedIn(true))
     };
 
@@ -47,8 +47,8 @@ export function UserProvider(props) {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
-            }).then(resp => resp.json())
-                .then(setUser));
+            }).then(resp => resp.json()))
+        // .then(setUser));
     };
 
     const getAllUserProfiles = () => {

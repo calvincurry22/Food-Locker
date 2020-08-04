@@ -116,15 +116,17 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default () => {
+export default ({ user }) => {
     const classes = useStyles()
     const history = useHistory()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
-    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
+    // const [user, setUser] = useState({})
     useEffect(() => {
         getAuditsByUserId(currentUser.id);
-        getUserProfile(currentUser.firebaseUserId)
+        // getUserProfile(currentUser.firebaseUserId)
+        //     .then(setUser)
     }, [])
 
     return (

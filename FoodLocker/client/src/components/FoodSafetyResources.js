@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { Grid, Typography, Paper, makeStyles, Container } from '@material-ui/core';
 import SideNav from './SideNav';
 import { UserContext } from '../providers/UserProvider';
@@ -90,14 +90,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default () => {
+export default ({ user }) => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
+    // const [user, setUser] = useState({})
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
 
-    useEffect(() => {
-        getUserProfile(currentUser.firebaseUserId)
-    })
+    // useEffect(() => {
+    //     getUserProfile(currentUser.firebaseUserId)
+    //         .then(setUser)
+    // })
     return (
         <>
             <div className={classes.root}>

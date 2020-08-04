@@ -128,15 +128,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal }) => {
+export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal, user }) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
-    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
     const { getIncompleteTasksByUserId, getTasksByUserId, tasks } = useContext(TaskContext)
     const { getCredentialsByEmployeeId } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const credentials = []
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
 
     // const handleDrawerClose = () => {
@@ -158,7 +157,8 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
     useEffect(() => {
-        getUserProfile(currentUser.firebaseUserId)
+        // getUserProfile(currentUser.firebaseUserId)
+        //     .then(setUser)
         getTasksByUserId(currentUser.id);
         getEmployeesByUserId(currentUser.id);
         getAuditsByUserId(currentUser.id);
@@ -216,7 +216,7 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                     <Typography>
                                         Manage Credentials
                                     </Typography>
-                                    <CredentialDashboardView employees={employees} credentials={credentials} />
+                                    {/* <CredentialDashboardView employees={employees} credentials={credentials} /> */}
                                     {/* {
                                         employees.map(e => {
                                             getCredentialsByEmployeeId(e.id)

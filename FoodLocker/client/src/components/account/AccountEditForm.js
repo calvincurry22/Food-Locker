@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default () => {
+export default ({ user, setUser }) => {
     const history = useHistory();
     const classes = useStyles();
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { updateUser, getAllUserProfiles, users, getUserProfile, user } = useContext(UserContext)
+    const { updateUser, getAllUserProfiles, users, getUserProfile } = useContext(UserContext)
     const [updatedUser, setUpdatedUser] = useState(user);
 
 
@@ -48,7 +48,8 @@ export default () => {
     const editUser = (e) => {
         e.preventDefault();
         console.log(updatedUser)
-        updateUser(updatedUser);
+        updateUser(updatedUser)
+            .then(setUser)
         alert("Account successfully updated!");
         history.push("/")
     }
@@ -75,7 +76,8 @@ export default () => {
 
     useEffect(() => {
         getAllUserProfiles()
-        getUserProfile(currentUser.firebaseUserId)
+        // getUserProfile(currentUser.firebaseUserId)
+        //     .then
     }, [])
 
 

@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default () => {
+export default ({ user }) => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks, deleteTask, updateTask, saveTask, deleteCompletedTask, completedTasks } = useContext(TaskContext)
@@ -135,9 +135,11 @@ export default () => {
     const [editTaskModal, setEditTaskModal] = useState(false)
     const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
     const [taskObj, setTaskObj] = useState({})
-    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
+    // const [user, setUser] = useState({})
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
     useEffect(() => {
-        getUserProfile(currentUser.firebaseUserId)
+        // getUserProfile(currentUser.firebaseUserId)
+        //     .then(setUser)
         if (viewingNewTasks) {
             getIncompleteTasksByUserId(currentUser.id)
             setViewButton("View Completed Tasks");

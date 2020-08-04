@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default () => {
+export default ({ user }) => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
@@ -138,16 +138,18 @@ export default () => {
     const [employeeModal, setEmployeeModal] = useState(false)
     const toggleEmployeeModal = () => setEmployeeModal(!employeeModal)
     const [taskObj, setTaskObj] = useState({})
+    // const [user, setUser] = useState({})
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [employeeEditModal, setEmployeeEditModal] = useState(false)
     const toggleEmployeeEditModal = () => setEmployeeEditModal(!employeeEditModal)
     const [employeeObj, setEmployeeObj] = useState({})
     const [employeeToDelete, setEmployeeToDelete] = useState({})
-    const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
 
     useEffect(() => {
         getEmployeesByUserId(currentUser.id)
-        getUserProfile(currentUser.firebaseUserId)
+        // getUserProfile(currentUser.firebaseUserId)
+        //     .then(setUser)
     }, [])
 
     return (

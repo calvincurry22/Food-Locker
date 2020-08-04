@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -15,11 +15,18 @@ import FoodSafetyResources from "./FoodSafetyResources";
 
 
 export default function ApplicationViews() {
-    const { isLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, getUserProfile } = useContext(UserContext);
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const [barChartView, setBarChartView] = useState(true)
     const toggleChartView = () => setBarChartView(!barChartView)
     const [accountEditModal, setAccountEditModal] = useState(false)
     const toggleAccountEditModal = () => setAccountEditModal(!accountEditModal)
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        getUserProfile(currentUser.firebaseUserId)
+            .then(setUser)
+    })
 
     return (
         <main>
@@ -28,6 +35,7 @@ export default function ApplicationViews() {
                 <Route path="/" exact>
                     {isLoggedIn ?
                         <Dashboard
+                            user={user}
                             barChartView={barChartView}
                             setBarChartView={setBarChartView}
                             toggleChartView={toggleChartView}
@@ -47,15 +55,15 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/tasks">
-                    {isLoggedIn ? <TaskList /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <TaskList user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/credentials">
-                    {isLoggedIn ? <CredentialList /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <CredentialList user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/audits">
-                    {isLoggedIn ? <AuditList /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <AuditList user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/audit/:id">
@@ -63,15 +71,15 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/createAudit">
-                    {isLoggedIn ? <AuditCreateForm /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <AuditCreateForm user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/accountSettings">
-                    {isLoggedIn ? <AccountEditForm /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <AccountEditForm user={user} setUser={setUser} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/resources">
-                    {isLoggedIn ? <FoodSafetyResources /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <FoodSafetyResources user={user} /> : <Redirect to="/login" />}
                 </Route>
             </Switch>
         </main>
