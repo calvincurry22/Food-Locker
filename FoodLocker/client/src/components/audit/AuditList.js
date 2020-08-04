@@ -125,7 +125,7 @@ export default () => {
     useEffect(() => {
         getAuditsByUserId(currentUser.id);
         getUserProfile(currentUser.firebaseUserId)
-    })
+    }, [])
 
     return (
         <>

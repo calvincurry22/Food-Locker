@@ -7,6 +7,7 @@ import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import AuditDetailsCharts from './AuditDetailsCharts';
+import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -29,6 +30,7 @@ export default () => {
     const classes = useStyles()
     const { getAuditById, audit } = useContext(AuditContext)
     const { auditViolations, getViolationsByAuditId } = useContext(AuditViolationContext)
+    const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     let i = 0;
 
@@ -36,6 +38,7 @@ export default () => {
         {
             getAuditById(parsedId)
             getViolationsByAuditId(parsedId)
+            getAllViolationCategories()
         }
     }, [])
 
@@ -76,7 +79,7 @@ export default () => {
                             )
                         })
                     }
-                    <AuditDetailsCharts violations={auditViolations} />
+                    <AuditDetailsCharts violations={auditViolations} violationCategories={violationCategories} />
                 </>
             }
         </Grid>

@@ -201,12 +201,6 @@ export default ({ toggleAccountEditModal, user }) => {
                         <ListItemIcon>
                             <ExitToAppOutlinedIcon />
                         </ListItemIcon>
-                        <ListItemText primary="Account Settings" onClick={toggleAccountEditModal} />
-                    </ListItem>
-                    <ListItem className="menuItems" button>
-                        <ListItemIcon>
-                            <ExitToAppOutlinedIcon />
-                        </ListItemIcon>
                         <ListItemText primary="Logout" onClick={logout} />
                     </ListItem>
                 </List>

@@ -36,12 +36,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ user, users, updateUser, toggleAccountEditModal }) => {
+export default () => {
     const history = useHistory();
     const classes = useStyles();
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    // const { updateUser, getAllUserProfiles, users, getUserProfile } = useContext(UserContext)
-    // const [user, setUser] = useState({})
+    const { updateUser, getAllUserProfiles, users, getUserProfile, user } = useContext(UserContext)
     const [updatedUser, setUpdatedUser] = useState(user);
 
 
@@ -51,7 +50,7 @@ export default ({ user, users, updateUser, toggleAccountEditModal }) => {
         console.log(updatedUser)
         updateUser(updatedUser);
         alert("Account successfully updated!");
-        toggleAccountEditModal()
+        history.push("/")
     }
 
     const existingEmailCheck = (e) => {
@@ -74,15 +73,12 @@ export default ({ user, users, updateUser, toggleAccountEditModal }) => {
         setUpdatedUser(newUser);
     };
 
-    // useEffect(() => {
-    //     getAllUserProfiles()
-    //     // getUserProfile(currentUser.firebaseUserId)
-    //     //     .then(setUser)
-    //     //     .then(() => setUpdatedUser(user))
-    // }, [])
+    useEffect(() => {
+        getAllUserProfiles()
+        getUserProfile(currentUser.firebaseUserId)
+    }, [])
 
-    console.log(user)
-    console.log(updatedUser)
+
     return (
         <>
             <Container component="main" maxWidth="xs">

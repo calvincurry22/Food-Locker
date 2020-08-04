@@ -49,7 +49,7 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
         } else {
             return null
         }
-    })
+    }, [])
 
     return (
         <>

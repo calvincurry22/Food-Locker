@@ -30,7 +30,6 @@ export default ({ audits, barChartView }) => {
         let z = new Date(obj.auditDate).toLocaleDateString()
         let monthNum = new Date(z).getMonth() + 1
         let year = new Date(z).getFullYear()
-        console.log(monthNum)
 
         switch (monthNum) {
             case 1:
