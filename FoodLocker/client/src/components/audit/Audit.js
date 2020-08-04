@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ audit }) => {
+export default ({ audit, idx }) => {
     const history = useHistory()
     const date = new Date(audit.auditDate).toLocaleDateString()
     const classes = useStyles()
@@ -31,6 +31,9 @@ export default ({ audit }) => {
             {audit &&
                 <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
+                        <Typography variant="h6" align="center">
+                            Record #{idx + 1}
+                        </Typography>
                         <Typography className="taskListTyopgraphy">
                             Date: {audit.auditDate}
                         </Typography>

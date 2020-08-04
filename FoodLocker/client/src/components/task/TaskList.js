@@ -166,9 +166,9 @@ export default () => {
                         <Grid container spacing={4}>
                             {
                                 (viewingNewTasks)
-                                    ? (tasks.map(t => {
+                                    ? tasks.map(t => {
                                         return <Task key={t.id} task={t} updateTask={updateTask} deleteTask={deleteTask} currentUser={currentUser} toggleEditTaskModal={toggleEditTaskModal} setTaskObj={setTaskObj} />
-                                    }))
+                                    })
                                     : completedTasks.map(t => {
                                         return <CompletedTask key={t.id} task={t} currentUser={currentUser} deleteCompletedTask={deleteCompletedTask} />
                                     })

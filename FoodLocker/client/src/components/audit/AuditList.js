@@ -143,8 +143,8 @@ export default () => {
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {audits &&
-                                audits.map(a => {
-                                    return <Audit key={a.id} audit={a} getAuditById={getAuditById} />
+                                audits.map((val, idx) => {
+                                    return <Audit key={val.id} idx={idx} audit={val} getAuditById={getAuditById} />
                                 })
                             }
                         </Grid>
