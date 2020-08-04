@@ -33,6 +33,7 @@ import ChartTest from '../ChartTest';
 import { AuditContext } from '../../providers/AuditProvider';
 import TaskProgress from '../task/TaskProgress';
 import AccountEditModal from '../account/AccountEditModal';
+import CredentialDashboardView from '../credential/CredentialDashboardView';
 
 const drawerWidth = 270;
 //test comment
@@ -132,15 +133,26 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
     const [open, setOpen] = React.useState(true)
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users, user } = useContext(UserContext)
     const { getIncompleteTasksByUserId, getTasksByUserId, tasks } = useContext(TaskContext)
-    const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
+    const { getCredentialsByEmployeeId } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-
+    const credentials = []
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
 
-    const handleDrawerClose = () => {
-        setOpen(!open);
-    }
+    // const handleDrawerClose = () => {
+    //     employees.map(e => {
+    //         console.log(e)
+    //         getCredentialsByEmployeeId(e.id)
+    //             .then(res => {
+    //                 if (res.length !== 0) {
+    //                     credentials.push(res)
+    //                 } else {
+    //                     return
+    //                 }
+    //                 console.log(credentials)
+    //             })
+    //     })
+    // }
 
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
@@ -151,8 +163,8 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
         getEmployeesByUserId(currentUser.id);
         getAuditsByUserId(currentUser.id);
         getAllUserProfiles()
+        // handleDrawerClose();
     }, [])
-
     return (
         <>
             <div className={classes.root}>
@@ -179,7 +191,8 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                     <Typography>
                                         Food Safety Resources
                                     </Typography>
-                                    <img className="d" src="data:image/png;base64,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" />
+                                    <h1> <a href="https://www.fda.gov/food/food-safety-during-emergencies/food-safety-and-coronavirus-disease-2019-covid-19">Information on food safety and COVID-19</a></h1>
+                                    <h1><a href="https://www.fda.gov/food/fda-food-code/state-retail-and-food-service-codes-and-regulations-state">Information on food regulations by state</a></h1>
                                 </Paper>
                             </Grid>
                             {/* Recent Deposits */}
@@ -203,7 +216,7 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                     <Typography>
                                         Manage Credentials
                                     </Typography>
-                                    <img className="c" src="https://i.ya-webdesign.com/images/modern-vector-identity-card-4.png" />
+                                    <CredentialDashboardView employees={employees} credentials={credentials} />
                                     {/* {
                                         employees.map(e => {
                                             getCredentialsByEmployeeId(e.id)
