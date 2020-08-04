@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ user }) => {
+export default () => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getIncompleteTasksByUserId, getCompletedTasksByUserId, tasks, deleteTask, updateTask, saveTask, deleteCompletedTask, completedTasks } = useContext(TaskContext)
@@ -135,11 +135,9 @@ export default ({ user }) => {
     const [editTaskModal, setEditTaskModal] = useState(false)
     const toggleEditTaskModal = () => setEditTaskModal(!editTaskModal)
     const [taskObj, setTaskObj] = useState({})
-    // const [user, setUser] = useState({})
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
+
     useEffect(() => {
-        // getUserProfile(currentUser.firebaseUserId)
-        //     .then(setUser)
         if (viewingNewTasks) {
             getIncompleteTasksByUserId(currentUser.id)
             setViewButton("View Completed Tasks");
@@ -155,7 +153,7 @@ export default ({ user }) => {
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav user={user} />
+                <SideNav />
                 <main className={classes.content}>
                     <Button variant="contained" onClick={toggleView}>{viewButton}</Button>
                     <h2>{pageTitle}</h2>

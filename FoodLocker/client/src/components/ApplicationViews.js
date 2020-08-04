@@ -12,25 +12,23 @@ import AuditCreateForm from "./audit/AuditCreateForm";
 import ChartTest from "./ChartTest";
 import AccountEditForm from "./account/AccountEditForm";
 import FoodSafetyResources from "./FoodSafetyResources";
+import SideNav from "./SideNav";
 
 
 export default function ApplicationViews() {
     const { isLoggedIn, getUserProfile } = useContext(UserContext);
-    const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const [barChartView, setBarChartView] = useState(true)
     const toggleChartView = () => setBarChartView(!barChartView)
     const [accountEditModal, setAccountEditModal] = useState(false)
     const toggleAccountEditModal = () => setAccountEditModal(!accountEditModal)
     const [user, setUser] = useState({})
 
-    useEffect(() => {
-        getUserProfile(currentUser.firebaseUserId)
-            .then(setUser)
-    })
 
     return (
         <main>
-
+            {/* {isLoggedIn &&
+                <SideNav />
+            } */}
             <Switch>
                 <Route path="/" exact>
                     {isLoggedIn ?
@@ -51,7 +49,7 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/register">
-                    {isLoggedIn ? <Register /> : <Redirect to="/login" />}
+                    <Register />
                 </Route>
 
                 <Route path="/tasks">

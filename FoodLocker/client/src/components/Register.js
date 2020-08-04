@@ -48,7 +48,7 @@ export default function Register() {
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
     const [businessName, setBusinessName] = useState();
-    const [image, setImage] = useState();
+    const [image, setImage] = useState("");
 
 
 
@@ -57,7 +57,7 @@ export default function Register() {
         if (password && password !== confirmPassword) {
             alert("Passwords don't match. Do better.");
         } else {
-            const userProfile = { firstName, lastName, email, businessName, image };
+            const userProfile = { firstName, lastName, email, password, businessName, image };
             register(userProfile, password)
                 .then(() => history.push("/"));
         }
@@ -127,6 +127,19 @@ export default function Register() {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                onChange={e => setConfirmPassword(e.target.value)}
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="confirmPassword"
+                                label="Confirm Password"
+                                type="password"
+                                id="confirmPassword"
+                                autoComplete="current-password"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
                                 onChange={e => setBusinessName(e.target.value)}
                                 variant="outlined"
                                 required
@@ -136,19 +149,6 @@ export default function Register() {
                                 type="businessName"
                                 id="businessName"
                                 autoComplete="current-businessName"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                onChange={e => setImage(e.target.value)}
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
                             />
                         </Grid>
                     </Grid>

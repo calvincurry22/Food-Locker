@@ -29,6 +29,7 @@ import AddIcon from '@material-ui/icons/Add';
 import { AuditContext } from '../../providers/AuditProvider';
 import Audit from './Audit';
 import { UserContext } from '../../providers/UserProvider';
+import { usePickerState } from '@material-ui/pickers';
 
 const drawerWidth = 270;
 //test comment
@@ -116,24 +117,22 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ user }) => {
+export default () => {
     const classes = useStyles()
     const history = useHistory()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
-    // const [user, setUser] = useState({})
+
     useEffect(() => {
         getAuditsByUserId(currentUser.id);
-        // getUserProfile(currentUser.firebaseUserId)
-        //     .then(setUser)
     }, [])
 
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav user={user} />
+                <SideNav />
                 <main className={classes.content}>
                     <h2>Audit Records</h2>
                     <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>

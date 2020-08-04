@@ -35,7 +35,8 @@ export function UserProvider(props) {
     const register = (user, password) => {
         return firebase.auth().createUserWithEmailAndPassword(user.email, password)
             .then((createResponse) => saveUser({ ...user, firebaseUserId: createResponse.user.uid }))
-            .then((savedUser) => sessionStorage.setItem("user", JSON.stringify(savedUser)));
+            .then((savedUser) => sessionStorage.setItem("user", JSON.stringify(savedUser)))
+            .then(() => setIsLoggedIn(true))
     };
 
     const getToken = () => firebase.auth().currentUser.getIdToken();
@@ -48,7 +49,6 @@ export function UserProvider(props) {
                     Authorization: `Bearer ${token}`
                 }
             }).then(resp => resp.json()))
-        // .then(setUser));
     };
 
     const getAllUserProfiles = () => {

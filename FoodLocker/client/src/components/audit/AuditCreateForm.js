@@ -82,7 +82,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-export default ({ user }) => {
+export default () => {
     const classes = useStyles();
     const history = useHistory()
     const [activeStep, setActiveStep] = useState(0);
@@ -164,7 +164,7 @@ export default ({ user }) => {
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav user={user} />
+                <SideNav />
                 <main className={classes.layout}>
                     <Container maxWidth="lg" className={classes.container}>
                         <Paper className={classes.paper}>

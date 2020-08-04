@@ -113,13 +113,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ toggleAccountEditModal, user }) => {
+export default () => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
     const { logout, getUserProfile } = useContext(UserContext)
-
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const history = useHistory()
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        getUserProfile(currentUser.firebaseUserId)
+            .then(setUser)
+    }, [])
 
     const handleDrawerClose = () => {
         setOpen(!open);

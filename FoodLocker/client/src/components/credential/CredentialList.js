@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ user }) => {
+export default () => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
@@ -138,7 +138,6 @@ export default ({ user }) => {
     const [employeeModal, setEmployeeModal] = useState(false)
     const toggleEmployeeModal = () => setEmployeeModal(!employeeModal)
     const [taskObj, setTaskObj] = useState({})
-    // const [user, setUser] = useState({})
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [employeeEditModal, setEmployeeEditModal] = useState(false)
     const toggleEmployeeEditModal = () => setEmployeeEditModal(!employeeEditModal)
@@ -147,16 +146,14 @@ export default ({ user }) => {
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
 
     useEffect(() => {
-        getEmployeesByUserId(currentUser.id)
-        // getUserProfile(currentUser.firebaseUserId)
-        //     .then(setUser)
+        getEmployeesByUserId(currentUser.id);
     }, [])
 
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav user={user} />
+                <SideNav />
                 <main className={classes.content}>
                     <h2>Manage Employee Credentials</h2>
                     <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>

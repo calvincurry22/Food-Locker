@@ -36,27 +36,25 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ user, setUser }) => {
+export default () => {
     const history = useHistory();
     const classes = useStyles();
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { updateUser, getAllUserProfiles, users, getUserProfile } = useContext(UserContext)
-    const [updatedUser, setUpdatedUser] = useState(user);
-
-
+    const [user, setUser] = useState({})
+    const [updatedUser, setUpdatedUser] = useState({});
 
     const editUser = (e) => {
         e.preventDefault();
         console.log(updatedUser)
         updateUser(updatedUser)
-            .then(setUser)
         alert("Account successfully updated!");
-        history.push("/")
+        history.replace("/")
     }
 
     const existingEmailCheck = (e) => {
         e.preventDefault()
-        console.log(updatedUser)
+        console.log(user)
         if (users.length) {
             const foundUser = users.find(u => u.email === updatedUser.email)
             if (foundUser && foundUser.id !== updatedUser.id) {
@@ -69,15 +67,20 @@ export default ({ user, setUser }) => {
 
     const handleControlledInputChange = (event) => {
         console.log(event.target.value)
+        console.log(updatedUser)
         const newUser = Object.assign({}, updatedUser);
         newUser[event.target.name] = event.target.value;
         setUpdatedUser(newUser);
     };
 
     useEffect(() => {
-        getAllUserProfiles()
-        // getUserProfile(currentUser.firebaseUserId)
-        //     .then
+        getAllUserProfiles();
+        getUserProfile(currentUser.firebaseUserId)
+            .then(res => {
+                setUpdatedUser(res)
+                setUser(res)
+            });
+        // setUpdatedUser(user)
     }, [])
 
 

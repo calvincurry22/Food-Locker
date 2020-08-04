@@ -90,20 +90,16 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default ({ user }) => {
+export default () => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    // const [user, setUser] = useState({})
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
 
-    // useEffect(() => {
-    //     getUserProfile(currentUser.firebaseUserId)
-    //         .then(setUser)
-    // })
+
     return (
         <>
             <div className={classes.root}>
-                <SideNav user={user} />
+                <SideNav />
                 <main className={classes.content}>
                     <h1> Food Safety Resources</h1>
                     <Container maxWidth="lg" className={classes.container}>
