@@ -25,11 +25,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal, setEmployeeToDelete }) => {
+export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, credentials, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal, setEmployeeToDelete }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
-    const [credentials, setCredentials] = useState([])
+    // const [credentials, setCredentials] = useState([])
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
     // const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
 
@@ -45,7 +45,6 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
     useEffect(() => {
         if (employee) {
             getCredentialsByEmployeeId(employee.id)
-                .then(setCredentials)
         } else {
             return null
         }
@@ -71,7 +70,7 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
                         <h3>{employee.title}</h3>
                         {/* </Typography> */}
                         <h4>Credentials</h4>
-                        {
+                        {credentials &&
                             credentials.map(c => {
                                 return <CredentialInfo
                                     key={c.id}

@@ -126,7 +126,7 @@ export default () => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
-    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
+    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential, credentials } = useContext(CredentialContext)
     const [credentialModal, setCredentialModal] = useState(false)
     const toggleCredentialModal = () => setCredentialModal(!credentialModal)
     const [viewButton, setViewButton] = useState("View Completed Tasks")
@@ -164,6 +164,7 @@ export default () => {
                                     return <Employee
                                         key={e.id}
                                         employee={e}
+                                        credentials={credentials}
                                         setEmployeeToDelete={setEmployeeToDelete}
                                         setEmployeeObj={setEmployeeObj}
                                         setCredentialObj={setCredentialObj}
