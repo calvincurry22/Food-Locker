@@ -89,7 +89,7 @@ export default ({ audits, barChartView }) => {
                 label: "Audit Scores",
                 data: chartData,
                 fill: true,
-                backgroundColor: "rgba(75,192,192,0.2)",
+                backgroundColor: "RGBA(0,188,228,0.5)",
                 borderColor: "rgba(37, 95, 90, 1)"
             }
         ]

@@ -69,13 +69,13 @@ export default function ButtonAppBar() {
                     </Typography>
                     {isLoggedIn &&
                         <>
-                            <Tooltip title="Notifications" arrow>
+                            {/* <Tooltip title="Notifications" arrow>
                                 <IconButton color="inherit" className="notificationsBadge">
                                     <Badge badgeContent={4} color="secondary" >
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
-                            </Tooltip>
+                            </Tooltip> */}
                             <Tooltip title="Account Settings" arrow>
                                 <IconButton color="inherit" className="settingsButton" onClick={() => history.push("/accountSettings")}>
                                     <SettingsIcon />

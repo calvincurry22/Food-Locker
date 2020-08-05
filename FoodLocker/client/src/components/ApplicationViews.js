@@ -11,7 +11,7 @@ import AuditDetails from "./audit/AuditDetails";
 import AuditCreateForm from "./audit/AuditCreateForm";
 import ChartTest from "./ChartTest";
 import AccountEditForm from "./account/AccountEditForm";
-import FoodSafetyResources from "./FoodSafetyResources";
+import FoodSafetyResources from "./foodSafetyResources/FoodSafetyResources";
 import SideNav from "./SideNav";
 
 

@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Grid, Typography, Paper, makeStyles, Container } from '@material-ui/core';
-import SideNav from './SideNav';
-import { UserContext } from '../providers/UserProvider';
+import SideNav from '../SideNav';
+import { UserContext } from '../../providers/UserProvider';
 
 
 const drawerWidth = 270;

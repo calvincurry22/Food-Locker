@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     large: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
+        width: theme.spacing(8),
+        height: theme.spacing(8),
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -96,6 +96,12 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+    },
+    largeName: {
+        fontSize: "0.7em"
+    },
+    smallName: {
+        fontSize: "9px !important"
     },
     container: {
         paddingTop: theme.spacing(4),
