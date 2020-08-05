@@ -2,16 +2,18 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
 import { AuditContext } from '../providers/AuditProvider';
 import { AuditViolationContext } from '../providers/AuditViolationProvider';
-import { makeStyles } from '@material-ui/core';
-
+import { makeStyles, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     chartJsHeight: {
         height: 100
     },
+    chartTitle: {
+        marginRight: 30
+    }
 }))
 
-export default ({ audits, barChartView }) => {
+export default ({ audits, barChartView, toggleChartView }) => {
 
     const classes = useStyles()
     const chartLabels = []
@@ -97,6 +99,12 @@ export default ({ audits, barChartView }) => {
 
     return (
         <>
+            <div className="chartHeader">
+                <Typography variant="h6" align="left">
+                    Audit Records
+                </Typography>
+                <Button onClick={toggleChartView} className="auditChartButton" variant="outlined">Toggle Chart</Button>
+            </div>
             {!barChartView &&
 
                 <div className="App">
