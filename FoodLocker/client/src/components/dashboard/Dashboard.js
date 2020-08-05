@@ -34,6 +34,7 @@ import { AuditContext } from '../../providers/AuditProvider';
 import TaskProgress from '../task/TaskProgress';
 import AccountEditModal from '../account/AccountEditModal';
 import DashboardResources from '../foodSafetyResources/DashboardResources';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const drawerWidth = 270;
 //test comment
@@ -129,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal }) => {
+export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal, employeesWithoutCredentials }) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
@@ -141,7 +142,8 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
-
+    const [credentialProgress, setCredentialProgress] = useState([])
+    let arrayofEmployees = []
 
 
 
@@ -184,6 +186,7 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                     <Typography>
                                         Manage Credentials
                                     </Typography>
+                                    <CircularProgressbar value={arrayofEmployees} />
                                 </Paper>
                             </Grid>
                         </Grid>

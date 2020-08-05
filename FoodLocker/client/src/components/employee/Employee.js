@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredentialObj, credentials, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal, setEmployeeToDelete }) => {
+export default ({ employee, setEmployeeObj, arrayOfEmployeesWithoutCredentials, toggleCredentialModal, setCredentialObj, credentials, toggleEditCredentialModal, deleteCredential, getCredentialsByEmployeeId, toggleEmployeeEditModal, toggleDeleteEmployeeModal, setEmployeeToDelete }) => {
     const classes = useStyles()
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const [isChecked, setIsChecked] = useState(false)
@@ -44,7 +44,11 @@ export default ({ employee, setEmployeeObj, toggleCredentialModal, setCredential
 
     useEffect(() => {
         if (employee) {
-            getCredentialsByEmployeeId(employee.id)
+            getCredentialsByEmployeeId(employee.id);
+            console.log(credentials)
+            if (!credentials[0]) {
+                arrayOfEmployeesWithoutCredentials.push(employee)
+            }
         } else {
             return null
         }
