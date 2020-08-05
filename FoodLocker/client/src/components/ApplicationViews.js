@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Login from "./Login";
 import Register from "./Register";
@@ -10,19 +10,38 @@ import AuditList from "./audit/AuditList";
 import AuditDetails from "./audit/AuditDetails";
 import AuditCreateForm from "./audit/AuditCreateForm";
 import ChartTest from "./ChartTest";
+import AccountEditForm from "./account/AccountEditForm";
+import FoodSafetyResources from "./foodSafetyResources/FoodSafetyResources";
+import SideNav from "./SideNav";
 
 
 export default function ApplicationViews() {
-    const { isLoggedIn } = useContext(UserContext);
+    const { isLoggedIn, getUserProfile } = useContext(UserContext);
     const [barChartView, setBarChartView] = useState(true)
     const toggleChartView = () => setBarChartView(!barChartView)
+    const [accountEditModal, setAccountEditModal] = useState(false)
+    const toggleAccountEditModal = () => setAccountEditModal(!accountEditModal)
+    const [user, setUser] = useState({})
+
 
     return (
         <main>
-
+            {/* {isLoggedIn &&
+                <SideNav />
+            } */}
             <Switch>
                 <Route path="/" exact>
-                    {isLoggedIn ? <Dashboard barChartView={barChartView} setBarChartView={setBarChartView} toggleChartView={toggleChartView} /> : <Redirect to="/login" />}
+                    {isLoggedIn ?
+                        <Dashboard
+                            user={user}
+                            barChartView={barChartView}
+                            setBarChartView={setBarChartView}
+                            toggleChartView={toggleChartView}
+                            accountEditModal={accountEditModal}
+                            toggleAccountEditModal={toggleAccountEditModal}
+                        />
+                        : <Redirect to="/login" />
+                    }
                 </Route>
 
                 <Route path="/login">
@@ -30,19 +49,19 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/register">
-                    {isLoggedIn ? <Register /> : <Redirect to="/login" />}
+                    <Register />
                 </Route>
 
                 <Route path="/tasks">
-                    {isLoggedIn ? <TaskList /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <TaskList user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/credentials">
-                    {isLoggedIn ? <CredentialList /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <CredentialList user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/audits">
-                    {isLoggedIn ? <AuditList /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <AuditList user={user} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/audit/:id">
@@ -50,11 +69,15 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/createAudit">
-                    {isLoggedIn ? <AuditCreateForm /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <AuditCreateForm user={user} /> : <Redirect to="/login" />}
                 </Route>
 
-                <Route path="/chart">
-                    {isLoggedIn ? <ChartTest /> : <Redirect to="/login" />}
+                <Route path="/accountSettings">
+                    {isLoggedIn ? <AccountEditForm user={user} setUser={setUser} /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/resources">
+                    {isLoggedIn ? <FoodSafetyResources user={user} /> : <Redirect to="/login" />}
                 </Route>
             </Switch>
         </main>

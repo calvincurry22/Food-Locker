@@ -22,6 +22,7 @@ namespace FoodLocker.Repositories
             return _context.Audit
                         .Where(a => a.UserId == id)
                         .Include(a => a.User)
+                        .OrderBy(a => a.AuditDate)
                         .ToList();
         }
 

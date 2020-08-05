@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import "./dashboard/Dashboard.css";
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar } from '@material-ui/core';
+import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Backdrop, CircularProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
     large: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
+        width: theme.spacing(8),
+        height: theme.spacing(8),
     },
     toolbar: {
         paddingRight: 24, // keep right padding when drawer closed
@@ -97,6 +97,12 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         overflow: 'auto',
     },
+    largeName: {
+        fontSize: "0.7em"
+    },
+    smallName: {
+        fontSize: "9px !important"
+    },
     container: {
         paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(4),
@@ -113,22 +119,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
 export default () => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
-    const { logout } = useContext(UserContext)
+    const { logout, getUserProfile } = useContext(UserContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const history = useHistory()
+    const [user, setUser] = useState({})
+
+    useEffect(() => {
+        getUserProfile(currentUser.firebaseUserId)
+            .then(setUser)
+    }, [])
 
     const handleDrawerClose = () => {
+        console.log(user)
         setOpen(!open);
     }
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-
             <Drawer
                 variant="permanent"
                 classes={{
@@ -145,65 +156,80 @@ export default () => {
                     </IconButton>
                 </div>
                 <Divider />
-                <List>
-                    <ListItem className="avatar">
-                        <ListItemAvatar>
-                            <Avatar className={classes.large} src="https://www.ekahiornish.com/wp-content/uploads/2018/07/default-avatar-profile-icon-vector-18942381.jpg" />
-                        </ListItemAvatar>
-                        <ListItemText primary={currentUser.firstName + " " + currentUser.lastName} />
-                        <ListItemText primary={currentUser.businessName} />
-                    </ListItem>
-                    <ListItem
-                        className="menuItems"
-                        button
-                        onClick={() => history.push("/audits")}
-                    >
-                        <ListItemIcon>
-                            <TimelineIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Audit Records" />
-                    </ListItem>
-                    <ListItem
-                        className="menuItems"
-                        button
-                        onClick={() => history.push("/credentials")}
-                    >
-                        <ListItemIcon>
-                            <CardMembershipIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Manage Credentials" />
-                    </ListItem>
-                    <ListItem
-                        className="menuItems"
-                        button
-                        onClick={() => history.push("/tasks")}>
-                        <ListItemIcon>
-                            <AssignmentTurnedInOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Manage Tasks" />
-                    </ListItem >
-                    <ListItem className="menuItems" button>
-                        <ListItemIcon>
-                            <LibraryBooksOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Food Safety Resources" />
-                    </ListItem>
-                    <ListItem
-                        className="menuItems"
-                        button
-                        onClick={() => history.push("/")}>
-                        <ListItemIcon>
-                            <DashboardOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Dashboard" />
-                    </ListItem>
-                    <ListItem className="menuItems" button>
-                        <ListItemIcon>
-                            <ExitToAppOutlinedIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Logout" onClick={logout} />
-                    </ListItem>
-                </List>
+                {user.hasOwnProperty('firstName') ?
+                    <List>
+                        <ListItem className="avatar">
+                            <ListItemAvatar>
+                                {user.image ?
+                                    <Avatar
+                                        className={classes.large}
+                                        src={user.image}
+                                    />
+                                    :
+                                    <Avatar
+                                        className={classes.large}
+                                        src="https://www.ekahiornish.com/wp-content/uploads/2018/07/default-avatar-profile-icon-vector-18942381.jpg"
+                                    />
+                                }
+                            </ListItemAvatar>
+                            <ListItemText primary={user.firstName + " " + user.lastName} />
+                            <ListItemText primary={user.businessName} />
+                        </ListItem>
+                        <ListItem
+                            className="menuItems"
+                            button
+                            onClick={() => history.push("/audits")}
+                        >
+                            <ListItemIcon>
+                                <TimelineIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Audit Records" />
+                        </ListItem>
+                        <ListItem
+                            className="menuItems"
+                            button
+                            onClick={() => history.push("/credentials")}
+                        >
+                            <ListItemIcon>
+                                <CardMembershipIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Manage Credentials" />
+                        </ListItem>
+                        <ListItem
+                            className="menuItems"
+                            button
+                            onClick={() => history.push("/tasks")}>
+                            <ListItemIcon>
+                                <AssignmentTurnedInOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Manage Tasks" />
+                        </ListItem >
+                        <ListItem className="menuItems" button onClick={() => history.push("/resources")}>
+                            <ListItemIcon>
+                                <LibraryBooksOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Food Safety Resources" />
+                        </ListItem>
+                        <ListItem
+                            className="menuItems"
+                            button
+                            onClick={() => history.push("/")}>
+                            <ListItemIcon>
+                                <DashboardOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItem>
+                        <ListItem className="menuItems" button>
+                            <ListItemIcon>
+                                <ExitToAppOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Logout" onClick={logout} />
+                        </ListItem>
+                    </List>
+                    : <Backdrop open={open}>
+                        <CircularProgress color="primary" />
+                    </Backdrop>
+                }
             </Drawer>
         </div>
     )

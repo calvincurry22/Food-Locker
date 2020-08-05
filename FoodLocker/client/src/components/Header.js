@@ -40,6 +40,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import SettingsIcon from '@material-ui/icons/Settings';
 import { Badge, Tooltip } from '@material-ui/core';
+import { Redirect, useHistory } from 'react-router-dom';
 import { UserContext } from '../providers/UserProvider';
 
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ButtonAppBar() {
+    const history = useHistory()
     const classes = useStyles();
     const { isLoggedIn } = useContext(UserContext)
 
@@ -67,15 +69,15 @@ export default function ButtonAppBar() {
                     </Typography>
                     {isLoggedIn &&
                         <>
-                            <Tooltip title="Notifications" arrow>
+                            {/* <Tooltip title="Notifications" arrow>
                                 <IconButton color="inherit" className="notificationsBadge">
                                     <Badge badgeContent={4} color="secondary" >
                                         <NotificationsIcon />
                                     </Badge>
                                 </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Settings" arrow>
-                                <IconButton color="inherit" className="settingsButton" >
+                            </Tooltip> */}
+                            <Tooltip title="Account Settings" arrow>
+                                <IconButton color="inherit" className="settingsButton" onClick={() => history.push("/accountSettings")}>
                                     <SettingsIcon />
                                 </IconButton>
                             </Tooltip>

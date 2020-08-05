@@ -1,35 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Header from '../Header';
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress, Tooltip } from '@material-ui/core';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import CardMembershipIcon from '@material-ui/icons/CardMembership';
-import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
-import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect, useContext, useState } from 'react';
+import { Grid, Typography, Paper, makeStyles, Container } from '@material-ui/core';
 import SideNav from '../SideNav';
-import Fab from '@material-ui/core/Fab';
-import AddIcon from '@material-ui/icons/Add';
-import { AuditContext } from '../../providers/AuditProvider';
-import Audit from './Audit';
 import { UserContext } from '../../providers/UserProvider';
-import { usePickerState } from '@material-ui/pickers';
+
 
 const drawerWidth = 270;
 //test comment
@@ -119,34 +92,44 @@ const useStyles = makeStyles((theme) => ({
 
 export default () => {
     const classes = useStyles()
-    const history = useHistory()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
 
-    useEffect(() => {
-        getAuditsByUserId(currentUser.id);
-    }, [])
 
     return (
         <>
             <div className={classes.root}>
-                <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <h2>Audit Records</h2>
-                    <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>
-                        <Fab aria-label="add" size="medium">
-                            <AddIcon />
-                        </Fab>
-                    </Tooltip>
+                    <h1> Food Safety Resources</h1>
                     <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={4}>
-                            {audits &&
-                                audits.map((val, idx) => {
-                                    return <Audit key={val.id} idx={idx} audit={val} getAuditById={getAuditById} />
-                                })
-                            }
+                        <Grid container spacing={3}>
+                            <Grid item xs={12} sm={12} md={12} lg={12}>
+                                <Typography variant="h4">
+                                    <a href="https://www.fda.gov/media/137867/download">COVID-19 Re-opening Food Safety Checklist</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.fda.gov/food/fda-food-code/state-retail-and-food-service-codes-and-regulations-state">Food Safety Regulations by state</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.fsis.usda.gov/wps/portal/fsis/topics/food-safety-education/get-answers/food-safety-fact-sheets">Food Safety Fact Sheets</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.fsis.usda.gov/wps/portal/fsis/topics/food-safety-education/get-answers/food-safety-fact-sheets/!ut/p/a1/jY_RCoJAFES_pQ9Y7jVN8lGEUEtFpNr2JZbaVaFccZeivj6jpyLLO08XzswwwIACa_ilLrmpVcNPz5-5e8zRtbwA48yzFhilmzxbBgHOi1kP7H4AqT3SP3A-_vPHIwqmXRIkJbCWm4rUjVRAS2EIb_RVdBqoVOpINJfC3IjkB0N0JYTRsAX2no5Wryi1CyeMUxsz5xP4Mv8FDO9rz2t6X4VYR_7kAeoGtjg!/?1dmy&urile=wcm%3apath%3a%2FFSIS-Content%2Finternet%2Fmain%2Ftopics%2Ffood-safety-education">Food Safety Education</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.fsis.usda.gov/wps/portal/fsis/topics/recalls-and-public-health-alerts/current-recalls-and-alerts">USDA Recalls</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts">FDA Recalls</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.fda.gov/food/guidance-regulation-food-and-dietary-supplements/hazard-analysis-critical-control-point-haccp">HACCP Information</a>
+                                </Typography>
+                                <Typography variant="h4">
+                                    <a href="https://www.business.com/articles/guide-to-food-handler-safety-certifications/">Restaurant Food Handler Certification Guide</a>
+                                </Typography>
+                            </Grid>
                         </Grid>
                     </Container>
                 </main>

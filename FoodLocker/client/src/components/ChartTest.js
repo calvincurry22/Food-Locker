@@ -12,144 +12,88 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 export default ({ audits, barChartView }) => {
-    // const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    // const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
-    // const [getViolationsByAuditId, auditViolations] = useContext(AuditViolationContext)
 
-    // useEffect(() => {
-    //     getAuditsByUserId(currentUser.id);
-    //     getViolationsByAuditId(3);
-
-
-    // })
     const classes = useStyles()
-    const d = []
+    const chartLabels = []
+    const chartData = []
+    const auditScores = audits.map(a => chartData.push(a.score))
 
-    const test = (obj, month) => {
-
-        let z = new Date(obj.auditDate).toLocaleDateString()
-        let monthNum = new Date(z).getMonth() + 1
-        let year = new Date(z).getFullYear()
-        console.log(monthNum)
+    const test = (obj) => {
+        let month;
+        let auditDateLocaleString = new Date(obj.auditDate).toLocaleDateString()
+        let monthNum = new Date(auditDateLocaleString).getMonth() + 1
+        let year = new Date(auditDateLocaleString).getFullYear()
 
         switch (monthNum) {
             case 1:
                 month = `Jan ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 2:
                 month = `Feb ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 3:
                 month = `Mar ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 4:
                 month = `Apr ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 5:
                 month = `May ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 6:
                 month = `Jun ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 7:
                 month = `Jul ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 8:
                 month = `Aug ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 9:
                 month = `Sept ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 10:
                 month = `Oct ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 11:
                 month = `Nov ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
             case 12:
                 month = `Dec ${year}`;
-                d.push(month)
+                chartLabels.push(month)
                 break;
         }
     }
-    const c = []
-    const auditScores = audits.map(a => c.push(a.score))
+
     const auditDates = audits.map(a => {
-        const m = 'a'
-        test(a, m)
+        test(a)
     })
 
 
     const data = {
         // labels: ['Jan', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        labels: d,
+        labels: chartLabels,
         datasets: [
             {
                 label: "Audit Scores",
-                data: c,
+                data: chartData,
                 fill: true,
-                backgroundColor: "rgba(75,192,192,0.2)",
+                backgroundColor: "RGBA(0,188,228,0.5)",
                 borderColor: "rgba(37, 95, 90, 1)"
             }
-            // },
-            // {
-            //     label: "Second dataset",
-            //     data: [33, 25, 35, 51, 54, 76],
-            //     fill: false,
-            //     borderColor: "#742774"
-            // }
         ]
     };
-
-    const barData = {
-        labels: ['January', 'February', 'March',
-            'April', 'May'],
-        datasets: [
-            {
-                label: 'Rainfall',
-                backgroundColor: 'rgba(75,192,192,1)',
-                borderColor: 'rgba(0,0,0,1)',
-                borderWidth: 2,
-                data: [65, 59, 80, 81, 56]
-            }
-        ]
-    }
-
-    const pieData = {
-        labels: ['January', 'February', 'March',
-            'April', 'May'],
-        datasets: [
-            {
-                label: 'Rainfall',
-                backgroundColor: [
-                    '#B21F00',
-                    '#C9DE00',
-                    '#2FDE00',
-                    '#00A6B4',
-                    '#6800B4'
-                ],
-                hoverBackgroundColor: [
-                    '#501800',
-                    '#4B5000',
-                    '#175000',
-                    '#003350',
-                    '#35014F'
-                ],
-                data: ['handwashing', 'sanitation']
-            }
-        ]
-    }
 
     return (
         <>

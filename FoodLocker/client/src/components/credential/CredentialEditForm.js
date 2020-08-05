@@ -13,6 +13,7 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,6 +48,7 @@ export default ({ toggleEditCredentialModal, updateCredential, credentialObj }) 
     const [selectedDate, setSelectedDate] = React.useState(new Date(credentialObj.expirationDate));
     const [employeeId, setEmployeeId] = useState(0)
     const [updatedCredential, setCredential] = useState(credentialObj);
+    const history = useHistory()
 
     const handleDateChange = (date) => {
         setSelectedDate(date);

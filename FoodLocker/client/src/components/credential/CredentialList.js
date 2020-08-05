@@ -34,6 +34,7 @@ import EmployeeCreateModal from '../employee/EmployeeCreateModal';
 import CredentialCreateModal from './CredentialCreateModal';
 import CredentialEditModal from './CredentialEditModal';
 import EmployeeDeleteModal from '../employee/EmployeeDeleteModal';
+import { UserContext } from '../../providers/UserProvider';
 
 const drawerWidth = 270;
 //test comment
@@ -125,7 +126,7 @@ export default () => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
-    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
+    const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential, credentials } = useContext(CredentialContext)
     const [credentialModal, setCredentialModal] = useState(false)
     const toggleCredentialModal = () => setCredentialModal(!credentialModal)
     const [viewButton, setViewButton] = useState("View Completed Tasks")
@@ -142,9 +143,10 @@ export default () => {
     const toggleEmployeeEditModal = () => setEmployeeEditModal(!employeeEditModal)
     const [employeeObj, setEmployeeObj] = useState({})
     const [employeeToDelete, setEmployeeToDelete] = useState({})
+    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
 
     useEffect(() => {
-        getEmployeesByUserId(currentUser.id)
+        getEmployeesByUserId(currentUser.id);
     }, [])
 
     return (
@@ -153,7 +155,7 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <h2>Manage Credentials</h2>
+                    <h2>Manage Employee Credentials</h2>
                     <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
@@ -162,6 +164,7 @@ export default () => {
                                     return <Employee
                                         key={e.id}
                                         employee={e}
+                                        credentials={credentials}
                                         setEmployeeToDelete={setEmployeeToDelete}
                                         setEmployeeObj={setEmployeeObj}
                                         setCredentialObj={setCredentialObj}

@@ -90,7 +90,6 @@ export default () => {
     const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
     const { saveAudit } = useContext(AuditContext)
     const { saveViolation } = useContext(AuditViolationContext)
-
     const blankViolation = { auditId: '', isCritical: '', violationCategoryId: '', description: '' };
     const [violations, setViolations] = useState([
         { ...blankViolation }
