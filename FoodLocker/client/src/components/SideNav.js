@@ -127,13 +127,13 @@ export default () => {
     }, [])
 
     const handleDrawerClose = () => {
+        console.log(user)
         setOpen(!open);
     }
 
     return (
         <div className={classes.root}>
             <CssBaseline />
-
             <Drawer
                 variant="permanent"
                 classes={{
@@ -154,7 +154,17 @@ export default () => {
                     <List>
                         <ListItem className="avatar">
                             <ListItemAvatar>
-                                <Avatar className={classes.large} src="https://www.ekahiornish.com/wp-content/uploads/2018/07/default-avatar-profile-icon-vector-18942381.jpg" />
+                                {user.image ?
+                                    <Avatar
+                                        className={classes.large}
+                                        src={user.image}
+                                    />
+                                    :
+                                    <Avatar
+                                        className={classes.large}
+                                        src="https://www.ekahiornish.com/wp-content/uploads/2018/07/default-avatar-profile-icon-vector-18942381.jpg"
+                                    />
+                                }
                             </ListItemAvatar>
                             <ListItemText primary={user.firstName + " " + user.lastName} />
                             <ListItemText primary={user.businessName} />

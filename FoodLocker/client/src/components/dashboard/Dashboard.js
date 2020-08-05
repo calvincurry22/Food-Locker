@@ -33,7 +33,6 @@ import ChartTest from '../ChartTest';
 import { AuditContext } from '../../providers/AuditProvider';
 import TaskProgress from '../task/TaskProgress';
 import AccountEditModal from '../account/AccountEditModal';
-import CredentialDashboardView from '../credential/CredentialDashboardView';
 
 const drawerWidth = 270;
 //test comment
@@ -133,7 +132,7 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
     const [open, setOpen] = React.useState(true)
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
     const { getIncompleteTasksByUserId, getTasksByUserId, tasks } = useContext(TaskContext)
-    const { getCredentialsByEmployeeId } = useContext(CredentialContext)
+    const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
     const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
@@ -141,11 +140,15 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
 
+
+
+
     useEffect(() => {
         getTasksByUserId(currentUser.id);
         getEmployeesByUserId(currentUser.id);
         getAuditsByUserId(currentUser.id);
     }, [])
+
     return (
         <>
             <div className={classes.root}>

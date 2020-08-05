@@ -13,6 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { UserContext } from "../../providers/UserProvider";
+import AccountImageUpload from "./AccountImageUpload";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -43,11 +44,25 @@ export default () => {
     const { updateUser, getAllUserProfiles, users, getUserProfile } = useContext(UserContext)
     const [user, setUser] = useState({})
     const [updatedUser, setUpdatedUser] = useState({});
+    const [imageUrl, setImageUrl] = useState('')
 
     const editUser = (e) => {
         e.preventDefault();
         console.log(updatedUser)
-        updateUser(updatedUser)
+        if (imageUrl !== '') {
+            updateUser({
+                id: updatedUser.id,
+                firstName: updatedUser.firstName,
+                lastName: updatedUser.lastName,
+                email: updatedUser.email,
+                password: updatedUser.password,
+                businessName: updatedUser.businessName,
+                firebaseUserId: updatedUser.firebaseUserId,
+                image: imageUrl
+            })
+        } else {
+            updateUser(updatedUser)
+        }
         alert("Account successfully updated!");
         history.replace("/")
     }
@@ -86,6 +101,7 @@ export default () => {
 
     return (
         <>
+            <Link to="/">Back to dashboard</Link>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
@@ -160,6 +176,9 @@ export default () => {
                                             defaultValue={user.businessName}
                                             autoComplete="current-businessName"
                                         />
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <AccountImageUpload setImageUrl={setImageUrl} />
                                     </Grid>
                                 </Grid>
                                 <Button
