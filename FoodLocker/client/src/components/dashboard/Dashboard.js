@@ -34,6 +34,7 @@ import { AuditContext } from '../../providers/AuditProvider';
 import TaskProgress from '../task/TaskProgress';
 import AccountEditModal from '../account/AccountEditModal';
 import DashboardResources from '../foodSafetyResources/DashboardResources';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 
 const drawerWidth = 270;
 //test comment
@@ -129,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal }) => {
+export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal, employeesWithoutCredentials }) => {
     const classes = useStyles()
     const [open, setOpen] = React.useState(true)
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
@@ -141,7 +142,8 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
-
+    const [credentialProgress, setCredentialProgress] = useState([])
+    let arrayofEmployees = []
 
 
 
@@ -159,16 +161,9 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                 <main className={classes.content}>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={3}>
-                            {/* Chart */}
                             <Grid item xs={12} md={8} lg={8}>
                                 <Paper className={chartHeightPaper} elevation={3}>
-                                    <div className="chartHeader">
-                                        <Typography>
-                                            Audit Records
-                                        </Typography>
-                                        <Button onClick={toggleChartView}>Toggle Chart</Button>
-                                    </div>
-                                    <ChartTest audits={audits} barChartView={barChartView} />
+                                    <ChartTest audits={audits} barChartView={barChartView} toggleChartView={toggleChartView} />
                                 </Paper>
                                 <br />
                                 <Paper className={resourcesHeightPaper} elevation={3}>
@@ -177,7 +172,7 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                             </Grid>
                             <Grid item xs={12} md={4} lg={4}>
                                 <Paper className={fixedHeightPaper} elevation={3}>
-                                    <Typography>
+                                    <Typography variant="h6">
                                         Tasks Completed
                                     </Typography>
                                     {
@@ -191,36 +186,12 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                     <Typography>
                                         Manage Credentials
                                     </Typography>
-                                    {/* <CredentialDashboardView employees={employees} credentials={credentials} /> */}
-                                    {/* {
-                                        employees.map(e => {
-                                            getCredentialsByEmployeeId(e.id)
-
-                                            return (
-                                                <>
-                                                    <p>{e.id} {e.lastName}</p>
-                                                    {
-                                                        credentials.map(c => {
-                                                            const date = new Date(c.expirationDate).toLocaleDateString()
-                                                            return <p>{c.name} - Expires {date}</p>
-                                                        })
-                                                    }
-                                                </>
-                                            )
-
-                                        })
-                                    } */}
+                                    <CircularProgressbar value={arrayofEmployees} />
                                 </Paper>
                             </Grid>
                         </Grid>
                     </Container>
                 </main>
-                {/* <AccountEditModal
-                    user={user}
-                    updateUser={updateUser}
-                    accountEditModal={accountEditModal}
-                    toggleAccountEditModal={toggleAccountEditModal}
-                    users={users} /> */}
             </div>
         </>
     )

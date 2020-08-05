@@ -122,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default () => {
+export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials }) => {
     const classes = useStyles()
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
@@ -144,11 +144,14 @@ export default () => {
     const [employeeObj, setEmployeeObj] = useState({})
     const [employeeToDelete, setEmployeeToDelete] = useState({})
     const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
-
+    const arrayOfEmployeesWithoutCredentials = []
     useEffect(() => {
         getEmployeesByUserId(currentUser.id);
     }, [])
 
+    useEffect(() => {
+        setEmployeesWithoutCredentials(arrayOfEmployeesWithoutCredentials)
+    }, [])
     return (
         <>
             <div className={classes.root}>
@@ -175,6 +178,7 @@ export default () => {
                                         toggleEmployeeEditModal={toggleEmployeeEditModal}
                                         toggleDeleteEmployeeModal={toggleDeleteEmployeeModal}
                                         getCredentialsByEmployeeId={getCredentialsByEmployeeId}
+                                        arrayOfEmployeesWithoutCredentials={arrayOfEmployeesWithoutCredentials}
                                     />
                                 })
                             }

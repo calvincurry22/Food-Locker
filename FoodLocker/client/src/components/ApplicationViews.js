@@ -22,6 +22,7 @@ export default function ApplicationViews() {
     const [accountEditModal, setAccountEditModal] = useState(false)
     const toggleAccountEditModal = () => setAccountEditModal(!accountEditModal)
     const [user, setUser] = useState({})
+    const [employeesWithoutCredentials, setEmployeesWithoutCredentials] = useState([])
 
 
     return (
@@ -39,6 +40,7 @@ export default function ApplicationViews() {
                             toggleChartView={toggleChartView}
                             accountEditModal={accountEditModal}
                             toggleAccountEditModal={toggleAccountEditModal}
+                            employeesWithoutCredentials={employeesWithoutCredentials}
                         />
                         : <Redirect to="/login" />
                     }
@@ -57,7 +59,7 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/credentials">
-                    {isLoggedIn ? <CredentialList user={user} /> : <Redirect to="/login" />}
+                    {isLoggedIn ? <CredentialList user={user} employeesWithoutCredentials={employeesWithoutCredentials} setEmployeesWithoutCredentials={setEmployeesWithoutCredentials} /> : <Redirect to="/login" />}
                 </Route>
 
                 <Route path="/audits">

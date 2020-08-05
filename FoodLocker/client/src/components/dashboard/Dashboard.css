@@ -71,5 +71,10 @@
 .chartHeader {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
+
+.auditChartButton {
+    font-size: 12px !important;
+}
+
