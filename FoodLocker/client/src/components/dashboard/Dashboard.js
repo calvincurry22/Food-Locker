@@ -35,6 +35,8 @@ import TaskProgress from '../task/TaskProgress';
 import AccountEditModal from '../account/AccountEditModal';
 import DashboardResources from '../foodSafetyResources/DashboardResources';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import CredentialList from '../credential/CredentialList';
+import CredentialDashboardView from '../credential/CredentialDashboardView';
 
 const drawerWidth = 270;
 //test comment
@@ -185,10 +187,10 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                 </Paper>
                                 <br />
                                 <Paper className={fixedHeightPaper} elevation={3}>
-                                    <Typography>
-                                        Manage Credentials
+                                    <Typography variant="h6">
+                                        Employee Credentials
                                     </Typography>
-                                    <CircularProgressbar value={arrayofEmployees} />
+                                    <CredentialDashboardView />
                                 </Paper>
                             </Grid>
                         </Grid>

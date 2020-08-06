@@ -87,7 +87,7 @@ export default ({ toggleEmployeeModal, currentUser, saveEmployee }) => {
                             fullWidth
                             id="lastName"
                             label="Last Name"
-                            autoFocus
+
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -100,7 +100,6 @@ export default ({ toggleEmployeeModal, currentUser, saveEmployee }) => {
                             fullWidth
                             id="title"
                             label="Title"
-                            autoFocus
                         />
                     </Grid>
                 </Grid>

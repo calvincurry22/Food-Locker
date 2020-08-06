@@ -202,7 +202,7 @@ export default () => {
                             <ListItemIcon>
                                 <CardMembershipIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Manage Credentials" />
+                            <ListItemText primary="Employee Credentials" />
                         </ListItem>
                         <ListItem
                             className="menuItems"

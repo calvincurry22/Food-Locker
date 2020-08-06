@@ -54,7 +54,7 @@ export default ({ toggleEmployeeEditModal, updateEmployee, employeeObj }) => {
             lastName: updatedEmployee.lastName,
             userId: updatedEmployee.userId,
             title: updatedEmployee.title
-        });
+        })
         toggleEmployeeEditModal()
     }
 
@@ -66,10 +66,7 @@ export default ({ toggleEmployeeEditModal, updateEmployee, employeeObj }) => {
 
     return (
         <Container component="main" maxWidth="xs">
-            <form className={classes.form} onSubmit={e => {
-                e.preventDefault()
-                editEmployee()
-            }}>
+            <form className={classes.form}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} sm={6}>
                         <TextField
@@ -112,7 +109,7 @@ export default ({ toggleEmployeeEditModal, updateEmployee, employeeObj }) => {
                     </Grid>
                 </Grid>
             </form>
-            <Button type="submit" variant="contained" className={classes.submit}>Save</Button>
+            <Button type="submit" variant="contained" className={classes.submit} onClick={editEmployee}>Save</Button>
         </Container >
     )
 }
