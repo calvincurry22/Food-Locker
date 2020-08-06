@@ -30,6 +30,7 @@ import { AuditContext } from '../../providers/AuditProvider';
 import Audit from './Audit';
 import { UserContext } from '../../providers/UserProvider';
 import { usePickerState } from '@material-ui/pickers';
+import './Audit.css';
 
 const drawerWidth = 270;
 //test comment
@@ -98,9 +99,11 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
+        backgroundColor: "#EBECF0",
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+        paddingTop: 10
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -134,9 +137,9 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <h2>Audit Records</h2>
+                    <Typography variant="h4" align="center">Audit Records</Typography>
                     <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>
-                        <Fab aria-label="add" size="medium">
+                        <Fab aria-label="add" size="medium" color="primary" className="addAuditButton">
                             <AddIcon />
                         </Fab>
                     </Tooltip>

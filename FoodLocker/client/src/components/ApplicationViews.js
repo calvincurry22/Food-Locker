@@ -9,7 +9,7 @@ import CredentialList from "./credential/CredentialList";
 import AuditList from "./audit/AuditList";
 import AuditDetails from "./audit/AuditDetails";
 import AuditCreateForm from "./audit/AuditCreateForm";
-import ChartTest from "./ChartTest";
+import AuditDashboardChart from "./audit/AuditDashboardChart";
 import AccountEditForm from "./account/AccountEditForm";
 import FoodSafetyResources from "./foodSafetyResources/FoodSafetyResources";
 import SideNav from "./SideNav";

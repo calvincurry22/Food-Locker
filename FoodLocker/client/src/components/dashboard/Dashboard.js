@@ -29,7 +29,7 @@ import SideNav from '../SideNav';
 import { TaskContext } from '../../providers/TaskProvider';
 import { CredentialContext } from '../../providers/CredentialProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
-import ChartTest from '../ChartTest';
+import AuditDashboardChart from '../audit/AuditDashboardChart';
 import { AuditContext } from '../../providers/AuditProvider';
 import TaskProgress from '../task/TaskProgress';
 import AccountEditModal from '../account/AccountEditModal';
@@ -62,7 +62,9 @@ const useStyles = makeStyles((theme) => ({
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
+
         }),
+        boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.21)"
     },
     appBarShift: {
         marginLeft: drawerWidth,
@@ -163,7 +165,7 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={8} lg={8}>
                                 <Paper className={chartHeightPaper} elevation={3}>
-                                    <ChartTest audits={audits} barChartView={barChartView} toggleChartView={toggleChartView} />
+                                    <AuditDashboardChart audits={audits} barChartView={barChartView} toggleChartView={toggleChartView} />
                                 </Paper>
                                 <br />
                                 <Paper className={resourcesHeightPaper} elevation={3}>

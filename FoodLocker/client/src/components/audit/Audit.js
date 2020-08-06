@@ -17,6 +17,19 @@ const useStyles = makeStyles((theme) => ({
     },
     buttonColor: {
         backgroundColor: '#32CD32'
+    },
+    cardSpace: {
+        display: "flex",
+        height: 200,
+        flexDirection: "column",
+        position: "relative"
+    },
+    auditRecordButton: {
+        backgroundColor: "rgb(255,99,71)",
+        bottom: 10,
+        color: "whitesmoke",
+        marginLeft: "63%",
+        position: "absolute",
     }
 }));
 
@@ -30,20 +43,24 @@ export default ({ audit, idx }) => {
         <>
             {audit &&
                 <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <Typography variant="h6" align="center">
+                    <Paper className={fixedHeightPaper} elevation={3} className={classes.cardSpace}>
+                        <Typography variant="h6" align="center" className="auditRecordItem">
                             Record #{idx + 1}
                         </Typography>
-                        <Typography className="taskListTyopgraphy">
-                            Date: {audit.auditDate}
-                        </Typography>
-                        <Typography>
-                            Score: {audit.score}
-                        </Typography>
-                        <Typography>
-                            Passed? {audit.passed ? "Yes" : "No"}
-                        </Typography>
+                        <br />
+                        <div className="auditRecordInfo">
+                            <Typography className="taskListTyopgraphy">
+                                Date: {audit.auditDate}
+                            </Typography>
+                            <Typography>
+                                Score: {audit.score}
+                            </Typography>
+                            <Typography>
+                                Passed? {audit.passed ? "Yes" : "No"}
+                            </Typography>
+                        </div>
                         <Button
+                            className={classes.auditRecordButton}
                             variant="contained"
                             onClick={() => {
                                 history.push(`/audit/${audit.id}`)

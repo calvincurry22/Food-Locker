@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
-import { AuditContext } from '../providers/AuditProvider';
-import { AuditViolationContext } from '../providers/AuditViolationProvider';
+import { AuditContext } from '../../providers/AuditProvider';
+import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 import { makeStyles, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
