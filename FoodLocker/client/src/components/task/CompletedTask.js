@@ -9,13 +9,15 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2),
         display: 'flex',
         overflow: 'auto',
+        position: 'relative',
         flexDirection: 'column',
     },
     fixedHeight: {
         height: 270,
     },
-    buttonColor: {
-        backgroundColor: '#32CD32'
+    deleteButton: {
+        position: 'absolute',
+        bottom: 2
     }
 }));
 
@@ -34,11 +36,15 @@ export default ({ task, deleteCompletedTask, currentUser }) => {
                 <Grid item xs={12} md={4} lg={3}>
                     <Paper className={fixedHeightPaper}>
                         <Typography className="taskListTyopgraphy">
-                            Task: {task.text} <br />
-                    Assigned To: {task.employee.firstName + " " + task.employee.lastName} <br />
-                    Expiration Date: {date}
+                            <strong>Task:</strong> {task.text}
                         </Typography>
-                        <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
+                        <Typography>
+                            <strong>Assigned To:</strong> {task.employee.firstName + " " + task.employee.lastName} <br />
+                        </Typography>
+                        <Typography>
+                            <strong>Expiration Date:</strong> {date}
+                        </Typography>
+                        <Button className={classes.deleteButton} variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
                     </Paper>
                 </Grid>
             }
