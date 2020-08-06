@@ -110,9 +110,9 @@ export default ({ toggleEmployeeEditModal, updateEmployee, employeeObj }) => {
                             autoFocus
                         />
                     </Grid>
-                    <Button type="submit" variant="contained">Save</Button>
                 </Grid>
             </form>
+            <Button type="submit" variant="contained" className={classes.submit}>Save</Button>
         </Container >
     )
 }

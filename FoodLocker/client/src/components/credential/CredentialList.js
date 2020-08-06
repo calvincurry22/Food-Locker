@@ -42,6 +42,7 @@ const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+        backgroundColor: 'whitesmoke'
     },
     large: {
         width: theme.spacing(10),
@@ -118,6 +119,13 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         flexDirection: 'column',
     },
+    tableContainer: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    table: {
+        maxWidth: 1300
+    },
     fixedHeight: {
         height: 270,
     },
@@ -166,14 +174,15 @@ export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials })
                         Manage Employee Credentials
                     </Typography>
                     <Button
+                        color="primary"
                         variant="contained"
                         className={classes.newEmployeeButton}
                         onClick={toggleEmployeeModal}
                     >
                         New Employee
                     </Button>
-                    <TableContainer component={Paper}>
-                        <Table aria-label="collapsible table">
+                    <TableContainer className={classes.tableContainer}>
+                        <Table aria-label="collapsible table" className={classes.table}>
                             <TableHead>
                                 <TableRow>
                                     <TableCell />
@@ -207,31 +216,6 @@ export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials })
                             </TableBody>
                         </Table>
                     </TableContainer>
-
-                    {/* <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={4}>
-                            {
-                                employees.map(e => {
-                                    return <Employee
-                                        key={e.id}
-                                        employee={e}
-                                        credentials={credentials}
-                                        setEmployeeToDelete={setEmployeeToDelete}
-                                        setEmployeeObj={setEmployeeObj}
-                                        setCredentialObj={setCredentialObj}
-                                        deleteCredential={deleteCredential}
-                                        deleteEmployee={deleteEmployee}
-                                        toggleCredentialModal={toggleCredentialModal}
-                                        toggleEditCredentialModal={toggleEditCredentialModal}
-                                        toggleEmployeeEditModal={toggleEmployeeEditModal}
-                                        toggleDeleteEmployeeModal={toggleDeleteEmployeeModal}
-                                        getCredentialsByEmployeeId={getCredentialsByEmployeeId}
-                                        arrayOfEmployeesWithoutCredentials={arrayOfEmployeesWithoutCredentials}
-                                    />
-                                })
-                            }
-                        </Grid>
-                    </Container> */}
                     <EmployeeCreateModal
                         toggleEmployeeModal={toggleEmployeeModal}
                         saveEmployee={saveEmployee}

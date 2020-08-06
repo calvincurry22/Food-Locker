@@ -38,13 +38,14 @@ export default ({ deleteEmployee, toggleDeleteEmployeeModal, deleteEmployeelModa
                         Are you sure you want to delete {employeeToDelete.fullName} ?
                     </Typography>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         onClick={toggleDeleteEmployeeModal}
                     >
                         Cancel
                     </Button>
                     <Button
-                        variant="outlined"
+                        color="secondary"
+                        variant="contained"
                         onClick={e => {
                             e.preventDefault()
                             deleteEmployee(employeeToDelete.id)

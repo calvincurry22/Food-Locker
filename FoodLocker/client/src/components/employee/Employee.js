@@ -120,7 +120,7 @@ export default ({ employee, setEmployeeObj, arrayOfEmployeesWithoutCredentials, 
                             <Collapse in={open} timeout="auto" unmountOnExit>
                                 <Box margin={1}>
                                     <Typography variant="h6" gutterBottom component="div">
-                                        Credentials
+                                        <strong>Credentials</strong>
                                     </Typography>
                                     <Table size="small" aria-label="purchases">
                                         <TableHead>
@@ -134,45 +134,15 @@ export default ({ employee, setEmployeeObj, arrayOfEmployeesWithoutCredentials, 
                                         </TableHead>
                                         <TableBody>
                                             {credentials.map(c => (
-                                                // <CredentialInfo
-                                                //     key={c.id}
-                                                //     credential={c}
-                                                //     employee={employee}
-                                                //     deleteCredential={deleteCredential}
-                                                //     setCredentialObj={setCredentialObj}
-                                                //     toggleEditCredentialModal={toggleEditCredentialModal}
-                                                // />
-                                                <TableRow>
-                                                    <TableCell component="th" scope="row">
-                                                        {c.name}
-                                                    </TableCell>
-                                                    <TableCell>{c.expirationDate}</TableCell>
-                                                    <TableCell>{c.renewalFee}</TableCell>
-                                                    <TableCell align="right">
-                                                        <Tooltip title="Edit Credential">
-                                                            <IconButton
-                                                                onClick={e => {
-                                                                    e.preventDefault()
-                                                                    setCredentialObj(c)
-                                                                    toggleEditCredentialModal()
-                                                                }}
-                                                            >
-                                                                <EditOutlinedIcon />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </TableCell>
-                                                    <TableCell align="right">
-                                                        <Tooltip title="Delete Credential">
-                                                            <IconButton
-                                                                onClick={e => {
-                                                                    e.preventDefault()
-                                                                    deleteCredential(c.id, employee.id)
-                                                                }}>
-                                                                <DeleteForeverOutlinedIcon />
-                                                            </IconButton>
-                                                        </Tooltip>
-                                                    </TableCell>
-                                                </TableRow>
+                                                <CredentialInfo
+                                                    key={c.id}
+                                                    credential={c}
+                                                    employee={employee}
+                                                    deleteCredential={deleteCredential}
+                                                    setCredentialObj={setCredentialObj}
+                                                    toggleCredentialModal={toggleCredentialModal}
+                                                    toggleEditCredentialModal={toggleEditCredentialModal}
+                                                />
                                             ))}
                                         </TableBody>
                                     </Table>

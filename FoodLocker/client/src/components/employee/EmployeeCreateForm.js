@@ -36,6 +36,8 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+        position: 'relative',
+        right: 0
     },
 }));
 
@@ -76,38 +78,34 @@ export default ({ toggleEmployeeModal, currentUser, saveEmployee }) => {
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                onChange={e => setEmployeeLastName(e.target.value)}
-                                autoComplete="lname"
-                                name="lastName"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={12}>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    onChange={e => setEmployeetitle(e.target.value)}
-                                    autoComplete="title"
-                                    name="title"
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="title"
-                                    label="Title"
-                                    autoFocus
-                                />
-                            </Grid>
-                        </Grid>
-                        <Button type="submit" variant="contained">Save</Button>
+                        <TextField
+                            onChange={e => setEmployeeLastName(e.target.value)}
+                            autoComplete="lname"
+                            name="lastName"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="lastName"
+                            label="Last Name"
+                            autoFocus
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            onChange={e => setEmployeetitle(e.target.value)}
+                            autoComplete="title"
+                            name="title"
+                            variant="outlined"
+                            required
+                            fullWidth
+                            id="title"
+                            label="Title"
+                            autoFocus
+                        />
                     </Grid>
                 </Grid>
+                <Button type="submit" variant="contained" className={classes.submit}>Save</Button>
             </form>
-        </Container>
+        </Container >
     )
 }
