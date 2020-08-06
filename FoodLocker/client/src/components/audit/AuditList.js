@@ -31,6 +31,12 @@ import Audit from './Audit';
 import { UserContext } from '../../providers/UserProvider';
 import { usePickerState } from '@material-ui/pickers';
 import './Audit.css';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 const drawerWidth = 270;
 //test comment
@@ -38,6 +44,7 @@ const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
+
     },
     large: {
         width: theme.spacing(10),
@@ -99,11 +106,11 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
-        backgroundColor: "#EBECF0",
+        backgroundColor: "whitesmoke",
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
-        paddingTop: 10
+        paddingTop: 10,
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -120,6 +127,19 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
+
+function createData(name, calories, fat, carbs, protein) {
+    return { name, calories, fat, carbs, protein };
+}
+
+const rows = [
+    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
+    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
+    createData('Eclair', 262, 16.0, 24, 6.0),
+    createData('Cupcake', 305, 3.7, 67, 4.3),
+    createData('Gingerbread', 356, 16.0, 49, 3.9),
+];
 export default () => {
     const classes = useStyles()
     const history = useHistory()
@@ -137,7 +157,7 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <Typography variant="h4" align="center">Audit Records</Typography>
+                    {/* <Typography variant="h4" align="center">Audit Records</Typography>
                     <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>
                         <Fab aria-label="add" size="medium" color="primary" className="addAuditButton">
                             <AddIcon />
@@ -151,7 +171,45 @@ export default () => {
                                 })
                             }
                         </Grid>
-                    </Container>
+                    </Container> */}
+
+
+
+                    <TableContainer className={classes.table}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Audit Date</TableCell>
+                                    <TableCell>Score</TableCell>
+                                    <TableCell>Passed?</TableCell>
+                                    <TableCell></TableCell>
+
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {audits.map((a) => (
+                                    <TableRow key={a.id}>
+                                        <TableCell>
+                                            {new Date(a.auditDate).toLocaleDateString()}
+                                        </TableCell>
+                                        <TableCell>{a.score}</TableCell>
+                                        <TableCell>{a.passed ? "Yes" : "No"}</TableCell>
+                                        <TableCell>
+                                            <Button
+                                                variant="contained"
+                                                onClick={() => {
+                                                    history.push(`/audit/${a.id}`)
+                                                }}
+                                            >
+                                                Details
+                                            </Button>
+                                        </TableCell>
+
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </main>
             </div>
         </>

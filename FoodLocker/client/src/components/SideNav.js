@@ -178,6 +178,15 @@ export default () => {
                         <ListItem
                             className="menuItems"
                             button
+                            onClick={() => history.push("/")}>
+                            <ListItemIcon>
+                                <DashboardOutlinedIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItem>
+                        <ListItem
+                            className="menuItems"
+                            button
                             onClick={() => history.push("/audits")}
                         >
                             <ListItemIcon>
@@ -209,15 +218,6 @@ export default () => {
                                 <LibraryBooksOutlinedIcon />
                             </ListItemIcon>
                             <ListItemText primary="Food Safety Resources" />
-                        </ListItem>
-                        <ListItem
-                            className="menuItems"
-                            button
-                            onClick={() => history.push("/")}>
-                            <ListItemIcon>
-                                <DashboardOutlinedIcon />
-                            </ListItemIcon>
-                            <ListItemText primary="Dashboard" />
                         </ListItem>
                         <ListItem className="menuItems" button>
                             <ListItemIcon>
