@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
     },
     appBarSpacer: theme.mixins.toolbar,
     content: {
-        backgroundColor: "whitesmoke",
+        backgroundColor: "#EBECF0",
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
