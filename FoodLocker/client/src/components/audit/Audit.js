@@ -77,7 +77,7 @@ export default ({ audit }) => {
                     <TableCell>{audit.auditorName}</TableCell>
                     <TableCell>{audit.score}</TableCell>
                     <TableCell>{audit.passed ? "Yes" : "No"}</TableCell>
-                    <TableCell>
+                    <TableCell className={classes.tableButton}>
                         <Button
                             variant="contained"
                             onClick={() => {

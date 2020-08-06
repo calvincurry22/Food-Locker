@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         overflow: 'auto',
         paddingTop: 10,
+
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -122,9 +123,16 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         flexDirection: 'column',
     },
+    tableContainer: {
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    table: {
+        maxWidth: 1175
+    },
     fixedHeight: {
         height: 270,
-    },
+    }
 }));
 
 
@@ -157,6 +165,7 @@ export default () => {
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
+                    <Typography variant="h4" align="center">Audit Records</Typography><br />
                     {/* <Typography variant="h4" align="center">Audit Records</Typography>
                     <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>
                         <Fab aria-label="add" size="medium" color="primary" className="addAuditButton">
@@ -175,21 +184,20 @@ export default () => {
 
 
 
-                    <TableContainer className={classes.table}>
+                    <TableContainer className={classes.tableContainer}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
                                 <TableRow>
-                                    <TableCell>Audit Date</TableCell>
-                                    <TableCell>Auditor</TableCell>
-                                    <TableCell>Score</TableCell>
-                                    <TableCell>Passed?</TableCell>
+                                    <TableCell><strong>Audit Date</strong></TableCell>
+                                    <TableCell><strong>Auditor</strong></TableCell>
+                                    <TableCell><strong>Score</strong></TableCell>
+                                    <TableCell><strong>Passed?</strong></TableCell>
                                     <TableCell></TableCell>
-
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 {audits.map((a) => (
-                                    <Audit audit={a} />
+                                    <Audit key={a.id} audit={a} />
                                 ))}
                             </TableBody>
                         </Table>
