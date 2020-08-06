@@ -19,6 +19,7 @@ import SideNav from '../SideNav';
 import { Container } from '@material-ui/core';
 import { AuditContext } from '../../providers/AuditProvider';
 import { AuditViolationContext } from '../../providers/AuditViolationProvider';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 function Copyright() {
     return (
@@ -105,6 +106,7 @@ export default () => {
         passed: (value === 'pass') ? true : false,
         userId: currentUser.id
     })
+
     useEffect(() => {
         getAllViolationCategories()
     }, [])
@@ -191,7 +193,6 @@ export default () => {
                                     </>
                                 ) : (
                                         <>
-
                                             {getStepContent(activeStep)}
                                             <div className={classes.buttons}>
                                                 {activeStep !== 0 && (
@@ -215,7 +216,6 @@ export default () => {
                                                     {activeStep === steps.length - 1 ? 'Submit Record' : 'Next'}
                                                 </Button>
                                             </div>
-
                                         </>
                                     )}
                             </>

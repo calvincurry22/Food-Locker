@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header';
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress, Tooltip } from '@material-ui/core';
+import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress, Tooltip, Modal } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -104,6 +104,11 @@ const useStyles = makeStyles((theme) => ({
             width: theme.spacing(9),
         },
     },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
     appBarSpacer: theme.mixins.toolbar,
     content: {
         backgroundColor: "whitesmoke",
@@ -111,7 +116,6 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         overflow: 'auto',
         paddingTop: 10,
-
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -132,22 +136,14 @@ const useStyles = makeStyles((theme) => ({
     },
     fixedHeight: {
         height: 270,
+    },
+    newRecordButton: {
+        marginLeft: "2%"
     }
 }));
 
 
 
-function createData(name, calories, fat, carbs, protein) {
-    return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 export default () => {
     const classes = useStyles()
     const history = useHistory()
@@ -166,24 +162,14 @@ export default () => {
                 <SideNav />
                 <main className={classes.content}>
                     <Typography variant="h4" align="center">Audit Records</Typography><br />
-                    {/* <Typography variant="h4" align="center">Audit Records</Typography>
-                    <Tooltip title="Add Audit" onClick={() => history.push("/createAudit")}>
-                        <Fab aria-label="add" size="medium" color="primary" className="addAuditButton">
-                            <AddIcon />
-                        </Fab>
-                    </Tooltip>
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={4}>
-                            {audits &&
-                                audits.map((val, idx) => {
-                                    return <Audit key={val.id} idx={idx} audit={val} getAuditById={getAuditById} />
-                                })
-                            }
-                        </Grid>
-                    </Container> */}
-
-
-
+                    <Button
+                        className={classes.newRecordButton}
+                        variant="contained"
+                        color="primary"
+                        onClick={() => history.push("/createAudit")}
+                    >
+                        Create new record
+                    </Button>
                     <TableContainer className={classes.tableContainer}>
                         <Table className={classes.table} aria-label="simple table">
                             <TableHead>
@@ -197,7 +183,7 @@ export default () => {
                             </TableHead>
                             <TableBody>
                                 {audits.map((a) => (
-                                    <Audit key={a.id} audit={a} />
+                                    <Audit key={a.id} audit={a} history={history} />
                                 ))}
                             </TableBody>
                         </Table>

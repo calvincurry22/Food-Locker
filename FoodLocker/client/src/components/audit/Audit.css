@@ -4,3 +4,14 @@
 .auditRecordInfo {
     margin-left: 5%;
 }
+
+.detailsChartGrid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 5% !important;
+}
+
+.auditDetailsButton {
+    background-color: tomato !important;
+}
