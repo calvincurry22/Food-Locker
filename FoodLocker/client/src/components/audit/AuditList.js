@@ -180,6 +180,7 @@ export default () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Audit Date</TableCell>
+                                    <TableCell>Auditor</TableCell>
                                     <TableCell>Score</TableCell>
                                     <TableCell>Passed?</TableCell>
                                     <TableCell></TableCell>
@@ -188,24 +189,7 @@ export default () => {
                             </TableHead>
                             <TableBody>
                                 {audits.map((a) => (
-                                    <TableRow key={a.id}>
-                                        <TableCell>
-                                            {new Date(a.auditDate).toLocaleDateString()}
-                                        </TableCell>
-                                        <TableCell>{a.score}</TableCell>
-                                        <TableCell>{a.passed ? "Yes" : "No"}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                onClick={() => {
-                                                    history.push(`/audit/${a.id}`)
-                                                }}
-                                            >
-                                                Details
-                                            </Button>
-                                        </TableCell>
-
-                                    </TableRow>
+                                    <Audit audit={a} />
                                 ))}
                             </TableBody>
                         </Table>

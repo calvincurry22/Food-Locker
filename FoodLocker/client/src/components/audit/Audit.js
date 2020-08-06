@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox, TableCell, TableRow } from '@material-ui/core';
 import { green } from '@material-ui/core/colors';
 import { useHistory } from 'react-router-dom';
 
@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default ({ audit, idx }) => {
+export default ({ audit }) => {
     const history = useHistory()
     const date = new Date(audit.auditDate).toLocaleDateString()
     const classes = useStyles()
@@ -42,25 +42,43 @@ export default ({ audit, idx }) => {
     return (
         <>
             {audit &&
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper} elevation={3} className={classes.cardSpace}>
-                        <Typography variant="h6" align="center" className="auditRecordItem">
-                            Record #{idx + 1}
-                        </Typography>
-                        <br />
-                        <div className="auditRecordInfo">
-                            <Typography className="taskListTyopgraphy">
-                                Date: {audit.auditDate}
-                            </Typography>
-                            <Typography>
-                                Score: {audit.score}
-                            </Typography>
-                            <Typography>
-                                Passed? {audit.passed ? "Yes" : "No"}
-                            </Typography>
-                        </div>
+                // <Grid item xs={12} md={4} lg={3}>
+                //     <Paper className={fixedHeightPaper} elevation={3} className={classes.cardSpace}>
+                //         <Typography variant="h6" align="center" className="auditRecordItem">
+                //             Record #{idx + 1}
+                //         </Typography>
+                //         <br />
+                //         <div className="auditRecordInfo">
+                //             <Typography className="taskListTyopgraphy">
+                //                 Date: {audit.auditDate}
+                //             </Typography>
+                //             <Typography>
+                //                 Score: {audit.score}
+                //             </Typography>
+                //             <Typography>
+                //                 Passed? {audit.passed ? "Yes" : "No"}
+                //             </Typography>
+                //         </div>
+                //         <Button
+                //             className={classes.auditRecordButton}
+                //             variant="contained"
+                //             onClick={() => {
+                //                 history.push(`/audit/${audit.id}`)
+                //             }}
+                //         >
+                //             Details
+                //         </Button>
+                //     </Paper>
+                // </Grid>
+                <TableRow>
+                    <TableCell>
+                        {new Date(audit.auditDate).toLocaleDateString()}
+                    </TableCell>
+                    <TableCell>{audit.auditorName}</TableCell>
+                    <TableCell>{audit.score}</TableCell>
+                    <TableCell>{audit.passed ? "Yes" : "No"}</TableCell>
+                    <TableCell>
                         <Button
-                            className={classes.auditRecordButton}
                             variant="contained"
                             onClick={() => {
                                 history.push(`/audit/${audit.id}`)
@@ -68,8 +86,8 @@ export default ({ audit, idx }) => {
                         >
                             Details
                         </Button>
-                    </Paper>
-                </Grid>
+                    </TableCell>
+                </TableRow>
             }
         </>
     )
