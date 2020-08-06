@@ -29,6 +29,7 @@ export default ({ audit, violationCategories, blankViolation, violations, setVio
         <form>
             <h2>Violations</h2>
             <Button variant="outlined" onClick={addViolation}>Add new issue</Button>
+            <br />
             {
                 violations.map((val, idx) => {
                     console.log(idx)

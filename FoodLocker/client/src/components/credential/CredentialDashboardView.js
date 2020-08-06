@@ -74,17 +74,23 @@ export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials })
 
                 <main >
 
-
-                    <List>
-
-                        {employees.map(e => (
+                    {(employees[0]) ?
+                        employees.map(e => (
                             <DashboardEmployee
                                 key={e.id}
                                 employee={e}
                                 credentials={credentials}
                                 getCredentialsByEmployeeId={getCredentialsByEmployeeId}
                             />
-                        ))}
+                        ))
+                        :
+                        <>
+                            <br />
+                            <Typography variant="h5">No employees</Typography>
+                        </>
+                    }
+                    <List>
+
 
                     </List>
                 </main>

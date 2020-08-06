@@ -182,7 +182,11 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                     {
                                         (tasks.length !== 0) ?
                                             <TaskProgress tasks={tasks} />
-                                            : <Typography variant="h5">No current tasks</Typography>
+                                            :
+                                            <>
+                                                <br />
+                                                <Typography variant="h5">No current tasks</Typography>
+                                            </>
                                     }
                                 </Paper>
                                 <br />

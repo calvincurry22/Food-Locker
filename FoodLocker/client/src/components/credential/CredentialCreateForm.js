@@ -44,7 +44,7 @@ export default ({ toggleCredentialModal, saveCredential, employeeObj }) => {
     const classes = useStyles()
     const [credentialName, setCredentialName] = useState("")
     const [renewalFee, setRenewalFee] = useState("")
-    const [selectedDate, setSelectedDate] = useState()
+    const [selectedDate, setSelectedDate] = useState(new Date())
 
     const handleDateChange = (date) => {
         // const dateMod = new Date(date)

@@ -105,46 +105,55 @@ export default ({ audits, barChartView, toggleChartView }) => {
                 </Typography>
                 <Button onClick={toggleChartView} className="auditChartButton" variant="outlined">Toggle Chart</Button>
             </div>
-            {!barChartView &&
+            {(audits[0]) ?
+                <>
+                    {!barChartView &&
 
-                <div className="App">
-                    <Line data={data} options={{
-                        scales: {
-                            yAxes: [{
-                                display: true,
-                                ticks: {
-                                    stepSize: 5,
-                                    maxTicksLimit: 10,    // minimum will be 0, unless there is a lower value.
-                                    // OR //
-                                    beginAtZero: true   // minimum value will be 0.
+                        <div className="App">
+                            <Line data={data} options={{
+                                scales: {
+                                    yAxes: [{
+                                        display: true,
+                                        ticks: {
+                                            stepSize: 5,
+                                            maxTicksLimit: 10,    // minimum will be 0, unless there is a lower value.
+                                            // OR //
+                                            beginAtZero: true   // minimum value will be 0.
+                                        }
+                                    }]
                                 }
-                            }]
-                        }
-                    }} />
-                </div>
-            }
-            {barChartView &&
+                            }} />
+                        </div>
+                    }
+                    {barChartView &&
 
-                <div className={classes.chartJsHeight}>
-                    <Bar
+                        <div className={classes.chartJsHeight}>
+                            <Bar
 
-                        data={data}
-                        options={{
-                            responsive: true,
-                            scales: {
-                                yAxes: [{
-                                    display: true,
-                                    ticks: {
-                                        stepSize: 5,
-                                        maxTicksLimit: 8,    // minimum will be 0, unless there is a lower value.
-                                        // OR //
-                                        beginAtZero: true   // minimum value will be 0.
+                                data={data}
+                                options={{
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                            display: true,
+                                            ticks: {
+                                                stepSize: 5,
+                                                maxTicksLimit: 8,    // minimum will be 0, unless there is a lower value.
+                                                // OR //
+                                                beginAtZero: true   // minimum value will be 0.
+                                            }
+                                        }]
                                     }
-                                }]
-                            }
-                        }}
-                    />
-                </div>
+                                }}
+                            />
+                        </div>
+                    }
+                </>
+                :
+                <>
+                    <br />
+                    <Typography variant="h5">No audits to view</Typography>
+                </>
             }
         </>
     );

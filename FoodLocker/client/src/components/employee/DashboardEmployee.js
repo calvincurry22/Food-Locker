@@ -66,7 +66,7 @@ export default ({ employee, setEmployeeObj, arrayOfEmployeesWithoutCredentials, 
                         </ListItemAvatar>
                         <ListItemText
                             primary={employee.fullName}
-                            secondary={`${credentials.length} credentials, ${expiredList.length} expired`} />
+                            secondary={`${credentials.length} credential(s), ${expiredList.length} expired`} />
                     </ListItem>
                     <Divider />
                 </>

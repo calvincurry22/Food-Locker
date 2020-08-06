@@ -148,7 +148,7 @@ export default () => {
                                         <a className="resourcePageLinks" target="_blank" href="https://www.fsis.usda.gov/wps/portal/fsis/topics/recalls-and-public-health-alerts/current-recalls-and-alerts">USDA Recalls</a>
                                     </Typography>
                                     <Typography>
-                                        Up-to-date of all UDSA food recalls
+                                        Up-to-date record of all UDSA food recalls
                                     </Typography>
                                 </Paper>
                                 <br />
@@ -157,7 +157,7 @@ export default () => {
                                         <a className="resourcePageLinks" target="_blank" href="https://www.fda.gov/safety/recalls-market-withdrawals-safety-alerts">FDA Recalls</a>
                                     </Typography>
                                     <Typography>
-                                        Up-to-date of all FDA food recalls
+                                        Up-to-date record of all FDA food recalls
                                     </Typography>
                                 </Paper>
                                 <br />

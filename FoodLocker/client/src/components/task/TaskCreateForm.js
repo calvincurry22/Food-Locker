@@ -44,7 +44,7 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
     const [taskText, setTaskText] = useState();
     const [expirationDate, setExpirationDate] = useState();
     const classes = useStyles()
-    const [selectedDate, setSelectedDate] = useState(new Date('2020-07-15T21:11:54'));
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [employeeId, setEmployeeId] = useState(0)
 
     const handleDateChange = (date) => {
