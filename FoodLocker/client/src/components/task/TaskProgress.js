@@ -19,7 +19,7 @@ export default ({ tasks }) => {
                         // Customize the path, i.e. the "completed progress"
                         path: {
                             // Path color
-                            stroke: `rgb(255,99,71)`,
+                            stroke: `red`,
                             // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                             strokeLinecap: 'round',
                         },
@@ -36,7 +36,7 @@ export default ({ tasks }) => {
                         // Customize the text
                         text: {
                             // Text color
-                            fill: 'dark gray',
+                            fill: 'dimgray',
                             // Text size
                             fontSize: '16px',
                         },
