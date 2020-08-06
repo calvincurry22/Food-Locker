@@ -63,7 +63,7 @@ export default ({ toggleCredentialModal, saveCredential, employeeObj }) => {
         });
         toggleCredentialModal()
     }
-
+    console.log(employeeObj)
     return (
         <Container component="main" maxWidth="xs">
             <form className={classes.form} onSubmit={e => {
@@ -107,7 +107,6 @@ export default ({ toggleCredentialModal, saveCredential, employeeObj }) => {
                                         format="MM/dd/yyyy"
                                         margin="normal"
                                         id="expirationDate"
-                                        defaultValue="mm/dd/yyyy"
                                         label="Set Expiration Date"
                                         value={selectedDate}
                                         onChange={handleDateChange}

@@ -49,7 +49,8 @@ namespace FoodLocker.Controllers
         public IActionResult Add(Credential c)
         {
             _credentialRepository.Add(c);
-            return CreatedAtAction("Get", new { id = c.Id }, c);
+            return CreatedAtAction(
+                nameof(GetAllCredentialsByEmployeeId), new { id = c.Id }, c);
         }
 
         [HttpDelete("{Id}")]

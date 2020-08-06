@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Header from '../Header';
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress, Tooltip } from '@material-ui/core';
+import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Button, CircularProgress, Tooltip, TableBody, TableHead, TableRow, TableCell, Table, TableContainer } from '@material-ui/core';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -106,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
+        paddingTop: 10
     },
     container: {
         paddingTop: theme.spacing(4),
@@ -120,6 +121,9 @@ const useStyles = makeStyles((theme) => ({
     fixedHeight: {
         height: 270,
     },
+    newEmployeeButton: {
+        marginLeft: '2%'
+    }
 }));
 
 export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials }) => {
@@ -149,18 +153,62 @@ export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials })
         getEmployeesByUserId(currentUser.id);
     }, [])
 
-    useEffect(() => {
-        setEmployeesWithoutCredentials(arrayOfEmployeesWithoutCredentials)
-    }, [])
     return (
         <>
             <div className={classes.root}>
                 <CssBaseline />
                 <SideNav />
                 <main className={classes.content}>
-                    <h2>Manage Employee Credentials</h2>
-                    <Button variant="contained" onClick={toggleEmployeeModal}>New Employee</Button>
-                    <Container maxWidth="lg" className={classes.container}>
+                    <Typography
+                        variant="h4"
+                        align="center"
+                    >
+                        Manage Employee Credentials
+                    </Typography>
+                    <Button
+                        variant="contained"
+                        className={classes.newEmployeeButton}
+                        onClick={toggleEmployeeModal}
+                    >
+                        New Employee
+                    </Button>
+                    <TableContainer component={Paper}>
+                        <Table aria-label="collapsible table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell />
+                                    <TableCell><strong>First Name</strong></TableCell>
+                                    <TableCell><strong>Last Name</strong></TableCell>
+                                    <TableCell><strong>Title</strong></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {employees.map(e => (
+                                    <Employee
+                                        key={e.id}
+                                        employee={e}
+                                        credentials={credentials}
+                                        setEmployeeToDelete={setEmployeeToDelete}
+                                        setEmployeeObj={setEmployeeObj}
+                                        setCredentialObj={setCredentialObj}
+                                        deleteCredential={deleteCredential}
+                                        deleteEmployee={deleteEmployee}
+                                        toggleCredentialModal={toggleCredentialModal}
+                                        toggleEditCredentialModal={toggleEditCredentialModal}
+                                        toggleEmployeeEditModal={toggleEmployeeEditModal}
+                                        toggleDeleteEmployeeModal={toggleDeleteEmployeeModal}
+                                        getCredentialsByEmployeeId={getCredentialsByEmployeeId}
+                                        arrayOfEmployeesWithoutCredentials={arrayOfEmployeesWithoutCredentials}
+                                    />
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+
+                    {/* <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={4}>
                             {
                                 employees.map(e => {
@@ -183,7 +231,7 @@ export default ({ setEmployeesWithoutCredentials, employeesWithoutCredentials })
                                 })
                             }
                         </Grid>
-                    </Container>
+                    </Container> */}
                     <EmployeeCreateModal
                         toggleEmployeeModal={toggleEmployeeModal}
                         saveEmployee={saveEmployee}
