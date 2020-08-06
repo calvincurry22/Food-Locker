@@ -21,7 +21,7 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import FaceIcon from '@material-ui/icons/Face';
+import FaceOutlinedIcon from '@material-ui/icons/FaceOutlined';
 import './Employee.css';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     gold: {
-        color: theme.palette.getContrastText(yellow[600]),
-        backgroundColor: yellow[600],
+        color: theme.palette.getContrastText(yellow[500]),
+        backgroundColor: yellow[500],
     }
 }));
 
@@ -45,16 +45,6 @@ export default ({ employee, setEmployeeObj, arrayOfEmployeesWithoutCredentials, 
     const [credentials, setCredentials] = useState([])
     const [expiredCredentials, setExpiredCredentials] = useState([])
     const { getEmployeesByUserId, getEmployeeById, saveEmployee, updateEmployee, deleteEmployee, employees } = useContext(EmployeeContext)
-    // const { getCredentialsByEmployeeId, getCredentialById, saveCredential, updateCredential, deleteCredential } = useContext(CredentialContext)
-
-    // const removeTask = (id) => {
-    //     deleteTask(id)
-    // }
-
-    // const completeTask = (taskObj) => {
-    //     taskObj.isCompleted = true
-    //     updateTask(taskObj)
-    // }
 
     const today = new Date();
     const expiredList = credentials.filter(c => new Date(c.expirationDate) < today)
@@ -68,21 +58,15 @@ export default ({ employee, setEmployeeObj, arrayOfEmployeesWithoutCredentials, 
         <>
             {credentials &&
                 <>
-                    {
-                        // credentials.map(c => {
-
-
-
-
-                        // })
-                    }
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar className={classes.gold}>
-                                <FaceIcon />
+                                <FaceOutlinedIcon />
                             </Avatar>
                         </ListItemAvatar>
-                        <ListItemText primary={employee.fullName} secondary={`${credentials.length} credentials, ${expiredList.length} expired`} />
+                        <ListItemText
+                            primary={employee.fullName}
+                            secondary={`${credentials.length} credentials, ${expiredList.length} expired`} />
                     </ListItem>
                     <Divider />
                 </>
