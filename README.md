@@ -8,7 +8,7 @@ create tasks for their employees, and receive access to the latest in relevant f
 - C#
 - ASP.NET Web API & Entity Framework for accessing the database
 - SQL Server for database management
-- React using "hooks" for application build
+- React using "hooks" for client-side application build
 - React Router for navigation
 - ChartJs for data visualization
 - Material UI for component design
