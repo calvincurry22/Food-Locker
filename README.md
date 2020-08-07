@@ -4,7 +4,7 @@ to log and track the food safety-related data and performance of their business.
 Users can store health inspection records, manage employee credentials & certifications, 
 create tasks for their employees, and receive access to the latest in relevant food safety information.
 
-## Technoligies Used
+## Technologies Used
 - C#
 - ASP.NET Web API & Entity Framework for accessing the database
 - SQL Server for database management
