@@ -1,4 +1,5 @@
 import React from 'react';
+import './Audit.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -18,36 +19,37 @@ export default ({ audit, violationCategories, violations }) => {
         <>
             <Typography variant="h6" gutterBottom>
                 Review before submission
-             </Typography>
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
-                    <Typography variant="h6" gutterBottom className={classes.title}>
-                        Details
+            </Typography>
+            <div className="auditReviewPage">
+                <Grid container spacing={2}>
+                    <Grid item xs={12} sm={12}>
+                        <Typography variant="h6" gutterBottom className={classes.title}>
+                            Details
                     </Typography>
-                    <Typography gutterBottom>Date: {audit.auditDate}</Typography>
-                    <Typography gutterBottom>Auditor Name: {audit.auditorName}</Typography>
-                    <Typography gutterBottom>Score: {audit.score}</Typography>
-                    <Typography gutterBottom>Passed?: {audit.passed === true ? "Yes" : "No"}</Typography>
+                        <Typography gutterBottom>Date: {audit.auditDate}</Typography>
+                        <Typography gutterBottom>Auditor Name: {audit.auditorName}</Typography>
+                        <Typography gutterBottom>Score: {audit.score}</Typography>
+                        <Typography gutterBottom>Passed?: {audit.passed === true ? "Yes" : "No"}</Typography>
+                    </Grid>
                 </Grid>
-            </Grid>
-            <Typography variant="h6" gutterBottom className={classes.title}>
-                Violations
+                <Typography variant="h6" gutterBottom className={classes.title}>
+                    Violations
                 </Typography>
-            <List disablePadding>
-                {violations.map((v, idx) => {
-                    const category = violationCategories.find(c => c.id === v.violationCategoryId)
+                <List disablePadding>
+                    {violations.map((v, idx) => {
+                        const category = violationCategories.find(c => c.id === v.violationCategoryId)
 
-                    return (
-                        <React.Fragment key={v.id}>
-                            <Typography variant="h6">Issue #{idx + 1}</Typography>
-                            <Typography>Description: {v.description}</Typography>
-                            <Typography>Category: {category.name}</Typography>
-                            <Typography>Critical Issue?: {v.isCritical}</Typography>
-                        </React.Fragment>
-                    )
-                })}
-            </List>
-
+                        return (
+                            <React.Fragment key={v.id}>
+                                <Typography variant="h6">Issue #{idx + 1}</Typography>
+                                <Typography>Description: {v.description}</Typography>
+                                <Typography>Category: {category.name}</Typography>
+                                <Typography>Critical Issue?: {v.isCritical}</Typography>
+                            </React.Fragment>
+                        )
+                    })}
+                </List>
+            </div>
         </>
     );
 }

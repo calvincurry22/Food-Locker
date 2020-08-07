@@ -18,13 +18,6 @@ import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '} FoodLocker {new Date().getFullYear()} {'.'}
-        </Typography>
-    );
-}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -210,7 +203,6 @@ export default () => {
                                     )}
                             </>
                         </Paper>
-                        <Copyright />
                     </Container>
                 </main>
             </div>

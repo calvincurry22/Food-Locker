@@ -1,5 +1,16 @@
 import React, { useRef } from 'react';
-import { Grid, FormControlLabel, FormControl, RadioGroup, Radio, FormLabel, TextField, Select, Button } from '@material-ui/core';
+import './Audit.css';
+import {
+    Grid,
+    Radio,
+    Button,
+    Select,
+    FormLabel,
+    TextField,
+    RadioGroup,
+    FormControl,
+    FormControlLabel,
+} from '@material-ui/core';
 
 
 export default ({ violationCategories, blankViolation, violations, setViolations }) => {
@@ -21,7 +32,7 @@ export default ({ violationCategories, blankViolation, violations, setViolations
     };
 
     return (
-        <form>
+        <form className="violationsForm">
             <h2>Violations</h2>
             <Button variant="outlined" onClick={addViolation}>Add new issue</Button>
             <br />

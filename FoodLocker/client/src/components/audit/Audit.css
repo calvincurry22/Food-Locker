@@ -15,3 +15,15 @@
 .auditDetailsButton {
     background-color: tomato !important;
 }
+
+.violationsForm {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 320px;
+}
+
+.auditReviewPage {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 320px;
+}

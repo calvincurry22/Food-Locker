@@ -18,7 +18,7 @@ export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserContext);
     const [barChartView, setBarChartView] = useState(true)
     const toggleChartView = () => setBarChartView(!barChartView)
-
+    console.log(React.version)
     return (
         <main>
             <Switch>
