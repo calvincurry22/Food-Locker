@@ -17,6 +17,7 @@ import { AuditContext } from '../../providers/AuditProvider';
 import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 
+
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">

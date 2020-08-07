@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import clsx from 'clsx';
 import AuditDetailsCharts from './AuditDetailsCharts';
 import { useParams, useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -40,11 +39,9 @@ export default () => {
     const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
 
     useEffect(() => {
-        {
-            getAuditById(parsedId)
-            getViolationsByAuditId(parsedId)
-            getAllViolationCategories()
-        }
+        getAuditById(parsedId)
+        getViolationsByAuditId(parsedId)
+        getAllViolationCategories()
     }, [])
 
     return (

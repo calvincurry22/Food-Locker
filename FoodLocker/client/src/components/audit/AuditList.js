@@ -1,7 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
 import { AuditContext } from '../../providers/AuditProvider';
-import { UserContext } from '../../providers/UserProvider';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';

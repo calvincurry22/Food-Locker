@@ -1,30 +1,31 @@
 import React, { useState, useEffect, useContext } from 'react';
-import "./dashboard/Dashboard.css";
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, Backdrop, CircularProgress } from '@material-ui/core';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import CardMembershipIcon from '@material-ui/icons/CardMembership';
 import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
 import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { Link, useHistory } from 'react-router-dom';
-import { UserContext } from '../providers/UserProvider';
 import DashboardOutlinedIcon from '@material-ui/icons/DashboardOutlined';
+import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
+import CardMembershipIcon from '@material-ui/icons/CardMembership';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { UserContext } from '../providers/UserProvider';
+import TimelineIcon from '@material-ui/icons/Timeline';
+import { makeStyles } from '@material-ui/core/styles';
+import IconButton from '@material-ui/core/IconButton';
+import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
+import { useHistory } from 'react-router-dom';
+import "./dashboard/Dashboard.css";
+import clsx from 'clsx';
+import {
+    List,
+    Avatar,
+    Backdrop,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+    ListItemAvatar,
+    CircularProgress
+} from '@material-ui/core';
 
 const drawerWidth = 270;
 //test comment

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { CredentialContext } from '../../providers/CredentialProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
 import DashboardEmployee from '../employee/DashboardEmployee';
-import { UserContext } from '../../providers/UserProvider';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 

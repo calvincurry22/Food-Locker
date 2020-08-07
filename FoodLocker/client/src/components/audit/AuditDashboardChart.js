@@ -1,7 +1,5 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
-import { AuditContext } from '../../providers/AuditProvider';
-import { AuditViolationContext } from '../../providers/AuditViolationProvider';
+import React from 'react';
+import { Line, Bar } from "react-chartjs-2";
 import { makeStyles, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
@@ -76,7 +74,7 @@ export default ({ audits, barChartView, toggleChartView }) => {
     }
 
     const auditDates = audits.map(a => {
-        test(a)
+        return test(a)
     })
 
 
