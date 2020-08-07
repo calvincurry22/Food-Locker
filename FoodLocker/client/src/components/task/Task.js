@@ -1,23 +1,10 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import "./Task.css";
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox, Divider } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: "column",
-    },
-    fixedHeight: {
-        height: 270,
-    },
-    buttonColor: {
-        backgroundColor: '#32CD32'
-    },
     cardspace: {
         display: "flex",
         minHeight: 200,
@@ -26,18 +13,12 @@ const useStyles = makeStyles((theme) => ({
         position: "relative",
         paddingLeft: 15,
         paddingTop: 5
-    },
-    buttons: {
-        position: "absolute",
-        bottom: 0
     }
 }));
 
-export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal, setTaskObj }) => {
+export default ({ task, updateTask, deleteTask, toggleEditTaskModal, setTaskObj }) => {
     const date = new Date(task.expirationDate).toLocaleDateString()
     const classes = useStyles()
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-    const [isChecked, setIsChecked] = useState(false)
 
     const removeTask = (id) => {
         deleteTask(id)
@@ -47,6 +28,7 @@ export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal
         taskObj.isCompleted = true
         updateTask(taskObj)
     }
+
     return (
         <>
             {task &&
@@ -56,7 +38,8 @@ export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal
                             <strong>Task:</strong> {task.text}
                         </Typography>
                         <Typography>
-                            <strong>Assigned To:</strong> {task.employee.firstName + " " + task.employee.lastName} <br />
+                            <strong>Assigned To:</strong>
+                            {task.employee.firstName + " " + task.employee.lastName} <br />
                         </Typography>
                         <Typography>
                             <strong>Expiration Date:</strong> {date}
@@ -81,7 +64,10 @@ export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal
                                 variant="contained"
                                 color="secondary"
                                 className="deleteButton"
-                                onClick={() => removeTask(task.id)}>Delete</Button>
+                                onClick={() => removeTask(task.id)}
+                            >
+                                Delete
+                            </Button>
                         </div>
                     </Paper>
                 </Grid>

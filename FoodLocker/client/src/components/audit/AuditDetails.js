@@ -1,14 +1,12 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link, useHistory } from 'react-router-dom';
-import { AuditContext } from '../../providers/AuditProvider';
-import { Grid, Paper, Typography, Button, makeStyles, IconButton, Container, Divider } from '@material-ui/core';
+import React, { useContext, useEffect } from 'react';
 import clsx from 'clsx';
-import { AuditViolationContext } from '../../providers/AuditViolationProvider';
-import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import DeleteForeverOutlinedIcon from '@material-ui/icons/DeleteForeverOutlined';
 import AuditDetailsCharts from './AuditDetailsCharts';
-import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
+import { useParams, useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import { AuditContext } from '../../providers/AuditProvider';
+import { AuditViolationContext } from '../../providers/AuditViolationProvider';
+import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
+import { Grid, Paper, Typography, Button, makeStyles, Container, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -17,17 +15,7 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'auto',
         flexDirection: 'column',
     },
-    fixedHeight: {
-        height: 270,
-    },
-    buttonColor: {
-        backgroundColor: '#32CD32'
-    },
     gridContainer: {
-        display: 'flex',
-        flexDirection: 'row'
-    },
-    chartWrapper: {
         display: 'flex',
         flexDirection: 'row'
     },
@@ -35,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "whitesmoke",
         flexGrow: 1,
         paddingTop: 10,
-
     },
     backButton: {
         marginLeft: "1%"
@@ -43,15 +30,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default () => {
+    let i = 0;
     const { id } = useParams()
+    const classes = useStyles()
     const history = useHistory()
     const parsedId = parseInt(id)
-    const classes = useStyles()
     const { getAuditById, audit } = useContext(AuditContext)
     const { auditViolations, getViolationsByAuditId } = useContext(AuditViolationContext)
     const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-    let i = 0;
 
     useEffect(() => {
         {
@@ -97,10 +83,18 @@ export default () => {
                                             {
                                                 auditViolations.map(a => (
                                                     <Grid item xs={12} sm={12} md={6} lg={6} key={a.id}>
-                                                        <Typography><strong>Violation # {i += 1}</strong></Typography>
-                                                        <Typography>Category: {a.violationCategory.name}</Typography>
-                                                        <Typography>Issue: {a.description}</Typography>
-                                                        <Typography>Critical issue ? : {a.isCritical ? "Yes" : "No"}</Typography><br />
+                                                        <Typography>
+                                                            <strong>Violation # {i += 1}</strong>
+                                                        </Typography>
+                                                        <Typography>
+                                                            Category: {a.violationCategory.name}
+                                                        </Typography>
+                                                        <Typography>
+                                                            Issue: {a.description}
+                                                        </Typography>
+                                                        <Typography>
+                                                            Critical issue ? : {a.isCritical ? "Yes" : "No"}
+                                                        </Typography><br />
                                                     </Grid>
                                                 ))
                                             }
@@ -110,7 +104,10 @@ export default () => {
                                 <Divider />
                                 <h2>Charts</h2>
                                 <Grid container spacing={3}>
-                                    <AuditDetailsCharts violations={auditViolations} violationCategories={violationCategories} />
+                                    <AuditDetailsCharts
+                                        violations={auditViolations}
+                                        violationCategories={violationCategories}
+                                    />
                                 </Grid>
                             </Paper>
                         </Grid>

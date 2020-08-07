@@ -1,54 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, makeStyles, Grid, TextField, Button } from '@material-ui/core';
-import { TaskContext } from '../../providers/TaskProvider';
-import { EmployeeContext } from '../../providers/EmployeeProvider';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import clsx from 'clsx';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker,
 } from '@material-ui/pickers';
-import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.secondary.main,
-        backgroundColor: "#32CD32"
-    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
-    },
-    submit: {
-        margin: theme.spacing(3, 0, 2),
-    },
+    }
 }));
 
 export default ({ toggleEditCredentialModal, updateCredential, credentialObj }) => {
-    const { getEmployeesByUserId, employees } = useContext(EmployeeContext);
-    const [taskText, setTaskText] = useState();
-    const [expirationDate, setExpirationDate] = useState();
     const classes = useStyles()
     const [selectedDate, setSelectedDate] = React.useState(new Date(credentialObj.expirationDate));
-    const [employeeId, setEmployeeId] = useState(0)
     const [updatedCredential, setCredential] = useState(credentialObj);
-    const history = useHistory()
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -89,27 +57,28 @@ export default ({ toggleEditCredentialModal, updateCredential, credentialObj }) 
                     <Grid item xs={12} sm={6}>
                         <TextField
                             onChange={handleControlledInputChange}
+                            defaultValue={credentialObj.name}
                             autoComplete="cname"
+                            id="credentialName"
                             name="name"
+                            label="Title"
                             variant="outlined"
                             required
-                            defaultValue={credentialObj.name}
                             fullWidth
-                            id="credentialName"
                             autoFocus
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
                         <TextField
                             onChange={handleControlledInputChange}
+                            defaultValue={credentialObj.renewalFee}
                             autoComplete="fee"
+                            id="renewalFee"
                             name="renewalFee"
+                            label="Renewal Fee"
                             variant="outlined"
                             required
-                            defaultValue={credentialObj.renewalFee}
                             fullWidth
-                            id="renewalFee"
-                            autoFocus
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -117,11 +86,11 @@ export default ({ toggleEditCredentialModal, updateCredential, credentialObj }) 
                             <Grid container justify="space-around">
                                 <KeyboardDatePicker
                                     disableToolbar
+                                    margin="normal"
                                     variant="inline"
                                     format="MM/dd/yyyy"
-                                    name="expirationDate"
-                                    margin="normal"
                                     id="expirationDate"
+                                    name="expirationDate"
                                     value={selectedDate}
                                     onChange={handleDateChange}
                                     KeyboardButtonProps={{

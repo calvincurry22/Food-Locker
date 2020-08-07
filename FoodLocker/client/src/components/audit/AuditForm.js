@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import { InputLabel, FormLabel, FormControl, Radio, RadioGroup } from '@material-ui/core';
 
 export default ({ value, setValue, audit, setAudit }) => {
@@ -16,18 +15,14 @@ export default ({ value, setValue, audit, setAudit }) => {
             newAudit[event.target.name] = event.target.value;
         }
         setAudit(newAudit);
-        console.log(audit);
     };
 
     const handleChange = (event) => {
-        console.log(event.target.value);
         setValue(event.target.value);
-        console.log(value);
     };
 
     return (
         <>
-
             <Typography variant="h6" gutterBottom>
                 Details
             </Typography>
@@ -72,10 +67,25 @@ export default ({ value, setValue, audit, setAudit }) => {
                 </Grid>
                 <Grid item xs={6} sm={6}>
                     <FormControl component="fieldset">
-                        <FormLabel component="legend">Result Status</FormLabel>
-                        <RadioGroup aria-label="passed" name="passed" value={value} onChange={handleChange}>
-                            <FormControlLabel value='pass' control={<Radio />} label="Pass" />
-                            <FormControlLabel value='fail' control={<Radio />} label="Fail" />
+                        <FormLabel component="legend">
+                            Result Status
+                        </FormLabel>
+                        <RadioGroup
+                            aria-label="passed"
+                            name="passed"
+                            value={value}
+                            onChange={handleChange}
+                        >
+                            <FormControlLabel
+                                value='pass'
+                                control={<Radio />}
+                                label="Pass"
+                            />
+                            <FormControlLabel
+                                value='fail'
+                                control={<Radio />}
+                                label="Fail"
+                            />
                         </RadioGroup>
                     </FormControl>
                 </Grid>

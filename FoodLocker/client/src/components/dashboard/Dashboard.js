@@ -1,42 +1,20 @@
-import React, { useState, useEffect, useContext } from 'react';
-import Header from '../Header';
-import "./Dashboard.css";
-import { Container, Paper, Grid, List, ListItem, ListItemText, ListItemIcon, ListItemAvatar, Avatar, CircularProgress, Button } from '@material-ui/core';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Drawer from '@material-ui/core/Drawer';
-import Box from '@material-ui/core/Box';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import TimelineIcon from '@material-ui/icons/Timeline';
-import CardMembershipIcon from '@material-ui/icons/CardMembership';
-import AssignmentTurnedInOutlinedIcon from '@material-ui/icons/AssignmentTurnedInOutlined';
-import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
-import { Link } from 'react-router-dom';
-import { UserContext } from '../../providers/UserProvider';
-import SideNav from '../SideNav';
-import { TaskContext } from '../../providers/TaskProvider';
-import { CredentialContext } from '../../providers/CredentialProvider';
+import React, { useEffect, useContext } from 'react';
+import CredentialDashboardView from '../credential/CredentialDashboardView';
+import DashboardResources from '../foodSafetyResources/DashboardResources';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
 import AuditDashboardChart from '../audit/AuditDashboardChart';
 import { AuditContext } from '../../providers/AuditProvider';
+import { Container, Paper, Grid } from '@material-ui/core';
+import { TaskContext } from '../../providers/TaskProvider';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import TaskProgress from '../task/TaskProgress';
-import AccountEditModal from '../account/AccountEditModal';
-import DashboardResources from '../foodSafetyResources/DashboardResources';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import CredentialList from '../credential/CredentialList';
-import CredentialDashboardView from '../credential/CredentialDashboardView';
+import SideNav from '../SideNav';
+import "./Dashboard.css";
+import clsx from 'clsx';
+
+
 
 const drawerWidth = 270;
 //test comment
@@ -45,67 +23,6 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
-    large: {
-        width: theme.spacing(10),
-        height: theme.spacing(10),
-    },
-    toolbar: {
-        paddingRight: 24, // keep right padding when drawer closed
-    },
-    toolbarIcon: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        padding: '0 8px',
-        ...theme.mixins.toolbar,
-    },
-    appBar: {
-        zIndex: theme.zIndex.drawer + 1,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-
-        }),
-        boxShadow: "10px 10px 5px 0px rgba(0,0,0,0.21)"
-    },
-    appBarShift: {
-        marginLeft: drawerWidth,
-        width: `calc(100% - ${drawerWidth}px)`,
-        transition: theme.transitions.create(['width', 'margin'], {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    menuButton: {
-        marginRight: 36,
-    },
-    menuButtonHidden: {
-        display: 'none',
-    },
-    title: {
-        flexGrow: 1,
-    },
-    drawerPaper: {
-        position: 'relative',
-        whiteSpace: 'nowrap',
-        width: drawerWidth,
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-    },
-    drawerPaperClose: {
-        overflowX: 'hidden',
-        transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        width: theme.spacing(7),
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9),
-        },
-    },
-    appBarSpacer: theme.mixins.toolbar,
     content: {
         backgroundColor: "#EBECF0",
         flexGrow: 1,
@@ -134,21 +51,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default ({ barChartView, setBarChartView, toggleChartView, accountEditModal, toggleAccountEditModal, employeesWithoutCredentials }) => {
+export default ({ barChartView, toggleChartView }) => {
     const classes = useStyles()
-    const [open, setOpen] = React.useState(true)
-    const { logout, getUserProfile, getAllUserProfiles, updateUser, users } = useContext(UserContext)
-    const { getIncompleteTasksByUserId, getTasksByUserId, tasks } = useContext(TaskContext)
-    const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
-    const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
+    const { getTasksByUserId, tasks } = useContext(TaskContext)
+    const { getEmployeesByUserId } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
-    const { audits, getAuditsByUserId, getAuditById, saveAudit, updateAudit, deleteAudit } = useContext(AuditContext)
+    const { audits, getAuditsByUserId } = useContext(AuditContext)
     const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
     const chartHeightPaper = clsx(classes.paper, classes.chartHeight)
     const resourcesHeightPaper = clsx(classes.paper, classes.resourcesHeight)
-    const [credentialProgress, setCredentialProgress] = useState([])
-    let arrayofEmployees = []
-
 
 
     useEffect(() => {
@@ -161,13 +72,17 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
         <>
             <div className={classes.root}>
                 <CssBaseline />
-                <SideNav toggleAccountEditModal={toggleAccountEditModal} />
+                <SideNav />
                 <main className={classes.content}>
                     <Container maxWidth="lg" className={classes.container}>
                         <Grid container spacing={3}>
                             <Grid item xs={12} md={8} lg={8}>
                                 <Paper className={chartHeightPaper} elevation={3}>
-                                    <AuditDashboardChart audits={audits} barChartView={barChartView} toggleChartView={toggleChartView} />
+                                    <AuditDashboardChart
+                                        audits={audits}
+                                        barChartView={barChartView}
+                                        toggleChartView={toggleChartView}
+                                    />
                                 </Paper>
                                 <br />
                                 <Paper className={resourcesHeightPaper} elevation={3}>
@@ -185,7 +100,9 @@ export default ({ barChartView, setBarChartView, toggleChartView, accountEditMod
                                             :
                                             <>
                                                 <br />
-                                                <Typography variant="h5">No current tasks</Typography>
+                                                <Typography variant="h5">
+                                                    No current tasks
+                                                </Typography>
                                             </>
                                     }
                                 </Paper>

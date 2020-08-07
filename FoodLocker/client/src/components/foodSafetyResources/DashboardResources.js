@@ -1,6 +1,6 @@
 import React from 'react';
-import { Typography, List, ListItem, Divider } from '@material-ui/core';
 import './FoodSafetyResources.css';
+import { Typography, List, ListItem, Divider } from '@material-ui/core';
 
 export default () => {
 
@@ -48,7 +48,6 @@ export default () => {
                 <Divider />
                 <ListItem><a className="dashboardLinks" target="_blank" href="https://www.fda.gov/food/fda-food-code/state-retail-and-food-service-codes-and-regulations-state">Information on food regulations by state</a></ListItem>
             </List>
-
         </>
     )
 }

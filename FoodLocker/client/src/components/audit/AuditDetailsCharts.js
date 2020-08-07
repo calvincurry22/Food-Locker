@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
+import React from 'react';
+import { Pie, Doughnut } from "react-chartjs-2";
 import { Grid } from '@material-ui/core';
 import './Audit.css';
 
 export default ({ violations, violationCategories }) => {
+    const doughnutChartPercentages = []
+    const doughnutChartCategoryNames = []
     const criticals = violations.filter(v => v.isCritical === true)
     const nonCriticals = violations.filter(v => v.isCritical === false)
     const criticalsPercentage = Math.round((criticals.length / violations.length) * 100)
     const nonCriticalsPercentage = Math.round((nonCriticals.length / violations.length) * 100)
-    const doughnutChartCategoryNames = []
-    const doughnutChartPercentages = []
 
 
     violationCategories.map(vc => {
@@ -22,7 +22,6 @@ export default ({ violations, violationCategories }) => {
             doughnutChartCategoryNames.push(vc.name)
         }
     })
-
 
     const pieData = {
         labels: ['Critical', 'Non-critical'],
@@ -47,6 +46,7 @@ export default ({ violations, violationCategories }) => {
             }
         ]
     }
+
     const doughnutData = {
         labels: doughnutChartCategoryNames,
         datasets: [

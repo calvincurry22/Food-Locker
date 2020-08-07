@@ -1,13 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, makeStyles, Grid, TextField, Button } from '@material-ui/core';
-import { TaskContext } from '../../providers/TaskProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import clsx from 'clsx';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
@@ -15,21 +11,6 @@ import {
 } from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.secondary.main,
-        backgroundColor: "#32CD32"
-    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
@@ -40,12 +21,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default ({ toggleTaskModal, currentUser, saveTask }) => {
-    const { getEmployeesByUserId, employees } = useContext(EmployeeContext);
-    const [taskText, setTaskText] = useState();
-    const [expirationDate, setExpirationDate] = useState();
-    const classes = useStyles()
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
+    const [selectedDate, setSelectedDate] = useState(new Date())
     const [employeeId, setEmployeeId] = useState(0)
+    const [taskText, setTaskText] = useState()
+    const classes = useStyles()
 
     const handleDateChange = (date) => {
         const dateMod = new Date(date)
@@ -117,7 +97,9 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
                         </MuiPickersUtilsProvider>
                         <Grid item xs={12} sm={12}>
                             <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="employee">Assign To</InputLabel>
+                                <InputLabel htmlFor="employee">
+                                    Assign To
+                                </InputLabel>
                                 <Select
                                     native="true"
                                     variant="outlined"
@@ -130,14 +112,22 @@ export default ({ toggleTaskModal, currentUser, saveTask }) => {
                                 >
                                     <option aria-label="None" value="" />
                                     {
-                                        employees.map(e => {
-                                            return <option key={e.id} value={e.id}>{e.firstName} {e.lastName}</option>
-                                        })
+                                        employees.map(e => (
+                                            <option key={e.id} value={e.id}>
+                                                {e.firstName} {e.lastName}
+                                            </option>
+                                        ))
                                     }
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button type="submit" variant="contained">Save</Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            className={classes.submit}
+                        >
+                            Save
+                        </Button>
                     </Grid>
                 </Grid>
             </form>

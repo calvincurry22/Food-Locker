@@ -59,7 +59,14 @@ export default function ApplicationViews() {
                 </Route>
 
                 <Route path="/credentials">
-                    {isLoggedIn ? <CredentialList user={user} employeesWithoutCredentials={employeesWithoutCredentials} setEmployeesWithoutCredentials={setEmployeesWithoutCredentials} /> : <Redirect to="/login" />}
+                    {isLoggedIn ?
+                        <CredentialList
+                            user={user}
+                            employeesWithoutCredentials={employeesWithoutCredentials}
+                            setEmployeesWithoutCredentials={setEmployeesWithoutCredentials}
+                        />
+                        : <Redirect to="/login" />
+                    }
                 </Route>
 
                 <Route path="/audits">

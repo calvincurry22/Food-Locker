@@ -1,15 +1,15 @@
 import React from 'react';
+import ViolationCategoryProvider from './providers/ViolationCategoryProvider';
+import AuditViolationProvider from './providers/AuditViolationProvider';
+import CredentialProvider from './providers/CredentialProvider';
+import EmployeeProvider from './providers/EmployeeProvider';
 import ApplicationViews from "./components/ApplicationViews";
 import { BrowserRouter as Router } from "react-router-dom";
-import './App.css';
 import { UserProvider } from './providers/UserProvider';
-import Header from './components/Header';
-import TaskProvider from './providers/TaskProvider';
-import EmployeeProvider from './providers/EmployeeProvider';
-import CredentialProvider from './providers/CredentialProvider';
 import AuditProvider from './providers/AuditProvider';
-import AuditViolationProvider from './providers/AuditViolationProvider';
-import ViolationCategoryProvider from './providers/ViolationCategoryProvider';
+import TaskProvider from './providers/TaskProvider';
+import Header from './components/Header';
+import './App.css';
 
 function App() {
   return (

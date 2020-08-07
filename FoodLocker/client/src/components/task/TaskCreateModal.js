@@ -1,11 +1,9 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import Backdrop from '@material-ui/core/Backdrop';
-import Fade from '@material-ui/core/Fade';
 import TaskCreateForm from './TaskCreateForm';
-import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 import { IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import CloseOutlinedIcon from '@material-ui/icons/CloseOutlined';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -23,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default ({ toggleTaskModal, taskModal, currentUser, saveTask }) => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
 
     return (
         <div>

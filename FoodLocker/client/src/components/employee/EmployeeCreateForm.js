@@ -1,35 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, makeStyles, Grid, TextField, Button } from '@material-ui/core';
-import { TaskContext } from '../../providers/TaskProvider';
-import { EmployeeContext } from '../../providers/EmployeeProvider';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import clsx from 'clsx';
-import DateFnsUtils from '@date-io/date-fns';
-import {
-    MuiPickersUtilsProvider,
-    KeyboardDatePicker,
-} from '@material-ui/pickers';
+
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.secondary.main,
-        backgroundColor: "#32CD32"
-    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(3),
@@ -87,7 +60,6 @@ export default ({ toggleEmployeeModal, currentUser, saveEmployee }) => {
                             fullWidth
                             id="lastName"
                             label="Last Name"
-
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -103,7 +75,13 @@ export default ({ toggleEmployeeModal, currentUser, saveEmployee }) => {
                         />
                     </Grid>
                 </Grid>
-                <Button type="submit" variant="contained" className={classes.submit}>Save</Button>
+                <Button
+                    type="submit"
+                    variant="contained"
+                    className={classes.submit}
+                >
+                    Save
+                </Button>
             </form>
         </Container >
     )

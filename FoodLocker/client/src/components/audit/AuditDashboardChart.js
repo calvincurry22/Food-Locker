@@ -7,9 +7,6 @@ import { makeStyles, Typography, Button } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     chartJsHeight: {
         height: 100
-    },
-    chartTitle: {
-        marginRight: 30
     }
 }))
 
@@ -84,7 +81,6 @@ export default ({ audits, barChartView, toggleChartView }) => {
 
 
     const data = {
-        // labels: ['Jan', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         labels: chartLabels,
         datasets: [
             {
@@ -103,7 +99,13 @@ export default ({ audits, barChartView, toggleChartView }) => {
                 <Typography variant="h6" align="left">
                     Audit Records
                 </Typography>
-                <Button onClick={toggleChartView} className="auditChartButton" variant="outlined">Toggle Chart</Button>
+                <Button
+                    onClick={toggleChartView}
+                    className="auditChartButton"
+                    variant="outlined"
+                >
+                    Toggle Chart
+                </Button>
             </div>
             {(audits[0]) ?
                 <>
@@ -129,7 +131,6 @@ export default ({ audits, barChartView, toggleChartView }) => {
 
                         <div className={classes.chartJsHeight}>
                             <Bar
-
                                 data={data}
                                 options={{
                                     responsive: true,
