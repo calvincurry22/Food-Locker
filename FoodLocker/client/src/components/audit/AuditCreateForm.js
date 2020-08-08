@@ -80,12 +80,11 @@ export default () => {
 
     const steps = ['Audit Info', 'Violations', 'Review Audit Record'];
 
-    const [value, setValue] = useState('pass');
     const [audit, setAudit] = useState({
         auditorName: '',
         auditDate: '',
         score: '',
-        passed: (value === 'pass') ? true : false,
+        passed: '',
         userId: currentUser.id
     })
 
@@ -98,9 +97,7 @@ export default () => {
             case 0:
                 return <AuditForm
                     audit={audit}
-                    value={value}
                     setAudit={setAudit}
-                    setValue={setValue}
                 />
             case 1:
                 return <AuditViolationsForm
@@ -131,6 +128,11 @@ export default () => {
     }
 
     const createNewRecord = (auditObj, violationArray) => {
+        if (auditObj.passed === 'pass') {
+            auditObj.passed = true
+        } else {
+            auditObj.passed = false
+        }
         saveAudit(auditObj)
             .then(r => {
                 violationArray.map(v => {

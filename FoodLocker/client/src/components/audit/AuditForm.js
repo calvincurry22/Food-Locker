@@ -73,8 +73,8 @@ export default ({ value, setValue, audit, setAudit }) => {
                         <RadioGroup
                             aria-label="passed"
                             name="passed"
-                            value={value}
-                            onChange={handleChange}
+                            defaultValue={audit.passed}
+                            onChange={handleControlledInputChange}
                         >
                             <FormControlLabel
                                 value='pass'

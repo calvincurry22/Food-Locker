@@ -29,7 +29,7 @@ export default ({ audit, violationCategories, violations }) => {
                         <Typography gutterBottom>Date: {audit.auditDate}</Typography>
                         <Typography gutterBottom>Auditor Name: {audit.auditorName}</Typography>
                         <Typography gutterBottom>Score: {audit.score}</Typography>
-                        <Typography gutterBottom>Passed?: {audit.passed === true ? "Yes" : "No"}</Typography>
+                        <Typography gutterBottom>Passed?: {audit.passed === 'pass' ? "Yes" : "No"}</Typography>
                     </Grid>
                 </Grid>
                 <Typography variant="h6" gutterBottom className={classes.title}>
