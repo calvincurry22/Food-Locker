@@ -1,30 +1,24 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import "./Task.css";
 import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
-import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
+import { Grid, Paper, Typography, Button, FormControlLabel, Checkbox, Divider } from '@material-ui/core';
+
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        padding: theme.spacing(2),
-        display: 'flex',
-        overflow: 'auto',
-        flexDirection: 'column',
-    },
-    fixedHeight: {
-        height: 270,
-    },
-    buttonColor: {
-        backgroundColor: '#32CD32'
+    cardspace: {
+        display: "flex",
+        minHeight: 200,
+        wordWrap: "break-word",
+        flexDirection: "column",
+        position: "relative",
+        paddingLeft: 15,
+        paddingTop: 5
     }
 }));
 
-export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal, setTaskObj }) => {
+export default ({ task, updateTask, deleteTask, toggleEditTaskModal, setTaskObj }) => {
     const date = new Date(task.expirationDate).toLocaleDateString()
     const classes = useStyles()
-    const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
-    const [isChecked, setIsChecked] = useState(false)
 
     const removeTask = (id) => {
         deleteTask(id)
@@ -34,27 +28,47 @@ export default ({ task, updateTask, deleteTask, currentUser, toggleEditTaskModal
         taskObj.isCompleted = true
         updateTask(taskObj)
     }
+
     return (
         <>
             {task &&
-                <Grid item xs={12} md={4} lg={3}>
-                    <Paper className={fixedHeightPaper}>
-                        <Typography className="taskListTyopgraphy">
-                            Task: {task.text} <br />
-                    Assigned To: {task.employee.firstName + " " + task.employee.lastName} <br />
-                    Expiration Date: {date}
+                <Grid item xs={12} md={4} lg={4}>
+                    <Paper className={classes.cardspace}>
+                        <Typography>
+                            <strong>Task:</strong> {task.text}
                         </Typography>
+                        <Typography>
+                            <strong>Assigned To:</strong>
+                            {task.employee.firstName + " " + task.employee.lastName} <br />
+                        </Typography>
+                        <Typography>
+                            <strong>Expiration Date:</strong> {date}
+                        </Typography>
+                        <Divider />
                         <FormControlLabel
-                            control={<Checkbox name="checkedA" color="primary" onChange={() => completeTask(task)} />}
+                            control={<Checkbox name="checkedA" color="primary"
+                                onChange={() => completeTask(task)} />}
                             label="Mark as completed"
                         />
-                        <Button variant="contained" onClick={() => {
-                            setTaskObj(task)
-                            toggleEditTaskModal()
-                        }}>
-                            Edit
-                        </Button>
-                        <Button variant="contained" color="secondary" onClick={() => removeTask(task.id)}>Delete</Button>
+                        <div className="editDeleteButtonsContainer">
+                            <Button
+                                className="editButton"
+                                variant="contained"
+                                onClick={() => {
+                                    setTaskObj(task)
+                                    toggleEditTaskModal()
+                                }}>
+                                Edit
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="secondary"
+                                className="deleteButton"
+                                onClick={() => removeTask(task.id)}
+                            >
+                                Delete
+                            </Button>
+                        </div>
                     </Paper>
                 </Grid>
             }

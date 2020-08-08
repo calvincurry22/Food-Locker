@@ -1,13 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Container, makeStyles, Grid, TextField, Button } from '@material-ui/core';
-import { TaskContext } from '../../providers/TaskProvider';
 import { EmployeeContext } from '../../providers/EmployeeProvider';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import clsx from 'clsx';
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
@@ -15,20 +10,9 @@ import {
 } from '@material-ui/pickers';
 
 const useStyles = makeStyles((theme) => ({
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.secondary.main,
-        backgroundColor: "#32CD32"
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -40,13 +24,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
-    const { getEmployeesByUserId, employees } = useContext(EmployeeContext);
-    const [taskText, setTaskText] = useState();
-    const [expirationDate, setExpirationDate] = useState();
     const classes = useStyles()
-    const [selectedDate, setSelectedDate] = React.useState(new Date(taskObj.expirationDate));
-    const [employeeId, setEmployeeId] = useState(0)
     const [updatedTask, setTask] = useState(taskObj);
+    const { getEmployeesByUserId, employees } = useContext(EmployeeContext);
+    const [selectedDate, setSelectedDate] = React.useState(new Date(taskObj.expirationDate));
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -58,10 +39,6 @@ export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
         const newTask = Object.assign({}, updatedTask);
         newTask.expirationDate = formattedDate;
         setTask(newTask);
-    }
-
-    const handleNameChange = (event) => {
-        setEmployeeId(event.target.value)
     }
 
     const editTask = () => {
@@ -97,7 +74,7 @@ export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
                     <Grid item xs={12} sm={6}>
                         <TextField
                             onChange={handleControlledInputChange}
-                            autoComplete="fname"
+                            autoComplete="text"
                             name="text"
                             variant="outlined"
                             required
@@ -129,7 +106,6 @@ export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
                         </MuiPickersUtilsProvider>
                         <Grid item xs={12} sm={12}>
                             <FormControl className={classes.formControl}>
-                                {/* <InputLabel htmlFor="employee">Assign To</InputLabel> */}
                                 <Select
                                     native="true"
                                     variant="outlined"
@@ -140,18 +116,29 @@ export default ({ toggleEditTaskModal, currentUser, updateTask, taskObj }) => {
                                         id: 'employee',
                                     }}
                                 >
-                                    <option value={taskObj.employeeId}>{taskObj.employee.firstName} {taskObj.employee.lastName}</option>
+                                    <option value={taskObj.employeeId}>
+                                        {taskObj.employee.firstName} {taskObj.employee.lastName}
+                                    </option>
                                     {
                                         employees.map(e => {
                                             return (e.id === taskObj.employeeId)
                                                 ? null
-                                                : <option key={e.id} value={e.id}>{e.firstName} {e.lastName}</option>
+                                                :
+                                                <option key={e.id} value={e.id}>
+                                                    {e.firstName} {e.lastName}
+                                                </option>
                                         })
                                     }
                                 </Select>
                             </FormControl>
                         </Grid>
-                        <Button type="submit" variant="contained">Save</Button>
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            className={classes.submit}
+                        >
+                            Save
+                        </Button>
                     </Grid>
                 </Grid>
             </form>

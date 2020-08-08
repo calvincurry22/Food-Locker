@@ -1,62 +1,45 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Typography } from '@material-ui/core';
+import React, { useEffect, useContext } from 'react';
 import { CredentialContext } from '../../providers/CredentialProvider';
-import { setDate } from 'date-fns';
-
-export default ({ employees }) => {
-    const { getCredentialsByEmployeeId } = useContext(CredentialContext)
-    let employeesWithNoCredentials = []
-    let credentials = []
-    const [s, setS] = useState([])
+import { EmployeeContext } from '../../providers/EmployeeProvider';
+import DashboardEmployee from '../employee/DashboardEmployee';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Typography from '@material-ui/core/Typography';
 
 
-    // useEffect(() => {
+const drawerWidth = 270;
+//test comment
 
-    //     employees.map(e => {
-    //         console.log(e)
-    //         getCredentialsByEmployeeId(e.id)
-    //             .then(r => {
-    //                 if (r.length === 0) {
-    //                     credentials.push(e)
-    //                     console.log(credentials)
-    //                 } else {
-    //                     return null
-    //                 }
-    //             });
-    //         .then(() => {
-    //             credentials = credentials.flat()
-    //             setS(employeesWithNoCredentials)
-    //         })
-    //     })
-    // }, [])
+export default () => {
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
+    const { getEmployeesByUserId, employees } = useContext(EmployeeContext)
+    const { getCredentialsByEmployeeId, credentials } = useContext(CredentialContext)
 
-    // if (credentials) {
-    //     return null
-    // } else {
-    //     employeesWithNoCredentials.push(e)
-    // }
-    // credentials.flat()
-
-    // employees.map(e => {
-    //     const t = credentials.find(c => c.employeeId === e.id)
-    //     if (t) {
-    //         return;
-    //     } else {
-    //         employeesWithNoCredentials.push(t)
-    //     }
-    // })
+    useEffect(() => {
+        getEmployeesByUserId(currentUser.id);
+    }, [])
 
     return (
-        <div>
-            <Typography>
-                Employees without certifications
-            </Typography>
-            {/* {credentials.length ?
-                credentials.map(e => {
-                    console.log(e)
-                    return <Typography>{e.fullName}</Typography>
-                }) : null
-            } */}
-        </div>
+        <>
+            <div >
+                <CssBaseline />
+                <main >
+                    {(employees[0]) ?
+                        employees.map(e => (
+                            <DashboardEmployee
+                                key={e.id}
+                                employee={e}
+                                credentials={credentials}
+                                getCredentialsByEmployeeId={getCredentialsByEmployeeId}
+                            />
+                        ))
+                        :
+                        <>
+                            <br />
+                            <Typography variant="h5">No employees</Typography>
+                        </>
+                    }
+                </main>
+            </div>
+        </>
     )
 }

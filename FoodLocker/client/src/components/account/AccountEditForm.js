@@ -1,19 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Button, FormGroup, FormLabel, Input, CircularProgress, LinearProgress } from '@material-ui/core';
-import { useHistory, Link } from "react-router-dom";
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import { Button, CircularProgress } from '@material-ui/core';
 import { UserContext } from "../../providers/UserProvider";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { makeStyles } from '@material-ui/core/styles';
 import AccountImageUpload from "./AccountImageUpload";
+import { useHistory, Link } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
+import Container from '@material-ui/core/Container';
+import Grid from '@material-ui/core/Grid';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -21,11 +15,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        // backgroundColor: theme.palette.secondary.main,
-        backgroundColor: "#32CD32"
     },
     form: {
         width: '100%', // Fix IE 11 issue.
@@ -38,17 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default () => {
-    const history = useHistory();
-    const classes = useStyles();
-    const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { updateUser, getAllUserProfiles, users, getUserProfile } = useContext(UserContext)
-    const [user, setUser] = useState({})
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const [updatedUser, setUpdatedUser] = useState({});
     const [imageUrl, setImageUrl] = useState('')
+    const [user, setUser] = useState({})
+    const history = useHistory();
+    const classes = useStyles();
 
     const editUser = (e) => {
         e.preventDefault();
-        console.log(updatedUser)
         if (imageUrl !== '') {
             updateUser({
                 id: updatedUser.id,
@@ -69,7 +57,6 @@ export default () => {
 
     const existingEmailCheck = (e) => {
         e.preventDefault()
-        console.log(user)
         if (users.length) {
             const foundUser = users.find(u => u.email === updatedUser.email)
             if (foundUser && foundUser.id !== updatedUser.id) {
@@ -81,8 +68,6 @@ export default () => {
     }
 
     const handleControlledInputChange = (event) => {
-        console.log(event.target.value)
-        console.log(updatedUser)
         const newUser = Object.assign({}, updatedUser);
         newUser[event.target.name] = event.target.value;
         setUpdatedUser(newUser);
@@ -95,7 +80,6 @@ export default () => {
                 setUpdatedUser(res)
                 setUser(res)
             });
-        // setUpdatedUser(user)
     }, [])
 
 

@@ -1,15 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Line, Bar, Pie, Doughnut } from "react-chartjs-2";
-import { AuditContext } from '../providers/AuditProvider';
-import { AuditViolationContext } from '../providers/AuditViolationProvider';
+import React from 'react';
+import { Line, Bar } from "react-chartjs-2";
 import { makeStyles, Typography, Button } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     chartJsHeight: {
         height: 100
-    },
-    chartTitle: {
-        marginRight: 30
     }
 }))
 
@@ -79,12 +74,11 @@ export default ({ audits, barChartView, toggleChartView }) => {
     }
 
     const auditDates = audits.map(a => {
-        test(a)
+        return test(a)
     })
 
 
     const data = {
-        // labels: ['Jan', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
         labels: chartLabels,
         datasets: [
             {
@@ -103,48 +97,62 @@ export default ({ audits, barChartView, toggleChartView }) => {
                 <Typography variant="h6" align="left">
                     Audit Records
                 </Typography>
-                <Button onClick={toggleChartView} className="auditChartButton" variant="outlined">Toggle Chart</Button>
+                <Button
+                    onClick={toggleChartView}
+                    className="auditChartButton"
+                    variant="outlined"
+                >
+                    Toggle Chart
+                </Button>
             </div>
-            {!barChartView &&
+            {(audits[0]) ?
+                <>
+                    {!barChartView &&
 
-                <div className="App">
-                    <Line data={data} options={{
-                        scales: {
-                            yAxes: [{
-                                display: true,
-                                ticks: {
-                                    stepSize: 5,
-                                    maxTicksLimit: 10,    // minimum will be 0, unless there is a lower value.
-                                    // OR //
-                                    beginAtZero: true   // minimum value will be 0.
+                        <div className="App">
+                            <Line data={data} options={{
+                                scales: {
+                                    yAxes: [{
+                                        display: true,
+                                        ticks: {
+                                            stepSize: 5,
+                                            maxTicksLimit: 10,    // minimum will be 0, unless there is a lower value.
+                                            // OR //
+                                            beginAtZero: true   // minimum value will be 0.
+                                        }
+                                    }]
                                 }
-                            }]
-                        }
-                    }} />
-                </div>
-            }
-            {barChartView &&
+                            }} />
+                        </div>
+                    }
+                    {barChartView &&
 
-                <div className={classes.chartJsHeight}>
-                    <Bar
-
-                        data={data}
-                        options={{
-                            responsive: true,
-                            scales: {
-                                yAxes: [{
-                                    display: true,
-                                    ticks: {
-                                        stepSize: 5,
-                                        maxTicksLimit: 8,    // minimum will be 0, unless there is a lower value.
-                                        // OR //
-                                        beginAtZero: true   // minimum value will be 0.
+                        <div className={classes.chartJsHeight}>
+                            <Bar
+                                data={data}
+                                options={{
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                            display: true,
+                                            ticks: {
+                                                stepSize: 5,
+                                                maxTicksLimit: 8,    // minimum will be 0, unless there is a lower value.
+                                                // OR //
+                                                beginAtZero: true   // minimum value will be 0.
+                                            }
+                                        }]
                                     }
-                                }]
-                            }
-                        }}
-                    />
-                </div>
+                                }}
+                            />
+                        </div>
+                    }
+                </>
+                :
+                <>
+                    <br />
+                    <Typography variant="h5">No audits to view</Typography>
+                </>
             }
         </>
     );

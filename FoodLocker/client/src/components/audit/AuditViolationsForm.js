@@ -1,11 +1,20 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import { Grid, FormControlLabel, FormControl, RadioGroup, Radio, FormLabel, TextField, Select, Typography, Button } from '@material-ui/core';
-import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
+import React, { useRef } from 'react';
+import './Audit.css';
+import {
+    Grid,
+    Radio,
+    Button,
+    Select,
+    FormLabel,
+    TextField,
+    RadioGroup,
+    FormControl,
+    FormControlLabel,
+} from '@material-ui/core';
 
 
-export default ({ audit, violationCategories, blankViolation, violations, setViolations }) => {
+export default ({ violationCategories, blankViolation, violations, setViolations }) => {
 
-    const [radioValue, setRadioValue] = useState('')
     const description = useRef()
 
     const addViolation = () => {
@@ -13,8 +22,6 @@ export default ({ audit, violationCategories, blankViolation, violations, setVio
     };
 
     const handleViolationChange = (e) => {
-        console.log()
-        console.log(e.target.value)
         const updatedViolations = [...violations];
         if (e.target.name === 'violationCategoryId') {
             updatedViolations[e.target.id][e.target.name] = parseInt(e.target.value);
@@ -22,40 +29,33 @@ export default ({ audit, violationCategories, blankViolation, violations, setVio
             updatedViolations[e.target.id][e.target.name] = e.target.value;
         }
         setViolations(updatedViolations);
-        console.log(violations)
     };
 
     return (
-        <form>
+        <form className="violationsForm">
             <h2>Violations</h2>
             <Button variant="outlined" onClick={addViolation}>Add new issue</Button>
+            <br />
             {
                 violations.map((val, idx) => {
-                    console.log(idx)
-
                     const isCriticalId = `isCritical-${idx}`;
-                    const violationCategoryId = `violationCategoryId-${idx}`;
-                    const descriptionId = `descriptionId-${idx}`;
+
                     return (
 
                         <Grid key={idx} container spacing={3}>
                             <Grid item xs={12} sm={12} md={12} lg={12}>
-                                {/* <Typography variant='h6'>Issue #{idx + 1}</Typography> */}
                                 <FormControl fullWidth>
                                     <TextField
+                                        rows={2}
                                         required
-                                        // id={descriptionId}
-                                        // name={descriptionId}
-                                        label="description"
                                         fullWidth
                                         multiline
                                         ref={description}
                                         variant="outlined"
-                                        rows={2}
-                                        value={violations[idx].description}
+                                        label="description"
                                         autoComplete="description"
-                                        // defaultValue={violations[idx].description}
                                         onChange={handleViolationChange}
+                                        value={violations[idx].description}
                                         inputProps={{
                                             name: "description",
                                             id: idx
@@ -65,12 +65,13 @@ export default ({ audit, violationCategories, blankViolation, violations, setVio
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <FormControl>
-                                    <FormLabel component="legend">Select Category</FormLabel>
+                                    <FormLabel component="legend">
+                                        Select Category
+                                    </FormLabel>
                                     <Select
                                         native
                                         variant="outlined"
                                         className="violationCategoryId"
-                                        data-idx={idx}
                                         value={val.violationCategoryId}
                                         onChange={handleViolationChange}
                                         inputProps={{
@@ -80,19 +81,37 @@ export default ({ audit, violationCategories, blankViolation, violations, setVio
                                     >
                                         <option aria-label="None" value="" />
                                         {
-                                            violationCategories.map(v => {
-                                                return <option key={v.id} value={v.id}>{v.name}</option>
-                                            })
+                                            violationCategories.map(v => (
+                                                <option key={v.id} value={v.id}>
+                                                    {v.name}
+                                                </option>
+                                            ))
                                         }
                                     </Select>
                                 </FormControl>
                             </Grid>
                             <Grid item xs={6} sm={6}>
                                 <FormControl component="fieldset">
-                                    <FormLabel component="legend">Critical Violation?</FormLabel>
-                                    <RadioGroup aria-label="passed" className="isCritical" data-idx={idx} name={isCriticalId} value={val.isCritical} onChange={handleViolationChange}>
-                                        <FormControlLabel value='no' control={<Radio inputProps={{ name: "isCritical", id: idx }} />} label="No" />
-                                        <FormControlLabel value='yes' control={<Radio inputProps={{ name: "isCritical", id: idx }} />} label="Yes" />
+                                    <FormLabel component="legend">
+                                        Critical Violation?
+                                    </FormLabel>
+                                    <RadioGroup
+                                        aria-label="passed"
+                                        className="isCritical"
+                                        name={isCriticalId}
+                                        value={val.isCritical}
+                                        onChange={handleViolationChange}
+                                    >
+                                        <FormControlLabel
+                                            value='no'
+                                            label="No"
+                                            control={<Radio inputProps={{ name: "isCritical", id: idx }} />}
+                                        />
+                                        <FormControlLabel
+                                            value='yes'
+                                            label="Yes"
+                                            control={<Radio inputProps={{ name: "isCritical", id: idx }} />}
+                                        />
                                     </RadioGroup>
                                 </FormControl>
                             </Grid>

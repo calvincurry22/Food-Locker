@@ -1,44 +1,27 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Paper from '@material-ui/core/Paper';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
 import Review from './Review';
-import AuditForm from './AuditForm';
-import AuditViolationsForm from './AuditViolationsForm';
-import { useHistory } from 'react-router-dom';
-import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 import SideNav from '../SideNav';
+import AuditForm from './AuditForm';
+import Step from '@material-ui/core/Step';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 import { Container } from '@material-ui/core';
+import Stepper from '@material-ui/core/Stepper';
+import StepLabel from '@material-ui/core/StepLabel';
+import { makeStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AuditViolationsForm from './AuditViolationsForm';
 import { AuditContext } from '../../providers/AuditProvider';
 import { AuditViolationContext } from '../../providers/AuditViolationProvider';
+import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
 
-function Copyright() {
-    return (
-        <Typography variant="body2" color="textSecondary" align="center">
-            {'Copyright © '} FoodLocker {new Date().getFullYear()} {'.'}
-        </Typography>
-    );
-}
+
 
 const useStyles = makeStyles((theme) => ({
-    appBar: {
-        position: 'relative',
-    },
     root: {
         display: 'flex',
-        flexGrow: 1,
-        height: '100vh',
-        overflow: 'auto',
-    },
-    content: {
         flexGrow: 1,
         height: '100vh',
         overflow: 'auto',
@@ -83,14 +66,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default () => {
-    const classes = useStyles();
+    const classes = useStyles()
     const history = useHistory()
-    const [activeStep, setActiveStep] = useState(0);
+    const { saveAudit } = useContext(AuditContext)
+    const [activeStep, setActiveStep] = useState(0)
+    const { saveViolation } = useContext(AuditViolationContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
-    const { saveAudit } = useContext(AuditContext)
-    const { saveViolation } = useContext(AuditViolationContext)
-    const blankViolation = { auditId: '', isCritical: '', violationCategoryId: '', description: '' };
+    const blankViolation = { auditId: '', isCritical: '', violationCategoryId: '', description: '' }
     const [violations, setViolations] = useState([
         { ...blankViolation }
     ]);
@@ -105,6 +88,7 @@ export default () => {
         passed: (value === 'pass') ? true : false,
         userId: currentUser.id
     })
+
     useEffect(() => {
         getAllViolationCategories()
     }, [])
@@ -114,36 +98,37 @@ export default () => {
             case 0:
                 return <AuditForm
                     audit={audit}
-                    setAudit={setAudit}
                     value={value}
+                    setAudit={setAudit}
                     setValue={setValue}
-                />;
+                />
             case 1:
                 return <AuditViolationsForm
-                    audit={audit}
                     violationCategories={violationCategories}
                     blankViolation={blankViolation}
+                    setViolations={setViolations}
                     violations={violations}
-                    setViolations={setViolations} />;
+                    audit={audit}
+                />
             case 2:
                 return <Review
-                    audit={audit}
                     violationCategories={violationCategories}
                     blankViolation={blankViolation}
                     violations={violations}
-                />;
+                    audit={audit}
+                />
             default:
-                throw new Error('Unknown step');
+                throw new Error('Unknown step')
         }
     }
 
     const handleNext = () => {
-        setActiveStep(activeStep + 1);
-    };
+        setActiveStep(activeStep + 1)
+    }
 
     const handleBack = () => {
-        setActiveStep(activeStep - 1);
-    };
+        setActiveStep(activeStep - 1)
+    }
 
     const createNewRecord = (auditObj, violationArray) => {
         saveAudit(auditObj)
@@ -154,7 +139,7 @@ export default () => {
                     } else {
                         v.isCritical = true
                     }
-                    v.auditId = r.id;
+                    v.auditId = r.id
                     saveViolation(v)
                 })
             })
@@ -191,7 +176,6 @@ export default () => {
                                     </>
                                 ) : (
                                         <>
-
                                             {getStepContent(activeStep)}
                                             <div className={classes.buttons}>
                                                 {activeStep !== 0 && (
@@ -215,12 +199,10 @@ export default () => {
                                                     {activeStep === steps.length - 1 ? 'Submit Record' : 'Next'}
                                                 </Button>
                                             </div>
-
                                         </>
                                     )}
                             </>
                         </Paper>
-                        <Copyright />
                     </Container>
                 </main>
             </div>

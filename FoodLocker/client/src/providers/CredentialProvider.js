@@ -2,6 +2,8 @@ import React, { useState, createContext, useContext } from 'react';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { UserContext } from './UserProvider';
+import { EmployeeContext } from './EmployeeProvider';
+import { useHistory } from 'react-router-dom';
 
 export const CredentialContext = createContext();
 
@@ -9,6 +11,9 @@ export default (props) => {
     const apiUrl = "/api/credential"
     const { getToken } = useContext(UserContext)
     const [credentials, setCredentials] = useState([])
+    const currentUser = JSON.parse(sessionStorage.getItem("user"))
+    const { getEmployeesByUserId } = useContext(EmployeeContext)
+    const history = useHistory()
 
     const getCredentialsByEmployeeId = (id) => {
         return getToken().then((token) =>
@@ -18,7 +23,6 @@ export default (props) => {
                     Authorization: `Bearer ${token}`
                 }
             }).then(resp => resp.json())
-                .then(setCredentials)
         )
     };
 
@@ -42,7 +46,7 @@ export default (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(credential)
-            }).then(() => getCredentialsByEmployeeId(credential.employeeId))
+            }).then(() => window.location.reload(true))
         );
     };
 
@@ -55,7 +59,7 @@ export default (props) => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(credential),
-            }).then(() => getCredentialsByEmployeeId(credential.employeeId))
+            }).then(() => window.location.reload(true))
         )
     }
 
@@ -66,7 +70,7 @@ export default (props) => {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-            }).then(() => getCredentialsByEmployeeId(employeeId))
+            }).then(() => window.location.reload(true))
         )
     }
 

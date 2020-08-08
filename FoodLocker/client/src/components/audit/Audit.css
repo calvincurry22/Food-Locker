@@ -1,0 +1,29 @@
+.addAuditButton {
+    margin-left: 2% !important;
+}
+.auditRecordInfo {
+    margin-left: 5%;
+}
+
+.detailsChartGrid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-top: 5% !important;
+}
+
+.auditDetailsButton {
+    background-color: tomato !important;
+}
+
+.violationsForm {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 320px;
+}
+
+.auditReviewPage {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 320px;
+}

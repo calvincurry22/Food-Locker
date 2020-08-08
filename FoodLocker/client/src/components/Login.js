@@ -1,14 +1,14 @@
 import React, { useState, useContext } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { UserContext } from "../providers/UserProvider";
-import { Button, Container } from "@material-ui/core";
-import Avatar from '@material-ui/core/Avatar';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Avatar from '@material-ui/core/Avatar';
+import { useHistory, Link } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import { Button, Container } from "@material-ui/core";
+import { UserContext } from "../providers/UserProvider";
+import CssBaseline from '@material-ui/core/CssBaseline';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
     const classes = useStyles();
     const history = useHistory();
-    const { login } = useContext(UserContext);
     const [email, setEmail] = useState();
+    const { login } = useContext(UserContext);
     const [password, setPassword] = useState();
 
     const loginSubmit = (e) => {
