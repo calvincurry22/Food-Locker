@@ -66,24 +66,25 @@ export default ({ barChartView, toggleChartView }) => {
     useEffect(() => {
         async function fetchData() {
             setLoading(true)
-            getTasksByUserId(currentUser.id);
-            getEmployeesByUserId(currentUser.id);
+            await getTasksByUserId(currentUser.id);
+            await getEmployeesByUserId(currentUser.id);
             await getAuditsByUserId(currentUser.id);
-            setLoading(false)
+
         }
 
-        fetchData()
+        fetchData();
+        setLoading(false);
     }, [])
 
     return (
-        <>
-            <div className={classes.root}>
-                <CssBaseline />
-                <SideNav />
-                <main className={classes.content}>
-                    {loading ?
-                        <CircularProgress />
-                        :
+        <div className={classes.root}>
+            {loading ?
+                <CircularProgress />
+                :
+                <>
+                    <CssBaseline />
+                    <SideNav />
+                    <main className={classes.content}>
                         <Container maxWidth="lg" className={classes.container}>
                             <Grid container spacing={3}>
                                 <Grid item xs={12} md={8} lg={8}>
@@ -126,9 +127,9 @@ export default ({ barChartView, toggleChartView }) => {
                                 </Grid>
                             </Grid>
                         </Container>
-                    }
-                </main>
-            </div>
-        </>
+                    </main>
+                </>
+            }
+        </div>
     )
 }
