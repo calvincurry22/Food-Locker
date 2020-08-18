@@ -17,40 +17,40 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public List<Audit> GetAllAuditsByUserId(int id)
+        public async Task<List<Audit>> GetAllAuditsByUserId(int id)
         {
-            return _context.Audit
+            return await _context.Audit
                         .Where(a => a.UserId == id)
                         .Include(a => a.User)
                         .OrderBy(a => a.AuditDate)
-                        .ToList();
+                        .ToListAsync();
         }
 
-        public Audit GetAuditById(int id)
+        public async Task<Audit> GetAuditById(int id)
         {
-            return _context.Audit
+            return await _context.Audit
                     .Include(a => a.User)
-                    .FirstOrDefault(a => a.Id == id);
+                    .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public void Add(Audit audit)
+        public async void Add(Audit audit)
         {
-            _context.Add(audit);
-            _context.SaveChanges();
+            await _context.AddAsync(audit);
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Audit audit)
+        public async void Update(Audit audit)
         {
             _context.Entry(audit).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var audit = GetAuditById(id);
+            var audit = await GetAuditById(id);
 
             _context.Audit.Remove(audit);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
