@@ -24,5 +24,10 @@ namespace FoodLocker.Data
         public DbSet<Models.Task> Task { get; set; }
 
         public DbSet<ViolationCategory> ViolationCategory { get; set; }
+
+        internal object EntryAsync(Audit audit)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

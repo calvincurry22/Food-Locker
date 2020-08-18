@@ -11,8 +11,8 @@ export default (props) => {
     const [audits, setAudits] = useState([])
     const { getToken } = useContext(UserContext)
 
-    const getAuditsByUserId = (userId) => {
-        getToken().then((token) =>
+    const getAuditsByUserId = async (userId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/getByUser/${userId}`, {
                 method: "GET",
                 headers: {
@@ -23,8 +23,8 @@ export default (props) => {
         )
     };
 
-    const getAuditById = (id) => {
-        getToken().then((token) =>
+    const getAuditById = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${id}`, {
                 method: "GET",
                 headers: {
@@ -35,8 +35,8 @@ export default (props) => {
         )
     };
 
-    const saveAudit = (audit) => {
-        return getToken().then((token) =>
+    const saveAudit = async (audit) => {
+        return await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -44,13 +44,11 @@ export default (props) => {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(audit)
-            })/*.then(() => getAuditsByUserId(audit.userId))*/
-
-                .then(r => r.json()))
+            }).then(r => r.json()))
     };
 
-    const updateAudit = (audit) => {
-        getToken().then((token) =>
+    const updateAudit = async (audit) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${audit.id}`, {
                 method: "PUT",
                 headers: {
@@ -62,8 +60,8 @@ export default (props) => {
         )
     }
 
-    const deleteAudit = (auditId, userId) => {
-        getToken().then((token) =>
+    const deleteAudit = async (auditId, userId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${auditId}`, {
                 method: "DELETE",
                 headers: {
