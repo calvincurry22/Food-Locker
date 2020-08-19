@@ -17,39 +17,39 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public List<AuditViolation> GetByAuditId(int id)
+        public async Task<List<AuditViolation>> GetByAuditId(int id)
         {
-            return _context.AuditViolation
+            return await _context.AuditViolation
                         .Where(a => a.AuditId == id)
                         .Include(a => a.ViolationCategory)
-                        .ToList();
+                        .ToListAsync();
         }
 
-        public AuditViolation GetById(int id)
+        public async Task<AuditViolation> GetById(int id)
         {
-            return _context.AuditViolation
+            return await _context.AuditViolation
                 .Include(a => a.ViolationCategory)
-                .FirstOrDefault(a => a.Id == id);
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public void Add(AuditViolation auditViolation)
+        public async void Add(AuditViolation auditViolation)
         {
-            _context.Add(auditViolation);
-            _context.SaveChanges();
+           await _context.AddAsync(auditViolation);
+           await _context.SaveChangesAsync();
         }
 
-        public void Update(AuditViolation auditViolation)
+        public async void Update(AuditViolation auditViolation)
         {
             _context.Entry(auditViolation).State = EntityState.Modified;
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var auditViolation = GetById(id);
+            var auditViolation = await GetById(id);
 
             _context.AuditViolation.Remove(auditViolation);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

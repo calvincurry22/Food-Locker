@@ -69,7 +69,6 @@ export default ({ barChartView, toggleChartView }) => {
             await getTasksByUserId(currentUser.id);
             await getEmployeesByUserId(currentUser.id);
             await getAuditsByUserId(currentUser.id);
-
         }
 
         fetchData();

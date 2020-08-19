@@ -23,9 +23,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("getByAudit/{id}")]
-        public IActionResult GetAllByAuditId(int id)
+        public async Task<IActionResult> GetAllByAuditId(int id)
         {
-            List<AuditViolation> avList = _auditViolationRepository.GetByAuditId(id);
+            List<AuditViolation> avList = await _auditViolationRepository.GetByAuditId(id);
             if (avList == null)
             {
                 return NotFound();
@@ -35,9 +35,9 @@ namespace FoodLocker.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            AuditViolation av = _auditViolationRepository.GetById(id);
+            AuditViolation av = await _auditViolationRepository.GetById(id);
             if (av == null)
             {
                 return NotFound();
