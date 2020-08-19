@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FoodLocker.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -31,13 +31,13 @@ namespace FoodLocker.Repositories
         public void Add(User user)
         {
             _context.Add(user);
-            _context.SaveChanges();
+           _context.SaveChangesAsync();
         }
 
         public void Update(User user)
         {
             _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
         }
     }
 }

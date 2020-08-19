@@ -17,37 +17,37 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public List<Employee> GetAllEmployeesByUserId(int id)
+        public async Task<List<Employee>> GetAllEmployeesByUserId(int id)
         {
-            return _context.Employee
+            return await _context.Employee
                         .Where(e => e.UserId == id)
-                        .ToList();
+                        .ToListAsync();
         }
 
-        public Employee GetById(int id)
+        public async Task<Employee> GetById(int id)
         {
-            return _context.Employee
-                .FirstOrDefault(e => e.Id == id);
+            return await _context.Employee
+                .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public void Add(Employee e)
+        public async void Add(Employee e)
         {
             _context.Add(e);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Employee e)
+        public async void Update(Employee e)
         {
             _context.Entry(e).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var employee = GetById(id);
+            var employee = await GetById(id);
 
             _context.Employee.Remove(employee);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }

@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default ({ barChartView, toggleChartView }) => {
     const classes = useStyles()
-    const [loading, setLoading] = useState()
+    const [loading, setLoading] = useState(true)
     const { getTasksByUserId, tasks } = useContext(TaskContext)
     const { getEmployeesByUserId } = useContext(EmployeeContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
@@ -65,14 +65,12 @@ export default ({ barChartView, toggleChartView }) => {
 
     useEffect(() => {
         async function fetchData() {
-            setLoading(true)
             await getTasksByUserId(currentUser.id);
             await getEmployeesByUserId(currentUser.id);
             await getAuditsByUserId(currentUser.id);
+            setLoading(false);
         }
-
         fetchData();
-        setLoading(false);
     }, [])
 
     return (
@@ -88,11 +86,15 @@ export default ({ barChartView, toggleChartView }) => {
                             <Grid container spacing={3}>
                                 <Grid item xs={12} md={8} lg={8}>
                                     <Paper className={chartHeightPaper} elevation={3}>
-                                        <AuditDashboardChart
-                                            audits={audits}
-                                            barChartView={barChartView}
-                                            toggleChartView={toggleChartView}
-                                        />
+                                        {audits[0] ?
+                                            <AuditDashboardChart
+                                                audits={audits}
+                                                barChartView={barChartView}
+                                                toggleChartView={toggleChartView}
+                                            />
+                                            :
+                                            <Typography variant="h5">No audits to view</Typography>
+                                        }
                                     </Paper>
                                     <br />
                                     <Paper className={resourcesHeightPaper} elevation={3}>

@@ -15,8 +15,8 @@ export default (props) => {
     const { getEmployeesByUserId } = useContext(EmployeeContext)
     const history = useHistory()
 
-    const getCredentialsByEmployeeId = (id) => {
-        return getToken().then((token) =>
+    const getCredentialsByEmployeeId = async (id) => {
+        return await getToken().then((token) =>
             fetch(`${apiUrl}/getByEmployee/${id}`, {
                 method: "GET",
                 headers: {
@@ -26,8 +26,8 @@ export default (props) => {
         )
     };
 
-    const getCredentialById = (id) => {
-        getToken().then((token) =>
+    const getCredentialById = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${id}`, {
                 method: "GET",
                 headers: {
@@ -37,8 +37,8 @@ export default (props) => {
         )
     };
 
-    const saveCredential = (credential) => {
-        getToken().then((token) =>
+    const saveCredential = async (credential) => {
+        await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -50,8 +50,8 @@ export default (props) => {
         );
     };
 
-    const updateCredential = (credential) => {
-        return getToken().then((token) =>
+    const updateCredential = async (credential) => {
+        return await getToken().then((token) =>
             fetch(`${apiUrl}/${credential.id}`, {
                 method: "PUT",
                 headers: {
@@ -63,8 +63,8 @@ export default (props) => {
         )
     }
 
-    const deleteCredential = (credentialId, employeeId) => {
-        getToken().then((token) =>
+    const deleteCredential = async (credentialId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${credentialId}`, {
                 method: "DELETE",
                 headers: {

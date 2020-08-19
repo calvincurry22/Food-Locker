@@ -23,9 +23,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            List<ViolationCategory> list = _vcRepository.GetAll();
+            List<ViolationCategory> list = await _vcRepository.GetAll();
             if (list == null)
             {
                 return NotFound();
@@ -35,9 +35,9 @@ namespace FoodLocker.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var violationCategory = _vcRepository.GetById(id);
+            var violationCategory = await _vcRepository.GetById(id);
             if (violationCategory == null)
             {
                 return NotFound();

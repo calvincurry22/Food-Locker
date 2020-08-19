@@ -23,9 +23,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("getByEmployee/{id}")]
-        public IActionResult GetAllCredentialsByEmployeeId(int id)
+        public async Task<IActionResult> GetAllCredentialsByEmployeeId(int id)
         {
-            List<Credential> credentialList = _credentialRepository.GetByEmployeeId(id);
+            List<Credential> credentialList = await _credentialRepository.GetByEmployeeId(id);
             if (credentialList == null)
             {
                 return NotFound();
@@ -35,9 +35,9 @@ namespace FoodLocker.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var credential = _credentialRepository.GetById(id);
+            var credential = await _credentialRepository.GetById(id);
             if (credential == null)
             {
                 return NotFound();

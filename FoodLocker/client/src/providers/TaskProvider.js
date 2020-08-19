@@ -12,8 +12,8 @@ export default (props) => {
     const { getToken } = useContext(UserContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
 
-    const getTasksByUserId = (id) => {
-        getToken().then((token) =>
+    const getTasksByUserId = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/getByUser/${id}`, {
                 method: "GET",
                 headers: {
@@ -23,8 +23,8 @@ export default (props) => {
                 .then(setTasks)
         )
     };
-    const getCompletedTasksByUserId = (id) => {
-        getToken().then((token) =>
+    const getCompletedTasksByUserId = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/completedTasksByUser/${id}`, {
                 method: "GET",
                 headers: {
@@ -34,8 +34,8 @@ export default (props) => {
                 .then(setCompletedTasks)
         )
     };
-    const getIncompleteTasksByUserId = (id) => {
-        getToken().then((token) =>
+    const getIncompleteTasksByUserId = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/incompleteTasksByUser/${id}`, {
                 method: "GET",
                 headers: {
@@ -46,8 +46,8 @@ export default (props) => {
         )
     };
 
-    const getTaskById = (id) => {
-        getToken().then((token) =>
+    const getTaskById = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${id}`, {
                 method: "GET",
                 headers: {
@@ -57,8 +57,8 @@ export default (props) => {
         )
     };
 
-    const saveTask = (task) => {
-        getToken().then((token) =>
+    const saveTask = async (task) => {
+        await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -70,8 +70,8 @@ export default (props) => {
         );
     };
 
-    const updateTask = (task) => {
-        getToken().then((token) =>
+    const updateTask = async (task) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${task.id}`, {
                 method: "PUT",
                 headers: {
@@ -83,8 +83,8 @@ export default (props) => {
         )
     }
 
-    const deleteTask = (taskId) => {
-        getToken().then((token) =>
+    const deleteTask = async (taskId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${taskId}`, {
                 method: "DELETE",
                 headers: {
@@ -94,8 +94,8 @@ export default (props) => {
         )
     }
 
-    const deleteCompletedTask = (taskId) => {
-        getToken().then((token) =>
+    const deleteCompletedTask = async (taskId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${taskId}`, {
                 method: "DELETE",
                 headers: {
