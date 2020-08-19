@@ -11,8 +11,8 @@ export default (props) => {
     const { getToken } = useContext(UserContext)
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
 
-    const getEmployeesByUserId = (id) => {
-        getToken().then((token) =>
+    const getEmployeesByUserId = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/getByUser/${id}`, {
                 method: "GET",
                 headers: {
@@ -23,8 +23,8 @@ export default (props) => {
         )
     };
 
-    const getEmployeeById = (id) => {
-        getToken().then((token) =>
+    const getEmployeeById = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${id}`, {
                 method: "GET",
                 headers: {
@@ -34,8 +34,8 @@ export default (props) => {
         )
     };
 
-    const saveEmployee = (employee) => {
-        getToken().then((token) =>
+    const saveEmployee = async (employee) => {
+        await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -47,8 +47,8 @@ export default (props) => {
         );
     };
 
-    const updateEmployee = (employee) => {
-        getToken().then((token) =>
+    const updateEmployee = async (employee) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${employee.id}`, {
                 method: "PUT",
                 headers: {
@@ -60,8 +60,8 @@ export default (props) => {
         )
     }
 
-    const deleteEmployee = (employeeId) => {
-        getToken().then((token) =>
+    const deleteEmployee = async (employeeId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${employeeId}`, {
                 method: "DELETE",
                 headers: {
