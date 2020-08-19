@@ -10,8 +10,8 @@ export default (props) => {
     const [violationCategories, setViolationCategories] = useState([])
     const { getToken } = useContext(UserContext)
 
-    const getAllViolationCategories = () => {
-        getToken().then((token) =>
+    const getAllViolationCategories = async () => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}`, {
                 method: "GET",
                 headers: {
@@ -21,8 +21,8 @@ export default (props) => {
                 .then(setViolationCategories)
         )
     };
-    const getViolationCategoryById = (id) => {
-        getToken().then((token) =>
+    const getViolationCategoryById = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${id}`, {
                 method: "GET",
                 headers: {
