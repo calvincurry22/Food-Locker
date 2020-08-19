@@ -17,55 +17,55 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public List<Models.Task> GetAllTasksByUserId(int id)
+        public async Task<List<Models.Task>> GetAllTasksByUserId(int id)
         {
-            return _context.Task
+            return await _context.Task
                     .Where(t => t.UserId == id)
                     .Include(t => t.Employee)
-                    .ToList();
+                    .ToListAsync();
         }
 
-        public Models.Task GetTaskById(int Id)
+        public async Task<Models.Task> GetTaskById(int Id)
         {
-            return _context.Task
+            return await _context.Task
                        .Include(t => t.Employee)
-                       .FirstOrDefault(t => t.Id == Id);
+                       .FirstOrDefaultAsync(t => t.Id == Id);
         }
 
-        public List<Models.Task> GetAllCompletedTasks( int userId)
+        public async Task<List<Models.Task>> GetAllCompletedTasks( int userId)
         {
-            return _context.Task
+            return await _context.Task
                         .Where(t => t.UserId == userId && t.isCompleted == true)
                         .Include(t => t.Employee)
-                        .ToList();
+                        .ToListAsync();
         }
 
-        public List<Models.Task> GetAllIncompleteTasks(int userId)
+        public async Task<List<Models.Task>> GetAllIncompleteTasks(int userId)
         {
-            return _context.Task
+            return await _context.Task
                         .Where(t => t.UserId == userId && t.isCompleted == false)
                         .Include(t => t.Employee)
-                        .ToList();
+                        .ToListAsync();
         }
 
-        public void Add(Models.Task task)
+        public async void Add(Models.Task task)
         {
             _context.Add(task);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(Models.Task task)
+        public async void Update(Models.Task task)
         {
             _context.Entry(task).State = EntityState.Modified;
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var task = GetTaskById(id);
+            var task = await GetTaskById(id);
 
             _context.Task.Remove(task);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
