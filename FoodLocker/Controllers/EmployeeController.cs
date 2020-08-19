@@ -23,9 +23,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("getByUser/{id}")]
-        public IActionResult GetAllEmployeesByUserId(int id)
+        public async Task<IActionResult> GetAllEmployeesByUserId(int id)
         {
-            List<Employee> employeeList = _employeeRepository.GetAllEmployeesByUserId(id);
+            List<Employee> employeeList = await _employeeRepository.GetAllEmployeesByUserId(id);
             if (employeeList == null)
             {
                 return NotFound();
@@ -35,9 +35,9 @@ namespace FoodLocker.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var employee = _employeeRepository.GetById(id);
+            var employee = await _employeeRepository.GetById(id);
             if (employee == null)
             {
                 return NotFound();
