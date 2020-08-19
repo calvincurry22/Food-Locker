@@ -22,9 +22,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("getByUser/{id}")]
-        public IActionResult GetAllTasksByUserId(int id)
+        public async Task<IActionResult> GetAllTasksByUserId(int id)
         {
-            List<Models.Task> taskList = _taskRepository.GetAllTasksByUserId(id);
+            List<Models.Task> taskList = await _taskRepository.GetAllTasksByUserId(id);
             if (taskList == null)
             {
                 return NotFound();
@@ -34,9 +34,9 @@ namespace FoodLocker.Controllers
 
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var task = _taskRepository.GetTaskById(id);
+            var task = await _taskRepository.GetTaskById(id);
             if (task == null)
             {
                 return NotFound();
@@ -45,9 +45,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("completedTasksByUser/{id}")]
-        public IActionResult GetCompletedTasksByUserId(int id)
+        public async Task<IActionResult> GetCompletedTasksByUserId(int id)
         {
-            var list = _taskRepository.GetAllCompletedTasks(id);
+            var list = await _taskRepository.GetAllCompletedTasks(id);
             if (list == null)
             {
                 return NotFound();
@@ -56,9 +56,9 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet("incompleteTasksByUser/{id}")]
-        public IActionResult GetIncompleteTasksByUserId(int id)
+        public async Task<IActionResult> GetIncompleteTasksByUserId(int id)
         {
-            var list = _taskRepository.GetAllIncompleteTasks(id);
+            var list = await _taskRepository.GetAllIncompleteTasks(id);
             if (list == null)
             {
                 return NotFound();
