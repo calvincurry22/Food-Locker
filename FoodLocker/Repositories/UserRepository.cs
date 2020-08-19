@@ -17,27 +17,27 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public List<User> GetAll()
+        public async Task<List<User>> GetAll()
         {
-            return _context.User
-                        .ToList();
+            return await _context.User
+                        .ToListAsync();
         }
-        public User GetByFirebaseUserId(string firebaseUserId)
+        public async Task<User> GetByFirebaseUserId(string firebaseUserId)
         {
-            return _context.User
-                .FirstOrDefault(u => u.FirebaseUserId == firebaseUserId);
+            return await _context.User
+                .FirstOrDefaultAsync(u => u.FirebaseUserId == firebaseUserId);
         }
 
-        public void Add(User user)
+        public async void Add(User user)
         {
             _context.Add(user);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
         }
 
-        public void Update(User user)
+        public async void Update(User user)
         {
             _context.Entry(user).State = EntityState.Modified;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
     }
 }
