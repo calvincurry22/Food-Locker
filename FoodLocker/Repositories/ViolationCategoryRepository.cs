@@ -17,16 +17,16 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public List<ViolationCategory> GetAll()
+        public async Task<List<ViolationCategory>> GetAll()
         {
-            return _context.ViolationCategory
-                            .ToList();
+            return await _context.ViolationCategory
+                            .ToListAsync();
         }
 
-        public ViolationCategory GetById(int id)
+        public async Task<ViolationCategory> GetById(int id)
         {
-            return _context.ViolationCategory
-                    .FirstOrDefault(vc => vc.Id == id);
+            return await _context.ViolationCategory
+                    .FirstOrDefaultAsync(vc => vc.Id == id);
         }
     }
 }
