@@ -64,13 +64,22 @@ export default ({ barChartView, toggleChartView }) => {
 
 
     useEffect(() => {
+        // async function fetchData() {
+        //     await getTasksByUserId(currentUser.id);
+        //     await getEmployeesByUserId(currentUser.id);
+        //     await getAuditsByUserId(currentUser.id);
+        //     setLoading(false);
+        // }
+
         async function fetchData() {
-            await getTasksByUserId(currentUser.id);
-            await getEmployeesByUserId(currentUser.id);
-            await getAuditsByUserId(currentUser.id);
-            setLoading(false);
+            let response = await Promise.all([
+                getTasksByUserId(currentUser.id),
+                getEmployeesByUserId(currentUser.id),
+                getAuditsByUserId(currentUser.id)
+            ])
+            setLoading(false)
         }
-        fetchData();
+        fetchData()
     }, [])
 
     return (
