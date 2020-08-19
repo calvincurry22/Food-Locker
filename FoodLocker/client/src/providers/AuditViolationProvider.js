@@ -10,8 +10,8 @@ export default (props) => {
     const [auditViolations, setAuditViolations] = useState([])
     const { getToken } = useContext(UserContext)
 
-    const getViolationsByAuditId = (id) => {
-        getToken().then((token) =>
+    const getViolationsByAuditId = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/getByAudit/${id}`, {
                 method: "GET",
                 headers: {
@@ -22,8 +22,8 @@ export default (props) => {
         )
     };
 
-    const getViolationById = (id) => {
-        getToken().then((token) =>
+    const getViolationById = async (id) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${id}`, {
                 method: "GET",
                 headers: {
@@ -33,8 +33,8 @@ export default (props) => {
         )
     };
 
-    const saveViolation = (violation) => {
-        getToken().then((token) =>
+    const saveViolation = async (violation) => {
+        await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -46,8 +46,8 @@ export default (props) => {
         );
     };
 
-    const updateViolation = (violation) => {
-        getToken().then((token) =>
+    const updateViolation = async (violation) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${violation.id}`, {
                 method: "PUT",
                 headers: {
@@ -59,8 +59,8 @@ export default (props) => {
         )
     }
 
-    const deleteViolation = (violationId, auditId) => {
-        getToken().then((token) =>
+    const deleteViolation = async (violationId, auditId) => {
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${violationId}`, {
                 method: "DELETE",
                 headers: {
