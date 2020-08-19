@@ -41,8 +41,8 @@ export function UserProvider(props) {
 
     const getToken = () => firebase.auth().currentUser.getIdToken();
 
-    const getUserProfile = (firebaseUserId) => {
-        return getToken().then((token) =>
+    const getUserProfile = async (firebaseUserId) => {
+        return await getToken().then((token) =>
             fetch(`api/user/${firebaseUserId}`, {
                 method: "GET",
                 headers: {
@@ -51,8 +51,8 @@ export function UserProvider(props) {
             }).then(resp => resp.json()))
     };
 
-    const getAllUserProfiles = () => {
-        return getToken().then((token) =>
+    const getAllUserProfiles = async () => {
+        return await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "GET",
                 headers: {
@@ -62,8 +62,8 @@ export function UserProvider(props) {
         )
             .then(setUsers)
     }
-    const saveUser = (user) => {
-        return getToken().then((token) =>
+    const saveUser = async (user) => {
+        return await getToken().then((token) =>
             fetch(apiUrl, {
                 method: "POST",
                 headers: {
@@ -74,8 +74,8 @@ export function UserProvider(props) {
             }).then(resp => resp.json()));
     };
 
-    const updateUser = (user) =>
-        getToken().then((token) =>
+    const updateUser = async (user) =>
+        await getToken().then((token) =>
             fetch(`${apiUrl}/${user.id}`, {
                 method: "PUT",
                 headers: {
