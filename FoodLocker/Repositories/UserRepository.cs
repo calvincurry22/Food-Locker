@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace FoodLocker.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -17,27 +17,27 @@ namespace FoodLocker.Repositories
             _context = context;
         }
 
-        public async Task<List<User>> GetAll()
+        public List<User> GetAll()
         {
-            return await _context.User
-                        .ToListAsync();
+            return _context.User
+                        .ToList();
         }
-        public async Task<User> GetByFirebaseUserId(string firebaseUserId)
+        public User GetByFirebaseUserId(string firebaseUserId)
         {
-            return await _context.User
-                .FirstOrDefaultAsync(u => u.FirebaseUserId == firebaseUserId);
+            return _context.User
+                .FirstOrDefault(u => u.FirebaseUserId == firebaseUserId);
         }
 
-        public async void Add(User user)
+        public void Add(User user)
         {
             _context.Add(user);
-           await _context.SaveChangesAsync();
+           _context.SaveChangesAsync();
         }
 
-        public async void Update(User user)
+        public void Update(User user)
         {
             _context.Entry(user).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
         }
     }
 }

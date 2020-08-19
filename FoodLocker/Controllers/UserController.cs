@@ -24,16 +24,16 @@ namespace FoodLocker.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public IActionResult GetAll()
         {
-            var users = await _userRepository.GetAll();
+            var users = _userRepository.GetAll();
             return Ok(users);
         }
 
         [HttpGet("{firebaseUserId}")]
-        public async Task<IActionResult> GetByFirebaseUserId(string firebaseUserId)
+        public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
-            var user = await _userRepository.GetByFirebaseUserId(firebaseUserId);
+            var user = _userRepository.GetByFirebaseUserId(firebaseUserId);
             if (user == null)
             {
                 return NotFound();
@@ -61,10 +61,10 @@ namespace FoodLocker.Controllers
 
         }
 
-        private async Task<User> GetCurrentUser()
+        private User GetCurrentUser()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return await _userRepository.GetByFirebaseUserId(firebaseUserId);
+            return _userRepository.GetByFirebaseUserId(firebaseUserId);
         }
     }
 }
