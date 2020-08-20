@@ -1,4 +1,6 @@
 # FoodLocker
+Video Demo Link : https://www.loom.com/share/2a7d18c52ab14210a0381186e4e34f0a
+
 Food Locker is a multi-user app that allows food establishment owners/managers
 to log and track the food safety-related data and performance of their business.
 Users can store health inspection records, manage employee credentials & certifications, 
