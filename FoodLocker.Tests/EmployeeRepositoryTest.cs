@@ -7,11 +7,22 @@ using Xunit;
 
 namespace FoodLocker.Tests
 {
-    class EmployeeRepositoryTest : EFTestFixture
+    public class EmployeeRepositoryTest : EFTestFixture
     {
         public EmployeeRepositoryTest()
         {
             AddSampleData();
+        }
+
+        [Fact]
+        public async void Result_Should_Match_An_Employee()
+        {
+            var repo = new EmployeeRepository(_context);
+            var results = await repo.GetAllEmployeesByUserId(3);
+
+            Assert.Equal(3, results.Count);
+            Assert.Equal("Steve", results[0].FirstName);
+            Assert.Equal("Thor", results[2].FirstName);
         }
 
         private void AddSampleData()
