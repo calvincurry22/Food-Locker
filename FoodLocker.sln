@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodLocker", "FoodLocker\FoodLocker.csproj", "{28FAEEFB-3FCB-470F-9E9F-EB340D112ADC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodLocker", "FoodLocker\FoodLocker.csproj", "{28FAEEFB-3FCB-470F-9E9F-EB340D112ADC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FoodLocker.Tests", "FoodLocker.Tests\FoodLocker.Tests.csproj", "{A767E8F8-9E9A-4C2E-9FB3-C1F1C3212853}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{28FAEEFB-3FCB-470F-9E9F-EB340D112ADC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28FAEEFB-3FCB-470F-9E9F-EB340D112ADC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28FAEEFB-3FCB-470F-9E9F-EB340D112ADC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A767E8F8-9E9A-4C2E-9FB3-C1F1C3212853}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A767E8F8-9E9A-4C2E-9FB3-C1F1C3212853}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A767E8F8-9E9A-4C2E-9FB3-C1F1C3212853}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A767E8F8-9E9A-4C2E-9FB3-C1F1C3212853}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
