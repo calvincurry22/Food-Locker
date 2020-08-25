@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    button: {
+        marginTop: "1%",
+        marginLeft: "1%"
+    }
 }));
 
 
@@ -85,12 +89,19 @@ export default () => {
 
     return (
         <>
-            <Link to="/">Back to dashboard</Link>
-            <Container component="main" maxWidth="xs">
-                <CssBaseline />
-                <div className={classes.paper}>
-                    {user.hasOwnProperty('firstName') ?
-                        <>
+            {user.hasOwnProperty('firstName') ?
+                <>
+                    <Button
+                        onClick={() => history.goBack()}
+                        variant="contained"
+                        color="primary"
+                        className={classes.button}
+                    >
+                        Back
+            </Button>
+                    <Container component="main" maxWidth="xs">
+                        <CssBaseline />
+                        <div className={classes.paper}>
                             <form className={classes.form} onSubmit={existingEmailCheck}>
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
@@ -175,11 +186,11 @@ export default () => {
                                     Save Changes
                                 </Button>
                             </form>
-                        </>
-                        : <CircularProgress />
-                    }
-                </div>
-            </Container>
+                        </div>
+                    </Container>
+                </>
+                : <CircularProgress />
+            }
         </>
     );
 }

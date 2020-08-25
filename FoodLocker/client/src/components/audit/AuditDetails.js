@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AuditDetailsCharts from './AuditDetailsCharts';
 import { useParams, useHistory } from 'react-router-dom';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { AuditContext } from '../../providers/AuditProvider';
 import { AuditViolationContext } from '../../providers/AuditViolationProvider';
 import { ViolationCategoryContext } from '../../providers/ViolationCategoryProvider';
-import { Grid, Paper, Typography, Button, makeStyles, Container, Divider } from '@material-ui/core';
+import { Grid, Paper, Typography, Button, makeStyles, Container, Divider, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -22,9 +22,16 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "whitesmoke",
         flexGrow: 1,
         paddingTop: 10,
+        display: 'flex',
+        flexDirection: 'column'
     },
     backButton: {
-        marginLeft: "1%"
+        marginBottom: "5%",
+        marginLeft: "1%",
+        maxWidth: "5%"
+    },
+    progress: {
+        alignSelf: 'center'
     }
 }));
 
@@ -34,14 +41,21 @@ export default () => {
     const classes = useStyles()
     const history = useHistory()
     const parsedId = parseInt(id)
+    const [loading, setLoading] = useState(true)
     const { getAuditById, audit } = useContext(AuditContext)
     const { auditViolations, getViolationsByAuditId } = useContext(AuditViolationContext)
     const { getAllViolationCategories, violationCategories } = useContext(ViolationCategoryContext)
 
     useEffect(() => {
-        getAuditById(parsedId)
-        getViolationsByAuditId(parsedId)
-        getAllViolationCategories()
+        async function fetchData() {
+            await Promise.all([
+                getAuditById(parsedId),
+                getViolationsByAuditId(parsedId),
+                getAllViolationCategories()
+            ]);
+            setLoading(false);
+        }
+        fetchData();
     }, [])
 
     return (
@@ -55,12 +69,14 @@ export default () => {
                 >
                     <ArrowBackIcon />
                 </Button>
-                <Container maxWidth="lg">
-                    <Grid container spacing={3} className={classes.gridContainer}>
-                        <Grid item xs={12} md={12} lg={12}>
-                            <Paper className={classes.paper} elevation={3}>
-                                <Typography variant="h4" align="center">Audit Details</Typography>
-                                {audit &&
+                {loading ?
+                    <CircularProgress className={classes.progress} />
+                    :
+                    <Container maxWidth="lg">
+                        <Grid container spacing={3} className={classes.gridContainer}>
+                            <Grid item xs={12} md={12} lg={12}>
+                                <Paper className={classes.paper} elevation={3}>
+                                    <Typography variant="h4" align="center">Audit Details</Typography>
                                     <>
                                         <Typography className="taskListTyopgraphy">
                                             Date: {new Date(audit.auditDate).toLocaleDateString()}
@@ -97,19 +113,19 @@ export default () => {
                                             }
                                         </Grid>
                                     </>
-                                }
-                                <Divider />
-                                <h2>Charts</h2>
-                                <Grid container spacing={3}>
-                                    <AuditDetailsCharts
-                                        violations={auditViolations}
-                                        violationCategories={violationCategories}
-                                    />
-                                </Grid>
-                            </Paper>
+                                    <Divider />
+                                    <h2>Charts</h2>
+                                    <Grid container spacing={3}>
+                                        <AuditDetailsCharts
+                                            violations={auditViolations}
+                                            violationCategories={violationCategories}
+                                        />
+                                    </Grid>
+                                </Paper>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Container>
+                    </Container>
+                }
             </main>
         </>
     )

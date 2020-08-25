@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Container, Grid, Button } from '@material-ui/core';
+import { Container, Grid, Button, CircularProgress } from '@material-ui/core';
 import { TaskContext } from '../../providers/TaskProvider';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,6 +33,7 @@ const useStyles = makeStyles((theme) => ({
 export default () => {
     const classes = useStyles()
     const [taskObj, setTaskObj] = useState({})
+    const [loading, setLoading] = useState(true)
     const [taskModal, setTaskModal] = useState(false)
     const toggleTaskModal = () => setTaskModal(!taskModal)
     const [viewingNewTasks, setViewingNewTasks] = useState(true)
@@ -54,79 +55,87 @@ export default () => {
 
 
     useEffect(() => {
-        if (viewingNewTasks) {
-            getIncompleteTasksByUserId(currentUser.id)
-            setViewButton("View Completed Tasks")
-        } else {
-            getCompletedTasksByUserId(currentUser.id)
-            setViewButton("View Current Tasks")
+        async function fetchData() {
+            if (viewingNewTasks) {
+                setViewButton("View Completed Tasks");
+                await getIncompleteTasksByUserId(currentUser.id);
+            } else {
+                setViewButton("View Current Tasks");
+                await getCompletedTasksByUserId(currentUser.id);
+            }
+            setLoading(false)
         }
+        fetchData();
     }, [viewingNewTasks])
 
     return (
         <>
-            <div className={classes.root}>
-                <CssBaseline />
-                <SideNav />
-                <main className={classes.content}>
-                    <br />
-                    <Typography variant="h4" align="center">
-                        Manage Tasks
+            {loading ?
+                <CircularProgress />
+                :
+                <div className={classes.root}>
+                    <CssBaseline />
+                    <SideNav />
+                    <main className={classes.content}>
+                        <br />
+                        <Typography variant="h4" align="center">
+                            Manage Tasks
                     </Typography>
-                    <Button
-                        variant="contained"
-                        className="listToggleButton"
-                        onClick={toggleView}
-                    >
-                        {viewButton}
+                        <Button
+                            variant="contained"
+                            className="listToggleButton"
+                            onClick={toggleView}
+                        >
+                            {viewButton}
+                        </Button>
+                        <Button
+                            onClick={toggleTaskModal}
+                            color="primary"
+                            variant="contained"
+                        >
+                            Add new task
                     </Button>
-                    <Button
-                        onClick={toggleTaskModal}
-                        color="primary"
-                        variant="contained"
-                    >
-                        Add new task
-                    </Button>
-                    <Container maxWidth="lg" className={classes.container}>
-                        <Grid container spacing={4}>
-                            {
-                                (viewingNewTasks) ?
-                                    tasks.map(t => (
-                                        <Task
-                                            key={t.id}
-                                            task={t}
-                                            setTaskObj={setTaskObj}
-                                            updateTask={updateTask}
-                                            deleteTask={deleteTask}
-                                            toggleEditTaskModal={toggleEditTaskModal}
-                                        />
-                                    ))
-                                    : completedTasks.map(t => (
-                                        <CompletedTask
-                                            task={t}
-                                            key={t.id}
-                                            currentUser={currentUser}
-                                            deleteCompletedTask={deleteCompletedTask}
-                                        />
-                                    ))
-                            }
-                        </Grid>
-                    </Container>
-                    <TaskCreateModal
-                        currentUser={currentUser}
-                        toggleTaskModal={toggleTaskModal}
-                        taskModal={taskModal}
-                        saveTask={saveTask}
-                    />
-                    <TaskEditModal
-                        toggleEditTaskModal={toggleEditTaskModal}
-                        currentUser={currentUser}
-                        editTaskModal={editTaskModal}
-                        updateTask={updateTask}
-                        taskObj={taskObj}
-                    />
-                </main>
-            </div>
+                        <Container maxWidth="lg" className={classes.container}>
+                            <Grid container spacing={4}>
+                                {
+                                    (viewingNewTasks) ?
+                                        tasks.map(t => (
+                                            <Task
+                                                key={t.id}
+                                                task={t}
+                                                setTaskObj={setTaskObj}
+                                                updateTask={updateTask}
+                                                deleteTask={deleteTask}
+                                                toggleEditTaskModal={toggleEditTaskModal}
+                                            />
+                                        ))
+                                        : completedTasks.map(t => (
+                                            <CompletedTask
+                                                task={t}
+                                                key={t.id}
+                                                currentUser={currentUser}
+                                                deleteCompletedTask={deleteCompletedTask}
+                                            />
+                                        ))
+                                }
+                            </Grid>
+                        </Container>
+                        <TaskCreateModal
+                            currentUser={currentUser}
+                            toggleTaskModal={toggleTaskModal}
+                            taskModal={taskModal}
+                            saveTask={saveTask}
+                        />
+                        <TaskEditModal
+                            toggleEditTaskModal={toggleEditTaskModal}
+                            currentUser={currentUser}
+                            editTaskModal={editTaskModal}
+                            updateTask={updateTask}
+                            taskObj={taskObj}
+                        />
+                    </main>
+                </div>
+            }
         </>
     )
 }
