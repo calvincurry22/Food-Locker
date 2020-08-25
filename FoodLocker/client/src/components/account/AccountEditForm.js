@@ -23,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    button: {
+        marginTop: "1%",
+        marginLeft: "1%"
+    }
 }));
 
 
@@ -85,7 +89,14 @@ export default () => {
 
     return (
         <>
-            <Link to="/">Back to dashboard</Link>
+            <Button
+                onClick={() => history.goBack()}
+                variant="contained"
+                color="primary"
+                className={classes.button}
+            >
+                Back
+            </Button>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <div className={classes.paper}>
