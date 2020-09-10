@@ -69,7 +69,7 @@ namespace FoodLocker
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+        
 
             app.UseEndpoints(endpoints =>
             {
